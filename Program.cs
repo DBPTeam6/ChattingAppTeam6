@@ -1,4 +1,4 @@
-﻿using ChattingAppTeam6.Auth;
+using ChattingAppTeam6.Auth;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +17,7 @@ namespace ChattingAppTeam6
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new HomeMain());
+            Application.Run(new Login());
         }
     }
 }

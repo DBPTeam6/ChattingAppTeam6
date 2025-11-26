@@ -164,6 +164,18 @@
     </Compile>
     <Compile Include="Admin\DBconnector.cs" />
     <Compile Include="ChattingClient.cs" />
+    <Compile Include="Chat\UI\ChatForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Chat\UI\ChatForm.Designer.cs">
+      <DependentUpon>ChatForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Chat\UI\ChatMessage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Chat\UI\ChatMessage.Designer.cs">
+      <DependentUpon>ChatMessage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -203,11 +215,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Auth\SignUp.resx">
       <DependentUpon>SignUp.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Admin\AdminShellForm.resx">
       <DependentUpon>AdminShellForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Notification\NotifyForm.resx">
       <DependentUpon>NotifyForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Chat\UI\ChatForm.resx">
+      <DependentUpon>ChatForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Chat\UI\ChatMessage.resx">
+      <DependentUpon>ChatMessage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -237,7 +256,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\chat_profile_test.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="packages\System.ValueTuple.4.6.1\build\net471\System.ValueTuple.targets" Condition="Exists('packages\System.ValueTuple.4.6.1\build\net471\System.ValueTuple.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
