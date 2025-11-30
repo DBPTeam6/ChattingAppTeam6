@@ -39,11 +39,7 @@
             this._chatList = new System.Windows.Forms.FlowLayoutPanel();
             this.chatMessage1 = new ChattingAppTeam6.Chat.UI.ChatMessage();
             this.chatMessage2 = new ChattingAppTeam6.Chat.UI.ChatMessage();
-            this.chatMessage3 = new ChattingAppTeam6.Chat.UI.ChatMessage();
-            this.chatMessage4 = new ChattingAppTeam6.Chat.UI.ChatMessage();
-            this.chatMessage5 = new ChattingAppTeam6.Chat.UI.ChatMessage();
-            this.chatMessage6 = new ChattingAppTeam6.Chat.UI.ChatMessage();
-            this.chatMessage7 = new ChattingAppTeam6.Chat.UI.ChatMessage();
+            this._chatSend = new System.Windows.Forms.Panel();
             this._header.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this._avatar)).BeginInit();
             this.panel2.SuspendLayout();
@@ -96,6 +92,7 @@
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this._chatSend);
             this.panel2.Controls.Add(this.panel4);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel2.Location = new System.Drawing.Point(0, 361);
@@ -139,11 +136,6 @@
             this._chatList.AutoSize = true;
             this._chatList.Controls.Add(this.chatMessage1);
             this._chatList.Controls.Add(this.chatMessage2);
-            this._chatList.Controls.Add(this.chatMessage3);
-            this._chatList.Controls.Add(this.chatMessage4);
-            this._chatList.Controls.Add(this.chatMessage5);
-            this._chatList.Controls.Add(this.chatMessage6);
-            this._chatList.Controls.Add(this.chatMessage7);
             this._chatList.Dock = System.Windows.Forms.DockStyle.Fill;
             this._chatList.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this._chatList.Location = new System.Drawing.Point(0, 0);
@@ -173,55 +165,14 @@
             this.chatMessage2.Size = new System.Drawing.Size(367, 56);
             this.chatMessage2.TabIndex = 1;
             // 
-            // chatMessage3
+            // _chatSend
             // 
-            this.chatMessage3.AutoSize = true;
-            this.chatMessage3.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.chatMessage3.Location = new System.Drawing.Point(0, 112);
-            this.chatMessage3.Margin = new System.Windows.Forms.Padding(0);
-            this.chatMessage3.Name = "chatMessage3";
-            this.chatMessage3.Size = new System.Drawing.Size(367, 56);
-            this.chatMessage3.TabIndex = 2;
-            // 
-            // chatMessage4
-            // 
-            this.chatMessage4.AutoSize = true;
-            this.chatMessage4.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.chatMessage4.Location = new System.Drawing.Point(0, 168);
-            this.chatMessage4.Margin = new System.Windows.Forms.Padding(0);
-            this.chatMessage4.Name = "chatMessage4";
-            this.chatMessage4.Size = new System.Drawing.Size(367, 56);
-            this.chatMessage4.TabIndex = 3;
-            // 
-            // chatMessage5
-            // 
-            this.chatMessage5.AutoSize = true;
-            this.chatMessage5.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.chatMessage5.Location = new System.Drawing.Point(0, 224);
-            this.chatMessage5.Margin = new System.Windows.Forms.Padding(0);
-            this.chatMessage5.Name = "chatMessage5";
-            this.chatMessage5.Size = new System.Drawing.Size(367, 56);
-            this.chatMessage5.TabIndex = 4;
-            // 
-            // chatMessage6
-            // 
-            this.chatMessage6.AutoSize = true;
-            this.chatMessage6.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.chatMessage6.Location = new System.Drawing.Point(0, 280);
-            this.chatMessage6.Margin = new System.Windows.Forms.Padding(0);
-            this.chatMessage6.Name = "chatMessage6";
-            this.chatMessage6.Size = new System.Drawing.Size(367, 56);
-            this.chatMessage6.TabIndex = 5;
-            // 
-            // chatMessage7
-            // 
-            this.chatMessage7.AutoSize = true;
-            this.chatMessage7.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.chatMessage7.Location = new System.Drawing.Point(0, 336);
-            this.chatMessage7.Margin = new System.Windows.Forms.Padding(0);
-            this.chatMessage7.Name = "chatMessage7";
-            this.chatMessage7.Size = new System.Drawing.Size(367, 56);
-            this.chatMessage7.TabIndex = 6;
+            this._chatSend.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._chatSend.Location = new System.Drawing.Point(0, 0);
+            this._chatSend.Margin = new System.Windows.Forms.Padding(0);
+            this._chatSend.Name = "_chatSend";
+            this._chatSend.Size = new System.Drawing.Size(384, 60);
+            this._chatSend.TabIndex = 1;
             // 
             // ChatForm
             // 
@@ -259,10 +210,6 @@
         private System.Windows.Forms.FlowLayoutPanel _chatList;
         private ChatMessage chatMessage1;
         private ChatMessage chatMessage2;
-        private ChatMessage chatMessage3;
-        private ChatMessage chatMessage4;
-        private ChatMessage chatMessage5;
-        private ChatMessage chatMessage6;
-        private ChatMessage chatMessage7;
+        private System.Windows.Forms.Panel _chatSend;
     }
 }
