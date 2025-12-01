@@ -33,13 +33,13 @@
             this._sender = new System.Windows.Forms.Label();
             this._avatar = new System.Windows.Forms.PictureBox();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.panel4 = new System.Windows.Forms.Panel();
+            this._chatSend = new System.Windows.Forms.Panel();
+            this._tools = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
             this._chatListContainer = new System.Windows.Forms.Panel();
             this._chatList = new System.Windows.Forms.FlowLayoutPanel();
             this.chatMessage1 = new ChattingAppTeam6.Chat.UI.ChatMessage();
             this.chatMessage2 = new ChattingAppTeam6.Chat.UI.ChatMessage();
-            this._chatSend = new System.Windows.Forms.Panel();
             this._header.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this._avatar)).BeginInit();
             this.panel2.SuspendLayout();
@@ -93,7 +93,7 @@
             // panel2
             // 
             this.panel2.Controls.Add(this._chatSend);
-            this.panel2.Controls.Add(this.panel4);
+            this.panel2.Controls.Add(this._tools);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel2.Location = new System.Drawing.Point(0, 361);
             this.panel2.Margin = new System.Windows.Forms.Padding(0);
@@ -101,14 +101,23 @@
             this.panel2.Size = new System.Drawing.Size(384, 100);
             this.panel2.TabIndex = 1;
             // 
-            // panel4
+            // _chatSend
             // 
-            this.panel4.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel4.Location = new System.Drawing.Point(0, 60);
-            this.panel4.Margin = new System.Windows.Forms.Padding(0);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(384, 40);
-            this.panel4.TabIndex = 0;
+            this._chatSend.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._chatSend.Location = new System.Drawing.Point(0, 0);
+            this._chatSend.Margin = new System.Windows.Forms.Padding(0);
+            this._chatSend.Name = "_chatSend";
+            this._chatSend.Size = new System.Drawing.Size(384, 60);
+            this._chatSend.TabIndex = 1;
+            // 
+            // _tools
+            // 
+            this._tools.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this._tools.Location = new System.Drawing.Point(0, 60);
+            this._tools.Margin = new System.Windows.Forms.Padding(0);
+            this._tools.Name = "_tools";
+            this._tools.Size = new System.Drawing.Size(384, 40);
+            this._tools.TabIndex = 0;
             // 
             // panel3
             // 
@@ -165,15 +174,6 @@
             this.chatMessage2.Size = new System.Drawing.Size(367, 56);
             this.chatMessage2.TabIndex = 1;
             // 
-            // _chatSend
-            // 
-            this._chatSend.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._chatSend.Location = new System.Drawing.Point(0, 0);
-            this._chatSend.Margin = new System.Windows.Forms.Padding(0);
-            this._chatSend.Name = "_chatSend";
-            this._chatSend.Size = new System.Drawing.Size(384, 60);
-            this._chatSend.TabIndex = 1;
-            // 
             // ChatForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -201,7 +201,6 @@
 
         private System.Windows.Forms.Panel _header;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.PictureBox _avatar;
         private System.Windows.Forms.Label _senderInfo;
@@ -211,5 +210,6 @@
         private ChatMessage chatMessage1;
         private ChatMessage chatMessage2;
         private System.Windows.Forms.Panel _chatSend;
+        private System.Windows.Forms.Panel _tools;
     }
 }

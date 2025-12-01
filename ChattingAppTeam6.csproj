@@ -173,6 +173,12 @@
     <Compile Include="Chat\UI\ChatForm.Designer.cs">
       <DependentUpon>ChatForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Chat\UI\ChatImage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Chat\UI\ChatImage.Designer.cs">
+      <DependentUpon>ChatImage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Chat\UI\ChatMessage.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -227,6 +233,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Chat\UI\ChatForm.resx">
       <DependentUpon>ChatForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Chat\UI\ChatImage.resx">
+      <DependentUpon>ChatImage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Chat\UI\ChatMessage.resx">
       <DependentUpon>ChatMessage.cs</DependentUpon>
