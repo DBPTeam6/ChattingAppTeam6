@@ -1,6 +1,6 @@
 ﻿namespace ChattingAppTeam6.Chat.UI
 {
-    partial class ChatMessage
+    partial class ChatImage
     {
         /// <summary> 
         /// 필수 디자이너 변수입니다.
@@ -31,23 +31,27 @@
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this._avatar = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
-            this._message = new System.Windows.Forms.Label();
+            this._imageBox = new System.Windows.Forms.PictureBox();
             this._sender = new System.Windows.Forms.Label();
             this.flowLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this._avatar)).BeginInit();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this._imageBox)).BeginInit();
             this.SuspendLayout();
             // 
             // flowLayoutPanel1
             // 
+            this.flowLayoutPanel1.AutoSize = true;
+            this.flowLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.flowLayoutPanel1.Controls.Add(this._avatar);
             this.flowLayoutPanel1.Controls.Add(this.panel1);
+            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Padding = new System.Windows.Forms.Padding(8);
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(367, 56);
-            this.flowLayoutPanel1.TabIndex = 1;
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(367, 186);
+            this.flowLayoutPanel1.TabIndex = 0;
             // 
             // _avatar
             // 
@@ -62,24 +66,28 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this._message);
+            this.panel1.AutoSize = true;
+            this.panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panel1.Controls.Add(this._imageBox);
             this.panel1.Controls.Add(this._sender);
             this.panel1.Location = new System.Drawing.Point(48, 8);
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
+            this.panel1.MinimumSize = new System.Drawing.Size(303, 50);
             this.panel1.Name = "panel1";
-            this.panel1.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.panel1.Size = new System.Drawing.Size(309, 40);
+            this.panel1.Size = new System.Drawing.Size(303, 170);
             this.panel1.TabIndex = 1;
             // 
-            // _message
+            // _imageBox
             // 
-            this._message.Location = new System.Drawing.Point(3, 25);
-            this._message.Margin = new System.Windows.Forms.Padding(0);
-            this._message.Name = "_message";
-            this._message.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this._message.Size = new System.Drawing.Size(306, 12);
-            this._message.TabIndex = 1;
-            this._message.Text = "label2";
+            this._imageBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this._imageBox.Image = global::ChattingAppTeam6.Properties.Resources.chat_profile_test;
+            this._imageBox.Location = new System.Drawing.Point(0, 20);
+            this._imageBox.Margin = new System.Windows.Forms.Padding(0, 5, 0, 0);
+            this._imageBox.Name = "_imageBox";
+            this._imageBox.Size = new System.Drawing.Size(303, 150);
+            this._imageBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this._imageBox.TabIndex = 1;
+            this._imageBox.TabStop = false;
             // 
             // _sender
             // 
@@ -89,11 +97,11 @@
             this._sender.Margin = new System.Windows.Forms.Padding(0);
             this._sender.Name = "_sender";
             this._sender.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this._sender.Size = new System.Drawing.Size(52, 12);
+            this._sender.Size = new System.Drawing.Size(58, 12);
             this._sender.TabIndex = 0;
-            this._sender.Text = "label1";
+            this._sender.Text = "sender";
             // 
-            // ChatMessage
+            // ChatImage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -101,13 +109,18 @@
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.Controls.Add(this.flowLayoutPanel1);
             this.Margin = new System.Windows.Forms.Padding(0);
-            this.Name = "ChatMessage";
-            this.Size = new System.Drawing.Size(367, 56);
+            this.MaximumSize = new System.Drawing.Size(367, 0);
+            this.MinimumSize = new System.Drawing.Size(367, 0);
+            this.Name = "ChatImage";
+            this.Size = new System.Drawing.Size(367, 186);
             this.flowLayoutPanel1.ResumeLayout(false);
+            this.flowLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this._avatar)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this._imageBox)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -116,9 +129,7 @@
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.PictureBox _avatar;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label sender;
-        private System.Windows.Forms.Label message;
-        private System.Windows.Forms.Label _message;
         private System.Windows.Forms.Label _sender;
+        private System.Windows.Forms.PictureBox _imageBox;
     }
 }

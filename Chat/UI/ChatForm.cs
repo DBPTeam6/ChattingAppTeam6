@@ -173,20 +173,20 @@ namespace ChattingAppTeam6.Chat.UI
 
         private void SendMessage()
         {
-            if (chatClient == null || !chatClient.IsConnected)
-                return;
+            //if (chatClient == null || !chatClient.IsConnected)
+            //    return;
 
-            if (string.IsNullOrWhiteSpace(txtMessage.Text))
-                return;
+            //if (string.IsNullOrWhiteSpace(txtMessage.Text))
+            //    return;
 
             string message = txtMessage.Text.Trim();
-            if (chatClient.SendMessage(message))
-            {
-                // 내가 보낸 메시지도 채팅 리스트에 추가
-                AddChatMessage(currentUsername ?? "나", message);
+            //if (chatClient.SendMessage(message))
+            //{
+            // 내가 보낸 메시지도 채팅 리스트에 추가
+            AddChatMessage(currentUsername ?? "나", message);
                 txtMessage.Clear();
                 txtMessage.Focus();
-            }
+            //}
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)
