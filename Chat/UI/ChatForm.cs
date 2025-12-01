@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 using ChattingAppTeam6.Chat.Lib;
 
@@ -14,10 +15,15 @@ namespace ChattingAppTeam6.Chat.UI
         private TextBox txtMessage;
         private Button btnSend;
 
+        // 도구 UI 컨트롤
+        private Button btnImage;
+        private OpenFileDialog openFileDialog;
+
         public ChatForm()
         {
             InitializeComponent();
             InitializeSendControls();
+            InitializeToolsControls();
 
             HorizontalScroll.Enabled = false;
             HorizontalScroll.Visible = false;
@@ -62,6 +68,131 @@ namespace ChattingAppTeam6.Chat.UI
             // _chatSend 패널에 컨트롤 추가
             _chatSend.Controls.Add(txtMessage);
             _chatSend.Controls.Add(btnSend);
+        }
+
+        /// <summary>
+        /// _tools 패널에 도구 컨트롤 초기화
+        /// </summary>
+        private void InitializeToolsControls()
+        {
+            // OpenFileDialog 초기화
+            openFileDialog = new OpenFileDialog
+            {
+                Title = "이미지 선택",
+                Filter = "이미지 파일|*.jpg;*.jpeg;*.png;*.gif;*.bmp|모든 파일|*.*",
+                FilterIndex = 1,
+                Multiselect = false
+            };
+
+            // 이미지 전송 버튼
+            btnImage = new Button
+            {
+                Text = "📷 이미지",
+                Dock = DockStyle.Left,
+                Width = 80,
+                Font = new Font("맑은 고딕", 9F),
+                FlatStyle = FlatStyle.Flat,
+                Cursor = Cursors.Hand
+            };
+            btnImage.FlatAppearance.BorderSize = 0;
+            btnImage.Click += BtnImage_Click;
+
+            // _tools 패널에 컨트롤 추가
+            _tools.Controls.Add(btnImage);
+        }
+
+        /// <summary>
+        /// 이미지 전송 버튼 클릭 이벤트
+        /// </summary>
+        private void BtnImage_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string filePath = openFileDialog.FileName;
+                SendImage(filePath);
+            }
+        }
+
+        /// <summary>
+        /// 이미지 전송
+        /// </summary>
+        private void SendImage(string filePath)
+        {
+            try
+            {
+                // 이미지 파일 유효성 검사
+                if (!File.Exists(filePath))
+                {
+                    MessageBox.Show("이미지 파일을 찾을 수 없습니다.", "오류",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // 이미지 로드 테스트
+                using (Image testImage = Image.FromFile(filePath))
+                {
+                    // 이미지가 정상적으로 로드되면 채팅에 추가
+                }
+
+                // 내가 보낸 이미지를 채팅 리스트에 추가
+                AddImageMessage(currentUsername ?? "나", filePath);
+
+                // 서버에 이미지 전송 (Base64 인코딩)
+                //if (chatClient != null && chatClient.IsConnected)
+                //{
+                //    byte[] imageBytes = File.ReadAllBytes(filePath);
+                //    string base64Image = Convert.ToBase64String(imageBytes);
+                //    string imageMessage = $"[IMAGE]{base64Image}";
+                //    chatClient.SendMessage(imageMessage);
+                //}
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"이미지 전송 실패: {ex.Message}", "오류",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// 이미지 메시지를 _chatList에 추가
+        /// </summary>
+        private void AddImageMessage(string sender, string imagePath)
+        {
+            if (_chatList.InvokeRequired)
+            {
+                _chatList.Invoke(new Action(() => AddImageMessage(sender, imagePath)));
+                return;
+            }
+
+            ChatImage chatImage = new ChatImage();
+            chatImage.SetSender(sender);
+            chatImage.SetImageFromFile(imagePath);
+
+            _chatList.Controls.Add(chatImage);
+
+            // 스크롤을 최신 메시지로 이동
+            _chatList.ScrollControlIntoView(chatImage);
+        }
+
+        /// <summary>
+        /// 이미지 메시지를 Image 객체로 _chatList에 추가
+        /// </summary>
+        private void AddImageMessage(string sender, Image image)
+        {
+            if (_chatList.InvokeRequired)
+            {
+                _chatList.Invoke(new Action(() => AddImageMessage(sender, image)));
+                return;
+            }
+
+            ChatImage chatImage = new ChatImage();
+            chatImage.SetSender(sender);
+            chatImage.SetImage(image);
+
+            _chatList.Controls.Add(chatImage);
+
+            // 스크롤을 최신 메시지로 이동
+            _chatList.ScrollControlIntoView(chatImage);
         }
 
         private void InitializeChatClient(string username, string serverIp, int port)

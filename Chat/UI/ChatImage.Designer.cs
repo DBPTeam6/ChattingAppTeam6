@@ -74,17 +74,17 @@
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.MinimumSize = new System.Drawing.Size(303, 50);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(303, 170);
+            this.panel1.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.panel1.Size = new System.Drawing.Size(304, 170);
             this.panel1.TabIndex = 1;
             // 
             // _imageBox
             // 
-            this._imageBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this._imageBox.Image = global::ChattingAppTeam6.Properties.Resources.chat_profile_test;
-            this._imageBox.Location = new System.Drawing.Point(0, 20);
+            this._imageBox.Location = new System.Drawing.Point(5, 20);
             this._imageBox.Margin = new System.Windows.Forms.Padding(0, 5, 0, 0);
             this._imageBox.Name = "_imageBox";
-            this._imageBox.Size = new System.Drawing.Size(303, 150);
+            this._imageBox.Size = new System.Drawing.Size(295, 150);
             this._imageBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this._imageBox.TabIndex = 1;
             this._imageBox.TabStop = false;
@@ -93,7 +93,7 @@
             // 
             this._sender.AutoSize = true;
             this._sender.Font = new System.Drawing.Font("굴림", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this._sender.Location = new System.Drawing.Point(3, 3);
+            this._sender.Location = new System.Drawing.Point(7, 3);
             this._sender.Margin = new System.Windows.Forms.Padding(0);
             this._sender.Name = "_sender";
             this._sender.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
