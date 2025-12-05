@@ -178,7 +178,7 @@ namespace ChattingAppTeam6.Auth
             // === user 변경 ====
             string updateQuery = $@"
                 UPDATE s5819937.user
-                SET login_pw = '{PwBox.Text}',
+                SET login_pw = '{hashedPw}',
                     name = '{NameBox.Text}',
                     address = '{AddressBox.Text}',
                     zipcode = '{ZipcodeBox.Text}',
