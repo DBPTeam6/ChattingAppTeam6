@@ -113,6 +113,7 @@ namespace ChattingAppTeam6.Auth
             this.PwBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.PwBox.Multiline = true;
             this.PwBox.Name = "PwBox";
+            this.PwBox.PasswordChar = '*';
             this.PwBox.Size = new System.Drawing.Size(457, 46);
             this.PwBox.TabIndex = 4;
             // 

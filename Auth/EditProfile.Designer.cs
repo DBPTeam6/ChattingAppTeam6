@@ -197,7 +197,7 @@ namespace ChattingAppTeam6.Auth
             this.UpdateInfoButton.TabIndex = 31;
             this.UpdateInfoButton.Text = "회원정보 변경";
             this.UpdateInfoButton.UseVisualStyleBackColor = false;
-            this.UpdateInfoButton.Click += new System.EventHandler(this.UpdateImage_Click);
+            this.UpdateInfoButton.Click += new System.EventHandler(this.UpdateInfoButton_Click);
             // 
             // TeamLabel
             // 
@@ -217,6 +217,7 @@ namespace ChattingAppTeam6.Auth
             this.PwCheckBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.PwCheckBox.Multiline = true;
             this.PwCheckBox.Name = "PwCheckBox";
+            this.PwCheckBox.PasswordChar = '*';
             this.PwCheckBox.Size = new System.Drawing.Size(457, 46);
             this.PwCheckBox.TabIndex = 28;
             this.PwCheckBox.TextChanged += new System.EventHandler(this.PwCheckBox_TextChanged);
