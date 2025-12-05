@@ -104,45 +104,28 @@ namespace ChattingAppTeam6.Auth
                 return;
             }
 
-            // === 편집 모드 (profile 변경) ====
             string query;
             List<MySqlParameter> parameters = new List<MySqlParameter>();
 
+
+            // === 편집 모드 (profile 변경) ====
             if (isEditMode)
             {
-                if (selectedImagePath != null) // 프로필 사진 변경 시
+                query = @"
+                    UPDATE s5819937.profile
+                    SET nickname = @nickname,
+                        image = @img
+                    WHERE id = @profile_id;
+                ";
+                parameters.AddRange(new MySqlParameter[]
                 {
-                    // 이미지 byte[]로 변환
-                    byte[] imgBytes = File.ReadAllBytes(selectedImagePath);
-
-                    query = @"
-                        UPDATE s5819937.profile
-                        SET nickname = @nickname,
-                            image = @img
-                        WHERE id = @profile_id;
-                    ";
-
-                    parameters.AddRange(new MySqlParameter[]
+                    new MySqlParameter("@nickname", MySqlDbType.VarChar) { Value = NicknameBox.Text },
+                    new MySqlParameter("@profile_id", MySqlDbType.Int32) { Value = profile_id },
+                    new MySqlParameter("@img", MySqlDbType.Blob)
                     {
-                        new MySqlParameter("@nickname", MySqlDbType.VarChar) { Value = NicknameBox.Text },
-                        new MySqlParameter("@profile_id", MySqlDbType.Int32) { Value = profile_id },
-                        new MySqlParameter("@img", MySqlDbType.Blob) { Value = imgBytes }
-                    });
-                }
-                else // 프로필 사진 변경 없는 경우
-                {
-                    query = @"
-                        UPDATE s5819937.profile
-                        SET nickname = @nickname
-                        WHERE id = @profile_id;
-                    ";
-
-                    parameters.AddRange(new MySqlParameter[]
-                    {
-                        new MySqlParameter("@nickname", MySqlDbType.VarChar) { Value = NicknameBox.Text },
-                        new MySqlParameter("@profile_id", MySqlDbType.Int32) { Value = profile_id },
-                    });
-                }
+                        Value = selectedImagePath != null ? File.ReadAllBytes(selectedImagePath) : null
+                    }
+                });
 
                 int result = DBConnector.GetInstance().Execute(query, parameters);
 
@@ -153,39 +136,24 @@ namespace ChattingAppTeam6.Auth
                 }
                 MessageBox.Show("멀티프로필 변경에 성공하였습니다!");
             }
-            // === profile 삽입 ===
+
+            // === 멀티프로필 생성 모드 (profile 삽입) ===
             else
             {
-                if (selectedImagePath != null) // 프로필 사진 변경 시
+                query = @"
+                    INSERT INTO s5819937.profile (user_id, nickname, image) 
+                    VALUES (@user_id, @nickname, @img);
+                ";
+
+                parameters.AddRange(new MySqlParameter[]
                 {
-                    // 이미지 byte[]로 변환
-                    byte[] imgBytes = File.ReadAllBytes(selectedImagePath);
-
-                    query = @"
-                        INSERT INTO s5819937.profile (user_id, nickname, image) 
-                        VALUES (@user_id, @nickname, @img);
-                    ";
-
-                    parameters.AddRange(new MySqlParameter[]
+                    new MySqlParameter("@user_id", MySqlDbType.Int32) { Value = user_id },
+                    new MySqlParameter("@nickname", MySqlDbType.VarChar) { Value = NicknameBox.Text},
+                    new MySqlParameter("@img", MySqlDbType.Blob)
                     {
-                        new MySqlParameter("@user_id", MySqlDbType.Int32) { Value = user_id },
-                        new MySqlParameter("@nickname", MySqlDbType.VarChar) { Value = NicknameBox.Text},
-                        new MySqlParameter("@img", MySqlDbType.Blob) { Value = imgBytes }
-                    });
-                }
-                else // 프로필 사진 변경 없을 경우
-                {
-                    query = @"
-                        INSERT INTO s5819937.profile (user_id, nickname) 
-                        VALUES (@user_id, @nickname);
-                    ";
-
-                    parameters.AddRange(new MySqlParameter[]
-                    {
-                        new MySqlParameter("@user_id", MySqlDbType.Int32) { Value = user_id },
-                        new MySqlParameter("@nickname", MySqlDbType.VarChar) { Value = NicknameBox.Text},
-                    });
-                }
+                        Value = selectedImagePath != null ? File.ReadAllBytes(selectedImagePath) : null
+                    }
+                });
 
                 int result = DBConnector.GetInstance().Execute(query, parameters);
 

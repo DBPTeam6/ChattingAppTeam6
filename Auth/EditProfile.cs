@@ -5,14 +5,15 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using System.IO;
 
 namespace ChattingAppTeam6.Auth
 {
@@ -54,7 +55,7 @@ namespace ChattingAppTeam6.Auth
                 FROM s5819937.user u
                 LEFT JOIN s5819937.team t ON u.team_id = t.id
                 LEFT JOIN s5819937.department d ON t.department_id = d.id
-                LEFT JOIN s5819937.profile p ON p.user_id = u.id
+                LEFT JOIN s5819937.profile p ON p.user_id = u.id AND p.is_default = 1
                 WHERE u.id = {user_id};
             ";
             DataTable user = DBConnector.GetInstance().Table(query);
@@ -123,6 +124,27 @@ namespace ChattingAppTeam6.Auth
             }
         }
 
+        // Salt 생성
+        private string GenerateSalt(int size = 16)
+        {
+            var random = new RNGCryptoServiceProvider();
+            byte[] saltBytes = new byte[size];
+            random.GetBytes(saltBytes);
+
+            return Convert.ToBase64String(saltBytes);
+        }
+
+        // SHA-256 해시
+        private string ComputeSHA256(string rawData)
+        {
+            using (var sha256 = SHA256.Create())
+            {
+                var bytes = Encoding.UTF8.GetBytes(rawData);
+                var hash = sha256.ComputeHash(bytes);
+                return BitConverter.ToString(hash).Replace("-", "").ToLower();
+            }
+        }
+
         // 회원정보 변경
         private void UpdateInfoButton_Click(object sender, EventArgs e)
         {
@@ -133,49 +155,54 @@ namespace ChattingAppTeam6.Auth
                 return;
             }
 
+            // 닉네임 미입력 시 이름과 동일하게 적용
+            if (string.IsNullOrEmpty(NicknameBox.Text))
+                NicknameBox.Text = NameBox.Text;
+
+            if (
+                string.IsNullOrWhiteSpace(IdBox.Text) ||
+                string.IsNullOrWhiteSpace(PwBox.Text) ||
+                string.IsNullOrWhiteSpace(PwCheckBox.Text) ||
+                string.IsNullOrWhiteSpace(NameBox.Text) ||
+                string.IsNullOrWhiteSpace(NicknameBox.Text) ||
+                string.IsNullOrWhiteSpace(AddressBox.Text) ||
+                string.IsNullOrWhiteSpace(ZipcodeBox.Text))
+            {
+                MessageBox.Show("모든 정보를 입력해야 합니다.");
+                return;
+            }
+
+            string salt = GenerateSalt(); // 랜덤 Salt 생성
+            string hashedPw = ComputeSHA256(PwBox.Text + salt); // Pw+Salt 해싱
+
             // === user 변경 ====
             string updateQuery = $@"
                 UPDATE s5819937.user
                 SET login_pw = '{PwBox.Text}',
                     name = '{NameBox.Text}',
                     address = '{AddressBox.Text}',
-                    zipcode = '{ZipcodeBox.Text}'
+                    zipcode = '{ZipcodeBox.Text}',
+                    salt = '{salt}'
                 WHERE id = {user_id};
             ";
             int User_result = DBConnector.GetInstance().Insert(updateQuery);
 
             // === profile 변경 ===
-            string profileQuery;
-            List<MySqlParameter> parameters = new List<MySqlParameter>();
-            if (selectedImagePath != null) // 프로필 사진 변경 시
+            string profileQuery = @"
+                UPDATE s5819937.profile
+                SET nickname = @nickname,
+                    image = @img
+                WHERE user_id = @user_id AND is_default = 1;
+            ";
+            List<MySqlParameter> parameters = new List<MySqlParameter>()
             {
-                // 이미지 byte[]로 변환
-                byte[] imgBytes = File.ReadAllBytes(selectedImagePath);
-                profileQuery = @"
-                    UPDATE s5819937.profile
-                    SET nickname = @nickname,
-                        image = @img
-                    WHERE id = @user_id;
-                ";
-                parameters.AddRange(new MySqlParameter[]
+                new MySqlParameter("@nickname", MySqlDbType.VarChar) { Value = NicknameBox.Text },
+                new MySqlParameter("@img", MySqlDbType.Blob)
                 {
-                    new MySqlParameter("@nickname", MySqlDbType.VarChar) { Value = NicknameBox.Text },
-                    new MySqlParameter("@img", MySqlDbType.Blob) { Value = imgBytes },
-                    new MySqlParameter("@profile_id", MySqlDbType.Int32) { Value = user_id }
-                });
-            }
-            else // 프로필 사진 변경 없을 경우
-            {
-                profileQuery = @"
-                    UPDATE s5819937.profile
-                    SET nickname = @nickname,
-                    WHERE id = @user_id;
-                ";
-                parameters.AddRange(new MySqlParameter[]
-                {
-                    new MySqlParameter("@nickname", MySqlDbType.VarChar) { Value = NicknameBox.Text }
-                });
-            }
+                   Value = selectedImagePath != null ? File.ReadAllBytes(selectedImagePath) : null
+                },
+                new MySqlParameter("@user_id", MySqlDbType.Int32) {Value = user_id}
+            };
 
             int Profile_result = DBConnector.GetInstance().Execute(profileQuery, parameters);
 
