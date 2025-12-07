@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.IO;
 using System.Net;
 using System.Windows.Forms;
@@ -14,27 +13,6 @@ namespace ChattingAppTeam6.Chat.UI
         public ChatImage()
         {
             InitializeComponent();
-            InitializeAvatar();
-        }
-
-        /// <summary>
-        /// 프로필 아바타를 원형으로 초기화
-        /// </summary>
-        private void InitializeAvatar()
-        {
-            Bitmap bitmap = new Bitmap(_avatar.Width, _avatar.Height);
-            Graphics g = Graphics.FromImage(bitmap);
-
-            GraphicsPath path = new GraphicsPath();
-            path.AddEllipse(0, 0, _avatar.Width, _avatar.Height);
-            Region region = new Region(path);
-            g.SetClip(region, CombineMode.Replace);
-            Bitmap bmp = Properties.Resources.chat_profile_test;
-            g.DrawImage(bmp, new Rectangle(0, 0, _avatar.Width, _avatar.Height),
-                           new Rectangle(0, 0, bmp.Width, bmp.Height),
-                           GraphicsUnit.Pixel);
-
-            _avatar.Image = bitmap;
         }
 
         /// <summary>
@@ -58,6 +36,11 @@ namespace ChattingAppTeam6.Chat.UI
 
             // 이미지 크기에 따라 PictureBox 크기 조정 (최대 크기 제한)
             AdjustImageSize(image.Width, image.Height);
+        }
+
+        public void SetTimestamp(DateTime timestamp)
+        {
+            this._sendTime.Text = timestamp.ToString("HH:mm");
         }
 
         /// <summary>

@@ -33,6 +33,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this._imageBox = new System.Windows.Forms.PictureBox();
             this._sender = new System.Windows.Forms.Label();
+            this._sendTime = new System.Windows.Forms.Label();
             this.flowLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this._avatar)).BeginInit();
             this.panel1.SuspendLayout();
@@ -48,6 +49,8 @@
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
+            this.flowLayoutPanel1.MaximumSize = new System.Drawing.Size(367, 0);
+            this.flowLayoutPanel1.MinimumSize = new System.Drawing.Size(367, 0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Padding = new System.Windows.Forms.Padding(8);
             this.flowLayoutPanel1.Size = new System.Drawing.Size(367, 186);
@@ -68,10 +71,12 @@
             // 
             this.panel1.AutoSize = true;
             this.panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panel1.Controls.Add(this._sendTime);
             this.panel1.Controls.Add(this._imageBox);
             this.panel1.Controls.Add(this._sender);
             this.panel1.Location = new System.Drawing.Point(48, 8);
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
+            this.panel1.MaximumSize = new System.Drawing.Size(304, 0);
             this.panel1.MinimumSize = new System.Drawing.Size(303, 50);
             this.panel1.Name = "panel1";
             this.panel1.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
@@ -100,6 +105,19 @@
             this._sender.Size = new System.Drawing.Size(58, 12);
             this._sender.TabIndex = 0;
             this._sender.Text = "sender";
+            // 
+            // _sendTime
+            // 
+            this._sendTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this._sendTime.AutoSize = true;
+            this._sendTime.Font = new System.Drawing.Font("굴림", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this._sendTime.Location = new System.Drawing.Point(272, 3);
+            this._sendTime.Margin = new System.Windows.Forms.Padding(0);
+            this._sendTime.Name = "_sendTime";
+            this._sendTime.Size = new System.Drawing.Size(28, 11);
+            this._sendTime.TabIndex = 3;
+            this._sendTime.Text = "time";
+            this._sendTime.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // ChatImage
             // 
@@ -131,5 +149,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label _sender;
         private System.Windows.Forms.PictureBox _imageBox;
+        private System.Windows.Forms.Label _sendTime;
     }
 }

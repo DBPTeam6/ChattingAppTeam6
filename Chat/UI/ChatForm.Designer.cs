@@ -34,15 +34,18 @@
             this._avatar = new System.Windows.Forms.PictureBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this._chatSend = new System.Windows.Forms.Panel();
+            this.txtMessage = new System.Windows.Forms.TextBox();
+            this.btnSend = new System.Windows.Forms.Button();
             this._tools = new System.Windows.Forms.Panel();
+            this.btnImage = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
             this._chatListContainer = new System.Windows.Forms.Panel();
             this._chatList = new System.Windows.Forms.FlowLayoutPanel();
             this.chatMessage1 = new ChattingAppTeam6.Chat.UI.ChatMessage();
-            this.chatMessage2 = new ChattingAppTeam6.Chat.UI.ChatMessage();
             this._header.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this._avatar)).BeginInit();
             this.panel2.SuspendLayout();
+            this._chatSend.SuspendLayout();
             this.panel3.SuspendLayout();
             this._chatListContainer.SuspendLayout();
             this._chatList.SuspendLayout();
@@ -103,6 +106,8 @@
             // 
             // _chatSend
             // 
+            this._chatSend.Controls.Add(this.txtMessage);
+            this._chatSend.Controls.Add(this.btnSend);
             this._chatSend.Dock = System.Windows.Forms.DockStyle.Fill;
             this._chatSend.Location = new System.Drawing.Point(0, 0);
             this._chatSend.Margin = new System.Windows.Forms.Padding(0);
@@ -110,14 +115,54 @@
             this._chatSend.Size = new System.Drawing.Size(384, 60);
             this._chatSend.TabIndex = 1;
             // 
+            // txtMessage
+            // 
+            this.txtMessage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtMessage.Font = new System.Drawing.Font("맑은 고딕", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.txtMessage.Location = new System.Drawing.Point(0, 0);
+            this.txtMessage.Multiline = true;
+            this.txtMessage.Name = "txtMessage";
+            this.txtMessage.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtMessage.Size = new System.Drawing.Size(324, 60);
+            this.txtMessage.TabIndex = 0;
+            this.txtMessage.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TxtMessage_KeyDown);
+            // 
+            // btnSend
+            // 
+            this.btnSend.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnSend.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnSend.Location = new System.Drawing.Point(324, 0);
+            this.btnSend.Name = "btnSend";
+            this.btnSend.Size = new System.Drawing.Size(60, 60);
+            this.btnSend.TabIndex = 1;
+            this.btnSend.Text = "전송";
+            this.btnSend.UseVisualStyleBackColor = true;
+            this.btnSend.Click += new System.EventHandler(this.OnClickSendButton);
+            // 
             // _tools
             // 
+            this._tools.Controls.Add(this.btnImage);
             this._tools.Dock = System.Windows.Forms.DockStyle.Bottom;
             this._tools.Location = new System.Drawing.Point(0, 60);
             this._tools.Margin = new System.Windows.Forms.Padding(0);
             this._tools.Name = "_tools";
             this._tools.Size = new System.Drawing.Size(384, 40);
             this._tools.TabIndex = 0;
+            // 
+            // btnImage
+            // 
+            this.btnImage.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnImage.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnImage.FlatAppearance.BorderSize = 0;
+            this.btnImage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnImage.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnImage.Location = new System.Drawing.Point(0, 0);
+            this.btnImage.Name = "btnImage";
+            this.btnImage.Size = new System.Drawing.Size(80, 40);
+            this.btnImage.TabIndex = 0;
+            this.btnImage.Text = "📷 이미지";
+            this.btnImage.UseVisualStyleBackColor = true;
+            this.btnImage.Click += new System.EventHandler(this.BtnImage_Click);
             // 
             // panel3
             // 
@@ -144,7 +189,6 @@
             this._chatList.AutoScroll = true;
             this._chatList.AutoSize = true;
             this._chatList.Controls.Add(this.chatMessage1);
-            this._chatList.Controls.Add(this.chatMessage2);
             this._chatList.Dock = System.Windows.Forms.DockStyle.Fill;
             this._chatList.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this._chatList.Location = new System.Drawing.Point(0, 0);
@@ -164,16 +208,6 @@
             this.chatMessage1.Size = new System.Drawing.Size(367, 56);
             this.chatMessage1.TabIndex = 0;
             // 
-            // chatMessage2
-            // 
-            this.chatMessage2.AutoSize = true;
-            this.chatMessage2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.chatMessage2.Location = new System.Drawing.Point(0, 56);
-            this.chatMessage2.Margin = new System.Windows.Forms.Padding(0);
-            this.chatMessage2.Name = "chatMessage2";
-            this.chatMessage2.Size = new System.Drawing.Size(367, 56);
-            this.chatMessage2.TabIndex = 1;
-            // 
             // ChatForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -188,6 +222,8 @@
             this._header.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this._avatar)).EndInit();
             this.panel2.ResumeLayout(false);
+            this._chatSend.ResumeLayout(false);
+            this._chatSend.PerformLayout();
             this.panel3.ResumeLayout(false);
             this._chatListContainer.ResumeLayout(false);
             this._chatListContainer.PerformLayout();
@@ -208,8 +244,10 @@
         private System.Windows.Forms.Panel _chatListContainer;
         private System.Windows.Forms.FlowLayoutPanel _chatList;
         private ChatMessage chatMessage1;
-        private ChatMessage chatMessage2;
         private System.Windows.Forms.Panel _chatSend;
+        private System.Windows.Forms.TextBox txtMessage;
+        private System.Windows.Forms.Button btnSend;
         private System.Windows.Forms.Panel _tools;
+        private System.Windows.Forms.Button btnImage;
     }
 }

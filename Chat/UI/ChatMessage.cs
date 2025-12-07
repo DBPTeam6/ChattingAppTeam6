@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
@@ -9,20 +10,6 @@ namespace ChattingAppTeam6.Chat.UI
         public ChatMessage()
         {
             InitializeComponent();
-
-            Bitmap bitmap = new Bitmap(_avatar.Width, _avatar.Height);
-            Graphics g = Graphics.FromImage(bitmap);
-
-            GraphicsPath path = new GraphicsPath();
-            path.AddEllipse(0, 0, _avatar.Width, _avatar.Height);
-            Region region = new Region(path);
-            g.SetClip(region, CombineMode.Replace);
-            Bitmap bmp = Properties.Resources.chat_profile_test;
-            g.DrawImage(bmp, new Rectangle(0, 0, _avatar.Width, _avatar.Height)
-                           , new Rectangle(0, 0, _avatar.Width, _avatar.Height)
-                           , GraphicsUnit.Pixel);
-
-            _avatar.Image = bitmap;
         }
 
         public void SetSender(string sender)
@@ -33,6 +20,26 @@ namespace ChattingAppTeam6.Chat.UI
         public void SetMessage(string message)
         {
             this._message.Text = message;
+        }
+
+        public void SetTimestamp(DateTime timestamp)
+        {
+            this._sendTime.Text = timestamp.ToString("HH:mm");
+        }
+
+        private void OnChatMessageRClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                ContextMenuStrip contextMenu = new ContextMenuStrip();
+                ToolStripMenuItem item1 = new ToolStripMenuItem("삭제");
+                item1.Click += (s, ev) =>
+                {
+                    MessageBox.Show("메시지가 삭제되었습니다.");
+                };
+                contextMenu.Items.Add(item1);
+                contextMenu.Show(this, e.Location);
+            }
         }
     }
 }
