@@ -65,6 +65,7 @@ namespace ChattingAppTeam6.Auth
             this.AddressGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.AddressGrid.Size = new System.Drawing.Size(860, 478);
             this.AddressGrid.TabIndex = 0;
+            this.AddressGrid.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.AddressGrid_CellDoubleClick);
             // 
             // AddressBox
             // 

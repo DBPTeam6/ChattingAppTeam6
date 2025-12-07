@@ -66,16 +66,16 @@ namespace ChattingAppTeam6.Auth
         {
             Panel panel = new Panel
             {
-                Width = 450,
-                Height = 60,
+                Width = 310,
+                Height = 50,
                 Margin = new Padding(5),
                 BorderStyle = BorderStyle.None
             };
 
             PictureBox pic = new PictureBox
             {
-                Width = 48,
-                Height = 48,
+                Width = 36,
+                Height = 36,
                 Left = 10,
                 Top = 6,
                 SizeMode = PictureBoxSizeMode.Zoom,
@@ -87,7 +87,7 @@ namespace ChattingAppTeam6.Auth
             Label nameLabel = new Label
             {
                 Text = nickname,
-                Location = new Point(65, 20),
+                Location = new Point(50, 15),
                 AutoSize = true,
                 Font = new Font("맑은 고딕", 11)
             };
@@ -95,10 +95,11 @@ namespace ChattingAppTeam6.Auth
             Button friendButton = new Button
             {
                 Text = "친구관리",
-                Width = 100,
-                Height = 40,
-                Location = new Point(330, 16),
-                BackColor = Color.WhiteSmoke
+                Width = 80,
+                Height = 30,
+                Location = new Point(220, 10),
+                BackColor = Color.WhiteSmoke,
+                Font = new Font("맑은 고딕", 10)
             };
 
             panel.Controls.Add(pic);
@@ -128,16 +129,16 @@ namespace ChattingAppTeam6.Auth
         {
             Panel panel = new Panel
             {
-                Width = 450,
-                Height = 60,
+                Width = 310,
+                Height = 50,
                 Margin = new Padding(5),
                 BorderStyle = BorderStyle.None
             };
 
             PictureBox pic = new PictureBox
             {
-                Width = 48,
-                Height = 48,
+                Width = 36,
+                Height = 36,
                 Left = 10,
                 Top = 6,
                 SizeMode = PictureBoxSizeMode.Zoom,
@@ -149,8 +150,8 @@ namespace ChattingAppTeam6.Auth
                 Text = "멀티프로필 만들기",
                 AutoSize = true,
                 Font = new Font("맑은 고딕", 11),
-                Left = 70,
-                Top = 18
+                Left = 50,
+                Top = 15
             };
 
             panel.Controls.Add(pic);
