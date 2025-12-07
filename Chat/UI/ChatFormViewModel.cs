@@ -61,7 +61,7 @@ namespace ChattingAppTeam6.Chat.UI
 
         public void SendTextMessage(Entity.ChatMessage message)
         {
-            client.SendMessage(message.room, message.sender, message.message);
+            client.SendMessage(message.room, room.me.id, message.message);
         }
 
         public void DeleteMessage(Entity.ChatMessage message)
