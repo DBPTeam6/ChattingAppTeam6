@@ -735,11 +735,14 @@ namespace ChattingAppTeam6.Home
         }
 
         // ===================== UI 이벤트 핸들러 =====================
+        
+        // 로그인 버튼은 나중에 없어져야됨
         private void LoginButton_Click_1(object sender, EventArgs e)
         {
             DoLogin();
         }
 
+        // 앤 있어야됨
         private void LogoutLabel_Click_1(object sender, EventArgs e)
         {
             DoLogout();
@@ -837,6 +840,8 @@ namespace ChattingAppTeam6.Home
         private void settingLabel_Click(object sender, EventArgs e)
         {
             // 새빈이꺼 회원정보변경 페이지로 연결
+            // var UpdateUserInfo = new UpdateUserInfo(MeId);
+            // UpdateUserInfo.ShowDialog();
         }
 
     }
