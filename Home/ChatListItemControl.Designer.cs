@@ -44,7 +44,8 @@ namespace ChattingAppTeam6.Home
             this.chatPIC.Location = new System.Drawing.Point(25, 14);
             this.chatPIC.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.chatPIC.Name = "chatPIC";
-            this.chatPIC.Size = new System.Drawing.Size(59, 58);
+            this.chatPIC.Size = new System.Drawing.Size(59, 59);
+            this.chatPIC.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.chatPIC.TabIndex = 11;
             this.chatPIC.TabStop = false;
             // 

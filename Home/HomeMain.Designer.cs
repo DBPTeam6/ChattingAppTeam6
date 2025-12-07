@@ -65,7 +65,8 @@ namespace ChattingAppTeam6.Home
             this.UserPIC.Location = new System.Drawing.Point(20, 19);
             this.UserPIC.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.UserPIC.Name = "UserPIC";
-            this.UserPIC.Size = new System.Drawing.Size(55, 51);
+            this.UserPIC.Size = new System.Drawing.Size(55, 55);
+            this.UserPIC.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.UserPIC.TabIndex = 1;
             this.UserPIC.TabStop = false;
             // 
