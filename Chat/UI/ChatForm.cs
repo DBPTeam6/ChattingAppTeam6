@@ -2,28 +2,20 @@
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
-using ChattingAppTeam6.Chat.Lib;
 
 namespace ChattingAppTeam6.Chat.UI
 {
     public partial class ChatForm : Form
     {
-        private ChatClient chatClient;
-        private string currentUsername;
-
-        // 메시지 입력 UI 컨트롤
-        private TextBox txtMessage;
-        private Button btnSend;
-
-        // 도구 UI 컨트롤
-        private Button btnImage;
+        private readonly ChatFormViewModel viewModel;
         private OpenFileDialog openFileDialog;
 
-        public ChatForm()
+        public ChatForm(int roomId, int selfUserId)
         {
+            this.viewModel = new ChatFormViewModel(roomId, selfUserId);
+
             InitializeComponent();
-            InitializeSendControls();
-            InitializeToolsControls();
+            InitializeControls();
 
             HorizontalScroll.Enabled = false;
             HorizontalScroll.Visible = false;
@@ -31,49 +23,18 @@ namespace ChattingAppTeam6.Chat.UI
 
             // 기존 테스트용 ChatMessage 제거
             _chatList.Controls.Clear();
+            viewModel.Listen((message) => OnReceiveMessage(message));
         }
 
-        public ChatForm(string username, string serverIp, int port) : this()
+        private void OnReceiveMessage(Entity.ChatMessage message)
         {
-            this.currentUsername = username;
-            this.Text = $"채팅 - {username}";
-            InitializeChatClient(username, serverIp, port);
+            AddChatMessage(message);
         }
 
         /// <summary>
-        /// _chatSend 패널에 메시지 입력 컨트롤 초기화
+        /// 컨트롤 초기화
         /// </summary>
-        private void InitializeSendControls()
-        {
-            // 메시지 입력 TextBox
-            txtMessage = new TextBox
-            {
-                Dock = DockStyle.Fill,
-                Font = new Font("맑은 고딕", 10F),
-                Multiline = true,
-                ScrollBars = ScrollBars.Vertical
-            };
-            txtMessage.KeyDown += TxtMessage_KeyDown;
-
-            // 전송 버튼
-            btnSend = new Button
-            {
-                Text = "전송",
-                Dock = DockStyle.Right,
-                Width = 60,
-                Font = new Font("맑은 고딕", 9F, FontStyle.Bold)
-            };
-            btnSend.Click += BtnSend_Click;
-
-            // _chatSend 패널에 컨트롤 추가
-            _chatSend.Controls.Add(txtMessage);
-            _chatSend.Controls.Add(btnSend);
-        }
-
-        /// <summary>
-        /// _tools 패널에 도구 컨트롤 초기화
-        /// </summary>
-        private void InitializeToolsControls()
+        private void InitializeControls()
         {
             // OpenFileDialog 초기화
             openFileDialog = new OpenFileDialog
@@ -83,22 +44,6 @@ namespace ChattingAppTeam6.Chat.UI
                 FilterIndex = 1,
                 Multiselect = false
             };
-
-            // 이미지 전송 버튼
-            btnImage = new Button
-            {
-                Text = "📷 이미지",
-                Dock = DockStyle.Left,
-                Width = 80,
-                Font = new Font("맑은 고딕", 9F),
-                FlatStyle = FlatStyle.Flat,
-                Cursor = Cursors.Hand
-            };
-            btnImage.FlatAppearance.BorderSize = 0;
-            btnImage.Click += BtnImage_Click;
-
-            // _tools 패널에 컨트롤 추가
-            _tools.Controls.Add(btnImage);
         }
 
         /// <summary>
@@ -135,7 +80,7 @@ namespace ChattingAppTeam6.Chat.UI
                 }
 
                 // 내가 보낸 이미지를 채팅 리스트에 추가
-                AddImageMessage(currentUsername ?? "나", filePath);
+                //AddImageMessage(currentUsername ?? "나", filePath);
 
                 // 서버에 이미지 전송 (Base64 인코딩)
                 //if (chatClient != null && chatClient.IsConnected)
@@ -167,6 +112,7 @@ namespace ChattingAppTeam6.Chat.UI
             ChatImage chatImage = new ChatImage();
             chatImage.SetSender(sender);
             chatImage.SetImageFromFile(imagePath);
+            chatImage.SetTimestamp(DateTime.Now);
 
             _chatList.Controls.Add(chatImage);
 
@@ -188,78 +134,29 @@ namespace ChattingAppTeam6.Chat.UI
             ChatImage chatImage = new ChatImage();
             chatImage.SetSender(sender);
             chatImage.SetImage(image);
+            chatImage.SetTimestamp(DateTime.Now);
 
             _chatList.Controls.Add(chatImage);
 
             // 스크롤을 최신 메시지로 이동
             _chatList.ScrollControlIntoView(chatImage);
-        }
-
-        private void InitializeChatClient(string username, string serverIp, int port)
-        {
-            chatClient = new ChatClient(username);
-
-            chatClient.Connected += (s, e) =>
-            {
-                AddSystemMessage("서버에 연결되었습니다.");
-            };
-
-            chatClient.Disconnected += (s, e) =>
-            {
-                AddSystemMessage("서버와의 연결이 끊어졌습니다.");
-            };
-
-            chatClient.MessageReceived += (s, e) =>
-            {
-                // 서버에서 받은 메시지 파싱 (형식: "발신자: 메시지")
-                string receivedMessage = e.Message;
-                string senderName = "알 수 없음";
-                string messageContent = receivedMessage;
-
-                int colonIndex = receivedMessage.IndexOf(": ");
-                if (colonIndex > 0)
-                {
-                    senderName = receivedMessage.Substring(0, colonIndex);
-                    messageContent = receivedMessage.Substring(colonIndex + 2);
-                }
-
-                // 시스템 메시지 처리
-                if (receivedMessage.StartsWith("[시스템]"))
-                {
-                    AddSystemMessage(receivedMessage.Substring(6).Trim());
-                }
-                else
-                {
-                    AddChatMessage(senderName, messageContent);
-                }
-            };
-
-            chatClient.ErrorOccurred += (s, error) =>
-            {
-                AddSystemMessage($"오류: {error}");
-            };
-
-            if (!chatClient.Connect(serverIp, port))
-            {
-                MessageBox.Show("서버 연결에 실패했습니다.", "오류",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
+        } 
 
         /// <summary>
         /// 채팅 메시지를 _chatList에 추가
         /// </summary>
-        private void AddChatMessage(string sender, string message)
+        private void AddChatMessage(Entity.ChatMessage message)
         {
             if (_chatList.InvokeRequired)
             {
-                _chatList.Invoke(new Action(() => AddChatMessage(sender, message)));
+                _chatList.Invoke(new Action(() => AddChatMessage(message)));
                 return;
             }
 
             ChatMessage chatMessage = new ChatMessage();
-            chatMessage.SetSender(sender);
-            chatMessage.SetMessage(message);
+            chatMessage.SetSender(viewModel.room.me.user == message.sender ? viewModel.room.me.nickname : viewModel.room.target.nickname);
+            chatMessage.SetMessage(message.message);
+            chatMessage.SetTimestamp(message.timestamp);
 
             _chatList.Controls.Add(chatMessage);
 
@@ -288,42 +185,28 @@ namespace ChattingAppTeam6.Chat.UI
             _chatList.ScrollControlIntoView(chatMessage);
         }
 
-        private void BtnSend_Click(object sender, EventArgs e)
-        {
-            SendMessage();
-        }
-
         private void TxtMessage_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter && !e.Shift)
             {
                 e.SuppressKeyPress = true;
-                SendMessage();
+                SendTextMessage();
             }
         }
 
-        private void SendMessage()
+        private void SendTextMessage()
         {
-            //if (chatClient == null || !chatClient.IsConnected)
-            //    return;
+            Entity.ChatMessage message = new Entity.ChatMessage(
+                id: null,
+                room: viewModel.room.id,
+                sender: viewModel.room.me.user,
+                message: txtMessage.Text.Trim(),
+                timestamp: DateTime.Now,
+                isRead: false,
+                isDeleted: false
+            );
 
-            //if (string.IsNullOrWhiteSpace(txtMessage.Text))
-            //    return;
-
-            string message = txtMessage.Text.Trim();
-            //if (chatClient.SendMessage(message))
-            //{
-            // 내가 보낸 메시지도 채팅 리스트에 추가
-            AddChatMessage(currentUsername ?? "나", message);
-                txtMessage.Clear();
-                txtMessage.Focus();
-            //}
-        }
-
-        protected override void OnFormClosing(FormClosingEventArgs e)
-        {
-            chatClient?.Dispose();
-            base.OnFormClosing(e);
+            viewModel.SendTextMessage(message);
         }
     }
 }

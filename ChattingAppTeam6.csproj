@@ -5,6 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <LangVersion>9.0</LangVersion>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <LangVersion>9.0</LangVersion>
     <ProjectGuid>{C7D267D6-0CA9-49E8-BF5D-CBD8F7F12797}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>ChattingAppTeam6</RootNamespace>
@@ -39,8 +40,8 @@
     <Reference Include="BouncyCastle.Cryptography, Version=2.0.0.0, Culture=neutral, PublicKeyToken=072edcf4a5328938, processorArchitecture=MSIL">
       <HintPath>packages\BouncyCastle.Cryptography.2.6.2\lib\net461\BouncyCastle.Cryptography.dll</HintPath>
     </Reference>
-    <Reference Include="Google.Protobuf, Version=3.32.0.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
-      <HintPath>packages\Google.Protobuf.3.32.0\lib\net45\Google.Protobuf.dll</HintPath>
+    <Reference Include="Google.Protobuf, Version=3.33.1.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
+      <HintPath>packages\Google.Protobuf.3.33.1\lib\net45\Google.Protobuf.dll</HintPath>
     </Reference>
     <Reference Include="K4os.Compression.LZ4, Version=1.3.8.0, Culture=neutral, PublicKeyToken=2186fa9121ef231d, processorArchitecture=MSIL">
       <HintPath>packages\K4os.Compression.LZ4.1.3.8\lib\net462\K4os.Compression.LZ4.dll</HintPath>
@@ -165,14 +166,24 @@
     <Compile Include="Admin\DBconnector.cs" />
     <Compile Include="ChattingClient.cs" />
     <Compile Include="Chat\Entity\ChatMessage.cs" />
+    <Compile Include="Chat\Entity\ChatRoom.cs" />
     <Compile Include="Chat\Entity\ChatUser.cs" />
-    <Compile Include="Chat\Lib\Socket.cs" />
+    <Compile Include="Chat\Entity\ChatMessage.cs" />
+    <Compile Include="Chat\Lib\ChatClient.cs" />
+    <Compile Include="Chat\Lib\DB.cs" />
+    <Compile Include="Chat\Lib\ParameterBuilder.cs" />
+    <Compile Include="Chat\Lib\Protocol\ChatMessageProtocol.cs" />
+    <Compile Include="Chat\MessageDB.cs" />
     <Compile Include="Chat\UI\ChatForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Chat\UI\ChatForm.Designer.cs">
       <DependentUpon>ChatForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Chat\UI\ChatForm.Event.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Chat\UI\ChatFormViewModel.cs" />
     <Compile Include="Chat\UI\ChatImage.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -252,7 +263,6 @@
     </Compile>
     <None Include="Admin\.gitkeep" />
     <None Include="Auth\.gitkeep" />
-    <None Include="Chat\.gitkeep" />
     <None Include="Home\.gitkeep" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
