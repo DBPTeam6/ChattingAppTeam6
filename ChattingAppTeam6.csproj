@@ -156,12 +156,31 @@
     <Compile Include="Auth\SignUp.Designer.cs">
       <DependentUpon>SignUp.cs</DependentUpon>
     </Compile>
+    <Compile Include="Admin\AdminShellForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Admin\AdminShellForm.Designer.cs">
+      <DependentUpon>AdminShellForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\DBconnector.cs" />
+    <Compile Include="ChattingClient.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Message.cs" />
+    <Compile Include="Notification\DBconnector.cs" />
+    <Compile Include="Notification\NotifyForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Notification\NotifyForm.Designer.cs">
+      <DependentUpon>NotifyForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Notification\PacketReceiver.cs" />
+    <Compile Include="Notification\ProfileService.cs" />
+    <Compile Include="Notification\ToastManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Auth\AddressSelectForm.resx">
@@ -184,6 +203,11 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Auth\SignUp.resx">
       <DependentUpon>SignUp.cs</DependentUpon>
+    <EmbeddedResource Include="Admin\AdminShellForm.resx">
+      <DependentUpon>AdminShellForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Notification\NotifyForm.resx">
+      <DependentUpon>NotifyForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -213,6 +237,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="packages\System.ValueTuple.4.6.1\build\net471\System.ValueTuple.targets" Condition="Exists('packages\System.ValueTuple.4.6.1\build\net471\System.ValueTuple.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
