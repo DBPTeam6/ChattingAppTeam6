@@ -65,29 +65,26 @@ namespace ChattingAppTeam6.Auth
                 u.name,
                 CASE 
                     WHEN pa.profile_id = {selected_profile_id} THEN 1 
-                    ELSE 0 
+                    ELSE 0
                 END AS is_checked
             FROM s5819937.user u
-            LEFT JOIN s5819937.profile_access pa
+            LEFT JOIN s5819937.team t ON u.team_id = t.id
+            LEFT JOIN s5819937.department d ON t.department_id = d.id
+            LEFT JOIN s5819937.profile_access pa 
                 ON u.id = pa.target_user_id
                 AND pa.user_id = {user_id}
-            LEFT JOIN s5819937.profile p
-                ON pa.profile_id = p.id
             WHERE u.id <> {user_id} AND u.login_id <> 'Admin'
             AND NOT EXISTS (
                 SELECT 1
                 FROM s5819937.user_relation ur
-                WHERE ur.user_id = u.id 
+                WHERE ur.user_id = {user_id}
                     AND (
-                         (ur.target_user_id = {user_id} AND ur.relation_type = 'HIDE_USER')
+                         (ur.relation_type = 'HIDE_USER' AND ur.target_user_id = u.id)
                          OR
-                         (
-                              ur.target_user_id = (SELECT team_id FROM s5819937.user WHERE id = {user_id}) 
-                              AND ur.relation_type = 'HIDE_DEPT'
-                          )
+                         (ur.relation_type = 'HIDE_DEPT' AND ur.target_user_id = d.id)
                     )
-            );
-        ";
+                );
+            ";
 
             DataTable dt = DBConnector.GetInstance().Table(query);
 
@@ -112,7 +109,7 @@ namespace ChattingAppTeam6.Auth
         {
             Panel p = new Panel
             {
-                Width = 295,
+                Width = 200,
                 Height = 50,
                 Margin = new Padding(5),
                 Cursor = Cursors.Hand,
@@ -135,8 +132,8 @@ namespace ChattingAppTeam6.Auth
 
             PictureBox pic = new PictureBox
             {
-                Width = 40,
-                Height = 40,
+                Width = 36,
+                Height = 36,
                 Left = 10,
                 Top = 5,
                 SizeMode = PictureBoxSizeMode.Zoom,
@@ -180,7 +177,7 @@ namespace ChattingAppTeam6.Auth
         {
             Panel p = new Panel
             {
-                Width = 460,
+                Width = 310,
                 Height = 50,
                 Margin = new Padding(5)
             };
@@ -188,7 +185,7 @@ namespace ChattingAppTeam6.Auth
             Label lbl = new Label
             {
                 Text = $"{name}",
-                Left = 30,
+                Left = 10,
                 Top = 13,
                 AutoSize = true,
                 Font = new Font("맑은 고딕", 10)
@@ -197,7 +194,7 @@ namespace ChattingAppTeam6.Auth
             CheckBox cb = new CheckBox
             {
                 Width = 20,
-                Left = 400,
+                Left = 280,
                 Top = 15,
                 Checked = isChecked // DB에서 가져온 상태 반영
             };

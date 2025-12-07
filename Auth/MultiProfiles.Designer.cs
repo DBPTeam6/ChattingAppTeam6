@@ -46,6 +46,7 @@ namespace ChattingAppTeam6.Auth
             // profilePanel
             // 
             this.profilePanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.profilePanel.Font = new System.Drawing.Font("굴림", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.profilePanel.Location = new System.Drawing.Point(12, 85);
             this.profilePanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.profilePanel.Name = "profilePanel";
@@ -82,6 +83,7 @@ namespace ChattingAppTeam6.Auth
             this.Controls.Add(this.ManageFriendsButton);
             this.Controls.Add(this.profilePanel);
             this.Controls.Add(this.label1);
+            this.Font = new System.Drawing.Font("굴림", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "MultiProfiles";
             this.Text = "MultiProfiles";

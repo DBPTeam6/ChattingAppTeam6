@@ -67,7 +67,7 @@ namespace ChattingAppTeam6.Auth
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("맑은 고딕", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label1.Location = new System.Drawing.Point(529, 78);
+            this.label1.Location = new System.Drawing.Point(529, 56);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(329, 41);
             this.label1.TabIndex = 0;
@@ -93,7 +93,7 @@ namespace ChattingAppTeam6.Auth
             this.IdBox.Name = "IdBox";
             this.IdBox.Size = new System.Drawing.Size(284, 46);
             this.IdBox.TabIndex = 2;
-            this.IdBox.TextChanged += new System.EventHandler(this.PwCheckBox_TextChanged);
+            this.IdBox.TextChanged += new System.EventHandler(this.IdBox_TextChanged);
             // 
             // PwLabel
             // 
@@ -116,6 +116,7 @@ namespace ChattingAppTeam6.Auth
             this.PwBox.PasswordChar = '*';
             this.PwBox.Size = new System.Drawing.Size(457, 46);
             this.PwBox.TabIndex = 4;
+            this.PwBox.TextChanged += new System.EventHandler(this.PwCheckBox_TextChanged);
             // 
             // PwCheckLabel
             // 
@@ -138,7 +139,6 @@ namespace ChattingAppTeam6.Auth
             this.PwCheckBox.PasswordChar = '*';
             this.PwCheckBox.Size = new System.Drawing.Size(457, 46);
             this.PwCheckBox.TabIndex = 7;
-            this.PwCheckBox.Click += new System.EventHandler(this.PwCheckBox_TextChanged);
             // 
             // TeamLabel
             // 
@@ -168,12 +168,13 @@ namespace ChattingAppTeam6.Auth
             this.SignupButton.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.SignupButton.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.SignupButton.Location = new System.Drawing.Point(149, 744);
+            this.SignupButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.SignupButton.Name = "SignupButton";
             this.SignupButton.Size = new System.Drawing.Size(1064, 61);
             this.SignupButton.TabIndex = 10;
             this.SignupButton.Text = "회원가입";
             this.SignupButton.UseVisualStyleBackColor = false;
-            this.SignupButton.Click += new System.EventHandler(this.SignUp_Load);
+            this.SignupButton.Click += new System.EventHandler(this.SignupButton_Click);
             // 
             // nameLabel
             // 
@@ -278,7 +279,7 @@ namespace ChattingAppTeam6.Auth
             this.ProfileBox.Location = new System.Drawing.Point(845, 178);
             this.ProfileBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ProfileBox.Name = "ProfileBox";
-            this.ProfileBox.Size = new System.Drawing.Size(203, 186);
+            this.ProfileBox.Size = new System.Drawing.Size(200, 200);
             this.ProfileBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.ProfileBox.TabIndex = 20;
             this.ProfileBox.TabStop = false;
@@ -341,7 +342,6 @@ namespace ChattingAppTeam6.Auth
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "SignUp";
             this.Text = "SignUp";
-            this.Load += new System.EventHandler(this.SignUp_Load);
             ((System.ComponentModel.ISupportInitialize)(this.ProfileBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
