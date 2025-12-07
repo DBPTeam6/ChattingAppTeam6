@@ -40,6 +40,9 @@ namespace ChattingAppTeam6.Admin
             LoadDepartmentComboBoxes();
             LoadEmployees();
             InitLogDatePickers();
+
+            // Start chat client receive loop for notifications
+            
         }
 
         private string Escape(string s)
@@ -472,21 +475,24 @@ namespace ChattingAppTeam6.Admin
             string to = dtLogTo.Value.ToString("yyyy-MM-dd HH:mm:ss");
 
             string sql = $@"
-                SELECT l.timestamp, l.command, l.content, c.name AS chat_name
-                FROM server_log l
-                LEFT JOIN chat c ON l.chat_id = c.id
-                WHERE l.profile_id IN (
+                SELECT ml.timestamp, ml.command, ml.content, c.name AS chat_name
+                FROM message_log ml
+                LEFT JOIN chat c ON ml.chat_id = c.id
+                WHERE ml.profile_id IN (
                     SELECT id FROM profile WHERE user_id = {_baseUserId.Value}
                 )
-                AND l.command = 'MESSAGE'
-                AND l.timestamp BETWEEN '{from}' AND '{to}'";
+                AND ml.timestamp BETWEEN '{from}' AND '{to}'
+                AND ml.command IN ('MESSAGE','SEND_MESSAGE')";
 
             if (!string.IsNullOrWhiteSpace(keyword))
             {
-                sql += $" AND l.content LIKE '%{Escape(keyword)}%'";
+                sql += $" AND ml.content LIKE '%{Escape(keyword)}%'";
             }
 
             sql += " ORDER BY l.timestamp";
+
+            // fix ORDER BY alias to match
+            sql = sql.Replace("ORDER BY l.timestamp", "ORDER BY ml.timestamp");
 
             DataTable dt = db.Query(sql);
             dgvLogs.DataSource = dt;
@@ -506,11 +512,9 @@ namespace ChattingAppTeam6.Admin
             string to = dtLogTo.Value.ToString("yyyy-MM-dd HH:mm:ss");
 
             string sql = $@"
-                SELECT l.timestamp, l.command, l.content
-                FROM server_log l
-                WHERE l.profile_id IN (
-                    SELECT id FROM profile WHERE user_id = {_baseUserId.Value}
-                )
+                SELECT l.timestamp, l.command
+                FROM login_out_log l
+                WHERE l.user_id = {_baseUserId.Value}
                 AND l.command IN ('LOGIN','LOGOUT')
                 AND l.timestamp BETWEEN '{from}' AND '{to}'
                 ORDER BY l.timestamp";
