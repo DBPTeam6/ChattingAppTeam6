@@ -6,7 +6,7 @@ namespace ChattingAppTeam6.Chat.Entity
 {
     public class ChatMessage
     {
-        public readonly int? id;
+        public readonly int id;
         public readonly int room;
         public readonly int sender;
         public readonly string message;
@@ -14,7 +14,7 @@ namespace ChattingAppTeam6.Chat.Entity
         public readonly bool isRead;
         public readonly bool isDeleted;
     
-        public ChatMessage(int? id,int room, int sender, string message, DateTime timestamp, bool isRead, bool isDeleted)
+        public ChatMessage(int id,int room, int sender, string message, DateTime timestamp, bool isRead, bool isDeleted)
         {
             this.id = id;
             this.room = room;
