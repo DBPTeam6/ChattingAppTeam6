@@ -50,5 +50,48 @@ namespace ChattingAppTeam6.Chat.Entity
                 isDeleted: false
             );
         }
+
+        public ChatFileMessage AttachFile(string fileName, byte[] fileContent)
+        {
+            return new ChatFileMessage(
+                id: this.id,
+                room: this.room,
+                sender: this.sender,
+                message: this.message,
+                timestamp: this.timestamp,
+                isRead: this.isRead,
+                isDeleted: this.isDeleted,
+                fileName: fileName,
+                fileContent: fileContent
+            );
+        }
+    }
+
+    public class ChatFileMessage : ChatMessage
+    {
+        public readonly string fileName;
+        public readonly byte[] fileContent;
+
+        public ChatFileMessage(int id, int room, int sender, string message, DateTime timestamp, bool isRead, bool isDeleted, string fileName, byte[] fileContent)
+            : base(id, room, sender, message, timestamp, isRead, isDeleted)
+        {
+            this.fileName = fileName;
+            this.fileContent = fileContent;
+        }
+
+        public static ChatFileMessage FromPacket(Packet packet)
+        {
+            return new ChatFileMessage(
+                id: packet.SendFile.MessageId, // Assuming ID is assigned by the database
+                room: packet.ChatId,
+                sender: packet.UserId,
+                message: packet.SendFile.FileName,
+                timestamp: packet.Timestamp.ToDateTime(), // Assuming current time for simplicity
+                isRead: false,
+                isDeleted: false,
+                fileName: packet.SendFile.FileName,
+                fileContent: packet.SendFile.FileContent.ToByteArray()
+            );
+        }
     }
 }

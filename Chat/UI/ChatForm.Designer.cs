@@ -38,6 +38,7 @@
             this.btnSend = new System.Windows.Forms.Button();
             this._tools = new System.Windows.Forms.Panel();
             this.btnImage = new System.Windows.Forms.Button();
+            this.btnFile = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
             this._chatListContainer = new System.Windows.Forms.Panel();
             this._chatList = new System.Windows.Forms.FlowLayoutPanel();
@@ -142,6 +143,7 @@
             // _tools
             // 
             this._tools.Controls.Add(this.btnImage);
+            this._tools.Controls.Add(this.btnFile);
             this._tools.Dock = System.Windows.Forms.DockStyle.Bottom;
             this._tools.Location = new System.Drawing.Point(0, 60);
             this._tools.Margin = new System.Windows.Forms.Padding(0);
@@ -162,7 +164,22 @@
             this.btnImage.TabIndex = 0;
             this.btnImage.Text = "📷 이미지";
             this.btnImage.UseVisualStyleBackColor = true;
-            this.btnImage.Click += new System.EventHandler(this.BtnImage_Click);
+            this.btnImage.Click += new System.EventHandler(this.OnClickSendImageButton);
+            // 
+            // btnFile
+            // 
+            this.btnFile.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnFile.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnFile.FlatAppearance.BorderSize = 0;
+            this.btnFile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFile.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnFile.Location = new System.Drawing.Point(80, 0);
+            this.btnFile.Name = "btnFile";
+            this.btnFile.Size = new System.Drawing.Size(80, 40);
+            this.btnFile.TabIndex = 1;
+            this.btnFile.Text = "📎 파일";
+            this.btnFile.UseVisualStyleBackColor = true;
+            this.btnFile.Click += new System.EventHandler(this.OnClickSendFileButton);
             // 
             // panel3
             // 
@@ -249,5 +266,6 @@
         private System.Windows.Forms.Button btnSend;
         private System.Windows.Forms.Panel _tools;
         private System.Windows.Forms.Button btnImage;
+        private System.Windows.Forms.Button btnFile;
     }
 }
