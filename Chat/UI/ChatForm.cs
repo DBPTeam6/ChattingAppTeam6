@@ -1,6 +1,8 @@
-﻿using System;
+﻿using ChattingAppTeam6.Chat.Lib;
+using System;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace ChattingAppTeam6.Chat.UI
@@ -9,6 +11,7 @@ namespace ChattingAppTeam6.Chat.UI
     {
         private readonly ChatFormViewModel viewModel;
         private OpenFileDialog openFileDialog;
+        private OpenFileDialog openFileDialogForFile;
 
         public ChatForm(int roomId, int selfUserId)
         {
@@ -23,12 +26,27 @@ namespace ChattingAppTeam6.Chat.UI
 
             // 기존 테스트용 ChatMessage 제거
             _chatList.Controls.Clear();
-            viewModel.Listen((message) => OnReceiveMessage(message));
+            viewModel.On("SEND_MESSAGE", OnReceiveTextMessage);
+            viewModel.On("SEND_FILE", OnReceiveFileMessage);
+            viewModel.Listen();
         }
 
-        private void OnReceiveMessage(Entity.ChatMessage message)
+        private void OnReceiveTextMessage(Packet packet)
         {
+            var message = Entity.ChatMessage.FromPacket(packet);
+            
             AddChatMessage(message);
+        }
+
+        private void OnReceiveFileMessage(Packet packet)
+        {
+            var message = Entity.ChatFileMessage.FromPacket(packet);
+
+            AddFileMessage(
+                sender: viewModel.room.me.user == message.sender ? viewModel.room.me.nickname : viewModel.room.target.nickname,
+                fileName: message.fileName,
+                fileContent: message.fileContent
+            );
         }
 
         /// <summary>
@@ -41,6 +59,15 @@ namespace ChattingAppTeam6.Chat.UI
             {
                 Title = "이미지 선택",
                 Filter = "이미지 파일|*.jpg;*.jpeg;*.png;*.gif;*.bmp|모든 파일|*.*",
+                FilterIndex = 1,
+                Multiselect = false
+            };
+
+            // OpenFileDialog for file 초기화
+            openFileDialogForFile = new OpenFileDialog
+            {
+                Title = "파일 선택",
+                Filter = "모든 파일|*.*",
                 FilterIndex = 1,
                 Multiselect = false
             };
@@ -96,6 +123,29 @@ namespace ChattingAppTeam6.Chat.UI
                 MessageBox.Show($"이미지 전송 실패: {ex.Message}", "오류",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        /// <summary>
+        /// 파일 메시지를 _chatList에 추가
+        /// </summary>
+        private void AddFileMessage(string sender, string fileName, byte[] fileContent)
+        {
+            if (_chatList.InvokeRequired)
+            {
+                _chatList.Invoke(new Action(() => AddFileMessage(sender, fileName, fileContent)));
+                return;
+            }
+
+            ChatFile chatFile = new ChatFile();
+            chatFile.SetSender(sender);
+            chatFile.SetFileName(fileName);
+            chatFile.SetFileContent(fileContent);
+            chatFile.SetTimestamp(DateTime.Now);
+
+            _chatList.Controls.Add(chatFile);
+
+            // 스크롤을 최신 메시지로 이동
+            _chatList.ScrollControlIntoView(chatFile);
         }
 
         /// <summary>
@@ -197,7 +247,7 @@ namespace ChattingAppTeam6.Chat.UI
         private void SendTextMessage()
         {
             Entity.ChatMessage message = new Entity.ChatMessage(
-                id: null,
+                id: -1,
                 room: viewModel.room.id,
                 sender: viewModel.room.me.user,
                 message: txtMessage.Text.Trim(),
@@ -207,6 +257,50 @@ namespace ChattingAppTeam6.Chat.UI
             );
 
             viewModel.SendTextMessage(message);
+        }
+
+        /// <summary>
+        /// 파일 전송
+        /// </summary>
+        private void SendFileMessage(string filePath, Stream stream)
+        {
+            try
+            {
+                // 파일 유효성 검사
+                if (!File.Exists(filePath))
+                {
+                    MessageBox.Show("파일을 찾을 수 없습니다.", "오류",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                string fileName = Path.GetFileName(filePath);
+
+                // 보낼 파일이 이미지라면 이미지로 처리
+                if (new string[] { ".jpg", ".jpeg", ".png", ".gif", ".bmp" }
+                    .Contains(Path.GetExtension(fileName).ToLower()))
+                {
+                    SendImage(filePath);
+                    return;
+                }
+
+                Entity.ChatMessage message = new Entity.ChatMessage(
+                    id: -1,
+                    room: viewModel.room.id,
+                    sender: viewModel.room.me.user,
+                    message: fileName,
+                    timestamp: DateTime.Now,
+                    isRead: false,
+                    isDeleted: false
+                );
+
+                viewModel.SendFileMessage(message, stream);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"파일 전송 실패: {ex.Message}", "오류",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

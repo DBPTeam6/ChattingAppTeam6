@@ -1,6 +1,6 @@
 ﻿namespace ChattingAppTeam6.Chat.UI
 {
-    partial class ChatImage
+    partial class ChatFile
     {
         /// <summary> 
         /// 필수 디자이너 변수입니다.
@@ -32,12 +32,14 @@
             this._avatar = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this._sendTime = new System.Windows.Forms.Label();
-            this._imageBox = new System.Windows.Forms.PictureBox();
             this._sender = new System.Windows.Forms.Label();
+            this._filePanel = new System.Windows.Forms.Panel();
+            this._fileName = new System.Windows.Forms.Label();
+            this._btnDownload = new System.Windows.Forms.Button();
             this.flowLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this._avatar)).BeginInit();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this._imageBox)).BeginInit();
+            this._filePanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // flowLayoutPanel1
@@ -53,7 +55,7 @@
             this.flowLayoutPanel1.MinimumSize = new System.Drawing.Size(367, 0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Padding = new System.Windows.Forms.Padding(8);
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(367, 186);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(367, 106);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
             // _avatar
@@ -72,15 +74,15 @@
             this.panel1.AutoSize = true;
             this.panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.panel1.Controls.Add(this._sendTime);
-            this.panel1.Controls.Add(this._imageBox);
             this.panel1.Controls.Add(this._sender);
+            this.panel1.Controls.Add(this._filePanel);
             this.panel1.Location = new System.Drawing.Point(48, 8);
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.MaximumSize = new System.Drawing.Size(304, 0);
             this.panel1.MinimumSize = new System.Drawing.Size(303, 50);
             this.panel1.Name = "panel1";
             this.panel1.Padding = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.panel1.Size = new System.Drawing.Size(304, 170);
+            this.panel1.Size = new System.Drawing.Size(304, 90);
             this.panel1.TabIndex = 1;
             // 
             // _sendTime
@@ -96,16 +98,6 @@
             this._sendTime.Text = "time";
             this._sendTime.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
-            // _imageBox
-            // 
-            this._imageBox.Location = new System.Drawing.Point(5, 20);
-            this._imageBox.Margin = new System.Windows.Forms.Padding(0, 5, 0, 0);
-            this._imageBox.Name = "_imageBox";
-            this._imageBox.Size = new System.Drawing.Size(295, 150);
-            this._imageBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this._imageBox.TabIndex = 1;
-            this._imageBox.TabStop = false;
-            // 
             // _sender
             // 
             this._sender.AutoSize = true;
@@ -118,7 +110,41 @@
             this._sender.TabIndex = 0;
             this._sender.Text = "sender";
             // 
-            // ChatImage
+            // _filePanel
+            // 
+            this._filePanel.BackColor = System.Drawing.Color.WhiteSmoke;
+            this._filePanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this._filePanel.Controls.Add(this._fileName);
+            this._filePanel.Controls.Add(this._btnDownload);
+            this._filePanel.Location = new System.Drawing.Point(5, 20);
+            this._filePanel.Margin = new System.Windows.Forms.Padding(0, 5, 0, 0);
+            this._filePanel.Name = "_filePanel";
+            this._filePanel.Size = new System.Drawing.Size(295, 70);
+            this._filePanel.TabIndex = 1;
+            // 
+            // _fileName
+            // 
+            this._fileName.AutoEllipsis = true;
+            this._fileName.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this._fileName.Location = new System.Drawing.Point(10, 10);
+            this._fileName.Name = "_fileName";
+            this._fileName.Size = new System.Drawing.Size(273, 20);
+            this._fileName.TabIndex = 0;
+            this._fileName.Text = "파일이름.txt";
+            // 
+            // _btnDownload
+            // 
+            this._btnDownload.Cursor = System.Windows.Forms.Cursors.Hand;
+            this._btnDownload.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this._btnDownload.Location = new System.Drawing.Point(10, 35);
+            this._btnDownload.Name = "_btnDownload";
+            this._btnDownload.Size = new System.Drawing.Size(100, 25);
+            this._btnDownload.TabIndex = 1;
+            this._btnDownload.Text = "💾 저장";
+            this._btnDownload.UseVisualStyleBackColor = true;
+            this._btnDownload.Click += new System.EventHandler(this.BtnDownload_Click);
+            // 
+            // ChatFile
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -128,14 +154,14 @@
             this.Margin = new System.Windows.Forms.Padding(0);
             this.MaximumSize = new System.Drawing.Size(367, 0);
             this.MinimumSize = new System.Drawing.Size(367, 0);
-            this.Name = "ChatImage";
-            this.Size = new System.Drawing.Size(367, 186);
+            this.Name = "ChatFile";
+            this.Size = new System.Drawing.Size(367, 106);
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this._avatar)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this._imageBox)).EndInit();
+            this._filePanel.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -147,7 +173,9 @@
         private System.Windows.Forms.PictureBox _avatar;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label _sender;
-        private System.Windows.Forms.PictureBox _imageBox;
         private System.Windows.Forms.Label _sendTime;
+        private System.Windows.Forms.Panel _filePanel;
+        private System.Windows.Forms.Label _fileName;
+        private System.Windows.Forms.Button _btnDownload;
     }
 }

@@ -15,7 +15,7 @@ namespace ChattingAppTeam6.Chat.Lib
     {
         private static ChattingClient instance = new();
 
-        private int userId = 0;
+        private int userId = 70;
 
         public Dictionary<string, Action<Packet>> commands = new()
         {
@@ -209,7 +209,7 @@ namespace ChattingAppTeam6.Chat.Lib
 
                 SendMessage = new SendMessageInfo
                 {
-                    MessageId = 0,
+                    MessageId = -1,
                     Content = content
                 }
             }.ToByteArray());
@@ -223,7 +223,7 @@ namespace ChattingAppTeam6.Chat.Lib
                 ChatId = chatId,
                 UserId = userId,
                 ProfileId = 0,
-                Timestamp = Timestamp.FromDateTime(DateTime.UtcNow),
+                Timestamp = Timestamp.FromDateTimeOffset(DateTime.Now),
 
                 DeleteMessage = new DeleteMessageInfo
                 {
@@ -239,11 +239,12 @@ namespace ChattingAppTeam6.Chat.Lib
                 Command = "SEND_FILE",
                 ChatId = chatId,
                 UserId = userId,
-                ProfileId = 0,
-                Timestamp = Timestamp.FromDateTime(DateTime.UtcNow),
+                ProfileId = profileId,
+                Timestamp = Timestamp.FromDateTimeOffset(DateTime.Now),
 
                 SendFile = new SendFileInfo
                 {
+                    MessageId = -1,
                     FileName = fileName,
                     FileContent = fileContent
                 }

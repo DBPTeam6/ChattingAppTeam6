@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Data;
+using System.IO;
 using ChattingAppTeam6.Chat.Entity;
 using ChattingAppTeam6.Chat.Lib;
-using Google.Protobuf.WellKnownTypes;
+using Google.Protobuf;
 
 namespace ChattingAppTeam6.Chat.UI
 {
@@ -48,14 +49,13 @@ namespace ChattingAppTeam6.Chat.UI
             return ChatUser.FromTable(chatUser);
         }
 
-        public void Listen(Action<Entity.ChatMessage> onMessageReceived)
+        public void On(string command, Action<Packet> callbackFn)
         {
-            client.commands["SEND_MESSAGE"] = (packet) =>
-            {
-                var message = Entity.ChatMessage.FromPacket(packet);
-                onMessageReceived(message);
-            };
+            client.commands[command] = callbackFn;
+        }
 
+        public void Listen()
+        {
             client.Connect();
         }
 
@@ -66,7 +66,12 @@ namespace ChattingAppTeam6.Chat.UI
 
         public void DeleteMessage(Entity.ChatMessage message)
         {
-            client.DeleteMessage(message.room, message.id.Value);
+            client.DeleteMessage(message.room, message.id);
+        }
+
+        public void SendFileMessage(Entity.ChatMessage message, Stream fs)
+        {
+            client.SendFile(message.room, room.me.id, message.message, ByteString.FromStream(fs));
         }
     }
 }
