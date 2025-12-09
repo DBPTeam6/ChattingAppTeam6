@@ -227,7 +227,7 @@
     <Compile Include="Home\Models.cs" />
     <Compile Include="Home\OrgService.cs" />
     <Compile Include="Home\ProfileService.cs" />
-    <Compile Include="Home\Service.cs" />
+    <Compile Include="Home\ChatService.cs" />
     <Compile Include="Notification\DBconnector.cs" />
     <Compile Include="Notification\NotifyForm.cs">
       <SubType>Form</SubType>
