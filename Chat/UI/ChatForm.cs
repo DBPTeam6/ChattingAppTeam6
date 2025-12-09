@@ -1,4 +1,5 @@
-﻿using ChattingAppTeam6.Chat.Lib;
+﻿using ChatMessage;
+using ChattingAppTeam6.Chat.Lib;
 using System;
 using System.Drawing;
 using System.IO;
@@ -27,6 +28,7 @@ namespace ChattingAppTeam6.Chat.UI
             // 기존 테스트용 ChatMessage 제거
             _chatList.Controls.Clear();
             viewModel.On("SEND_MESSAGE", OnReceiveTextMessage);
+            viewModel.On("DELETE_MESSAGE", OnDeleteMessage);
             viewModel.On("SEND_FILE", OnReceiveFileMessage);
             viewModel.Listen();
         }
@@ -38,6 +40,25 @@ namespace ChattingAppTeam6.Chat.UI
             AddChatMessage(message);
         }
 
+        private void OnDeleteMessage(Packet packet)
+        {
+            if (_chatList.InvokeRequired)
+            {
+                _chatList.Invoke(new Action(() => OnDeleteMessage(packet)));
+                return;
+            }
+
+            foreach (var contral in _chatList.Controls)
+            {
+                ChatMessage message = contral as ChatMessage;
+
+                if (message.id == packet.DeleteMessage.MessageId)
+                {
+                    _chatList.Controls.Remove(message);
+                }
+            }
+        }
+
         private void OnReceiveFileMessage(Packet packet)
         {
             var message = Entity.ChatFileMessage.FromPacket(packet);
@@ -47,6 +68,11 @@ namespace ChattingAppTeam6.Chat.UI
                 fileName: message.fileName,
                 fileContent: message.fileContent
             );
+        }
+
+        private void OnEditBanner(Packet packet)
+        {
+            bannerTextBox.Text = packet.EditBanner.Content;
         }
 
         /// <summary>
@@ -204,6 +230,7 @@ namespace ChattingAppTeam6.Chat.UI
             }
 
             ChatMessage chatMessage = new ChatMessage();
+            chatMessage.SetId(message.id);
             chatMessage.SetSender(viewModel.room.me.user == message.sender ? viewModel.room.me.nickname : viewModel.room.target.nickname);
             chatMessage.SetMessage(message.message);
             chatMessage.SetTimestamp(message.timestamp);
@@ -301,6 +328,11 @@ namespace ChattingAppTeam6.Chat.UI
                 MessageBox.Show($"파일 전송 실패: {ex.Message}", "오류",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void editBannerButton_Click(object sender, EventArgs e)
+        {
+            ChattingClient.GetInstance().EditBanner(viewModel.room.id, bannerTextBox.Text);
         }
     }
 }

@@ -43,10 +43,14 @@
             this._chatListContainer = new System.Windows.Forms.Panel();
             this._chatList = new System.Windows.Forms.FlowLayoutPanel();
             this.chatMessage1 = new ChattingAppTeam6.Chat.UI.ChatMessage();
+            this.bannerLabel = new System.Windows.Forms.Label();
+            this.bannerTextBox = new System.Windows.Forms.TextBox();
+            this.editBannerButton = new System.Windows.Forms.Button();
             this._header.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this._avatar)).BeginInit();
             this.panel2.SuspendLayout();
             this._chatSend.SuspendLayout();
+            this._tools.SuspendLayout();
             this.panel3.SuspendLayout();
             this._chatListContainer.SuspendLayout();
             this._chatList.SuspendLayout();
@@ -54,6 +58,9 @@
             // 
             // _header
             // 
+            this._header.Controls.Add(this.editBannerButton);
+            this._header.Controls.Add(this.bannerTextBox);
+            this._header.Controls.Add(this.bannerLabel);
             this._header.Controls.Add(this._senderInfo);
             this._header.Controls.Add(this._sender);
             this._header.Controls.Add(this._avatar);
@@ -158,7 +165,7 @@
             this.btnImage.FlatAppearance.BorderSize = 0;
             this.btnImage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnImage.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.btnImage.Location = new System.Drawing.Point(0, 0);
+            this.btnImage.Location = new System.Drawing.Point(80, 0);
             this.btnImage.Name = "btnImage";
             this.btnImage.Size = new System.Drawing.Size(80, 40);
             this.btnImage.TabIndex = 0;
@@ -173,7 +180,7 @@
             this.btnFile.FlatAppearance.BorderSize = 0;
             this.btnFile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnFile.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.btnFile.Location = new System.Drawing.Point(80, 0);
+            this.btnFile.Location = new System.Drawing.Point(0, 0);
             this.btnFile.Name = "btnFile";
             this.btnFile.Size = new System.Drawing.Size(80, 40);
             this.btnFile.TabIndex = 1;
@@ -225,6 +232,32 @@
             this.chatMessage1.Size = new System.Drawing.Size(367, 56);
             this.chatMessage1.TabIndex = 0;
             // 
+            // bannerLabel
+            // 
+            this.bannerLabel.AutoSize = true;
+            this.bannerLabel.Location = new System.Drawing.Point(135, 9);
+            this.bannerLabel.Name = "bannerLabel";
+            this.bannerLabel.Size = new System.Drawing.Size(53, 12);
+            this.bannerLabel.TabIndex = 3;
+            this.bannerLabel.Text = "공지사상";
+            // 
+            // bannerTextBox
+            // 
+            this.bannerTextBox.Location = new System.Drawing.Point(137, 25);
+            this.bannerTextBox.Name = "bannerTextBox";
+            this.bannerTextBox.Size = new System.Drawing.Size(235, 21);
+            this.bannerTextBox.TabIndex = 4;
+            // 
+            // editBannerButton
+            // 
+            this.editBannerButton.Location = new System.Drawing.Point(297, 52);
+            this.editBannerButton.Name = "editBannerButton";
+            this.editBannerButton.Size = new System.Drawing.Size(75, 23);
+            this.editBannerButton.TabIndex = 5;
+            this.editBannerButton.Text = "수정";
+            this.editBannerButton.UseVisualStyleBackColor = true;
+            this.editBannerButton.Click += new System.EventHandler(this.editBannerButton_Click);
+            // 
             // ChatForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -241,6 +274,7 @@
             this.panel2.ResumeLayout(false);
             this._chatSend.ResumeLayout(false);
             this._chatSend.PerformLayout();
+            this._tools.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this._chatListContainer.ResumeLayout(false);
             this._chatListContainer.PerformLayout();
@@ -267,5 +301,8 @@
         private System.Windows.Forms.Panel _tools;
         private System.Windows.Forms.Button btnImage;
         private System.Windows.Forms.Button btnFile;
+        private System.Windows.Forms.Button editBannerButton;
+        private System.Windows.Forms.TextBox bannerTextBox;
+        private System.Windows.Forms.Label bannerLabel;
     }
 }

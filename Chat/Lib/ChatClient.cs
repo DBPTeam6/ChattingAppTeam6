@@ -8,6 +8,7 @@ using System.Threading;
 using System.Windows.Forms;
 
 using ChattingAppTeam6.Chat.Lib;
+using ChatMessage;
 
 namespace ChattingAppTeam6.Chat.Lib
 {
@@ -247,6 +248,23 @@ namespace ChattingAppTeam6.Chat.Lib
                     MessageId = -1,
                     FileName = fileName,
                     FileContent = fileContent
+                }
+            }.ToByteArray());
+        }
+
+        public void EditBanner(int chatId, string content)
+        {
+            Send(new Packet
+            {
+                Command = "EDIT_BANNER",
+                ChatId = chatId,
+                UserId = userId,
+                ProfileId = 0,
+                Timestamp = Timestamp.FromDateTimeOffset(DateTime.Now),
+
+                EditBanner = new EditBannerInfo
+                {
+                    Content = content
                 }
             }.ToByteArray());
         }

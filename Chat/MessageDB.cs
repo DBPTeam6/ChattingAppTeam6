@@ -32,7 +32,7 @@ namespace ChattingAppTeam6.Chat.Lib
             OnChatReady();
         }
 
-        public static void SaveMessage(ChatMessage message)
+        public static void SaveMessage(Entity.ChatMessage message)
         {
             Storage.Rows.Add(message.ToDataRow(Storage));
         }

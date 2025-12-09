@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.IO;
+using ChatMessage;
 using ChattingAppTeam6.Chat.Entity;
 using ChattingAppTeam6.Chat.Lib;
 using Google.Protobuf;

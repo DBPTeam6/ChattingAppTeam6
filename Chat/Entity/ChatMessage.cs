@@ -1,4 +1,5 @@
-﻿using ChattingAppTeam6.Chat.Lib;
+﻿using ChatMessage;
+using ChattingAppTeam6.Chat.Lib;
 using System;
 using System.Data;
 
