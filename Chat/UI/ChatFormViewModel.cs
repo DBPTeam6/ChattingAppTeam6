@@ -56,7 +56,7 @@ namespace ChattingAppTeam6.Chat.UI
 
         public void Listen()
         {
-            client.Connect();
+            // client.Connect();
         }
 
         public void SendTextMessage(Entity.ChatMessage message)
