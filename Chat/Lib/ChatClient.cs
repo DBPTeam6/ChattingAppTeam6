@@ -15,7 +15,7 @@ namespace ChattingAppTeam6.Chat.Lib
     {
         private static ChattingClient instance = new();
 
-        private int userId = 70;
+        private int userId = 0;
 
         public Dictionary<string, Action<Packet>> commands = new()
         {
