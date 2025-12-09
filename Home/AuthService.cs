@@ -1,5 +1,6 @@
 using System;
 using System.Data;
+using ChattingAppTeam6.Common;
 using ChattingAppTeam6.Home;
 
 namespace ChattingAppTeam6.Home
@@ -11,11 +12,8 @@ namespace ChattingAppTeam6.Home
     {
         private readonly DBconnector _db;
 
-        // 현재 로그인한 사용자 정보
-        public int? CurrentUserId { get; private set; }
-        public string CurrentUserName { get; private set; }
-        public string CurrentUserNickname { get; private set; }
-        public byte[] CurrentUserImageBytes { get; private set; }   
+        // 현재 로그인한 사용자 정보 
+        public User? CurrentUser { get; private set; }
 
         /// <summary>
         /// DI용으로 DBconnector 주입.
@@ -25,58 +23,36 @@ namespace ChattingAppTeam6.Home
             _db = db;
         }
 
-        // 로그인 시돈데 이거 새빈이 쪽에서 아이디 받아오는걸로 바꿔야됨
-        public bool Login(string loginId, string loginPw, out string error)
+        public void Login(int userId)
         {
-            error = null;
+            var user = _db.Query(@"
+                SELECT id, name, team_id
+                FROM `user`
+                WHERE id = @id
+                LIMIT 1;", 
+                ("@id", userId));
 
-            var dt = _db.Query(@"
-                SELECT 
-                    u.id, 
-                    u.name, 
-                    p.nickname, 
-                    p.image
-                FROM s5819937.`user` u
-                LEFT JOIN s5819937.profile p 
-                    ON p.user_id = u.id
-                    AND p.is_default = 1
-                WHERE u.login_id = @loginId
-                  AND u.login_pw = @loginPw
-                LIMIT 1;
-            ",
-                ("@loginId", loginId),
-                ("@loginPw", loginPw)
-            );
+            var profile = _db.Query(@"
+                SELECT *
+                FROM profile
+                WHERE user_id = @id AND is_default = 1
+                LIMIT 1;",
+                ("@id", userId));
 
-            // 일치하는 계정 없으면 로그인 실패
-            if (dt.Rows.Count == 0)
-            {
-                error = "아이디 또는 비밀번호가 올바르지 않습니다.";
-                return false;
-            }
+            if (user.Rows.Count == 0)
+                return;
 
-            // 한 명만 나온다고 가정
-            var row = dt.Rows[0];
-
-            CurrentUserId = Convert.ToInt32(row["id"]);
-            CurrentUserName = Convert.ToString(row["name"]) ?? string.Empty;
-
-            // 기본 프로필이 없을 수도 있으니 null 체크
-            CurrentUserNickname = row.IsNull("nickname")
-                ? null
-                : Convert.ToString(row["nickname"]);
-
-            CurrentUserImageBytes = row.IsNull("image")
-                ? null
-                : (byte[])row["image"];
-
-            // 로그인 시간 저장하고 싶으면 여기에 UPDATE 추가
-            // _db.ExecuteNonQuery(
-            //     "UPDATE s5819937.`user` SET login_time = NOW() WHERE id = @uid;",
-            //     ("@uid", CurrentUserId.Value)
-            // );
-
-            return true;
+            CurrentUser = new User(
+                Convert.ToInt32(user.Rows[0]["id"]),
+                Convert.ToInt32(user.Rows[0]["team_id"]),
+                (string)user.Rows[0]["name"],
+                new Profile(
+                    Convert.ToInt32(profile.Rows[0]["id"]),
+                    Convert.ToInt32(profile.Rows[0]["user_id"]),
+                    (string)profile.Rows[0]["nickname"],
+                    profile.Rows[0]["image"] == DBNull.Value ? null : (byte[])profile.Rows[0]["image"],
+                    (int)profile.Rows[0]["is_default"] == 1)
+                );
         }
 
         /// <summary>
@@ -84,25 +60,13 @@ namespace ChattingAppTeam6.Home
         /// </summary>
         public void Logout()
         {
-            if (!CurrentUserId.HasValue)
-            {
-                // 로그아웃 시간 저장하고 싶으면 사용
-                // _db.ExecuteNonQuery(
-                //     "UPDATE s5819937.`user` SET logout_time = NOW() WHERE id = @uid;",
-                //     ("@uid", CurrentUserId.Value)
-                // );
-            }
-
             // 메모리 텅
-            CurrentUserId = null;
-            CurrentUserName = null;
-            CurrentUserNickname = null;
-            CurrentUserImageBytes = null;
+            CurrentUser = null;
         }
 
         /// <summary>
         /// 로그인 되어 있으면 true.
         /// </summary>
-        public bool IsAuthenticated => CurrentUserId.HasValue;
+        public bool IsAuthenticated => CurrentUser != null;
     }
 }

@@ -5,7 +5,7 @@ using System.Data.Common;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-
+using ChattingAppTeam6.Auth;
 using ChattingAppTeam6.Home.Models;
 using ChattingAppTeam6.Home.Service;
 using ChattingAppTeam6.Home.Utils;
@@ -20,11 +20,11 @@ namespace ChattingAppTeam6.Home
         private readonly OrgService _orgService;
         private readonly ProfileService _profileService;
 
-        private int MeId => _auth.CurrentUserId ?? 0;
+        private int MeId => _auth.CurrentUser?.id ?? 0;
 
         private int? _selectedUserIdInTree = null;
 
-        public HomeMain()
+        public HomeMain(int userId)
         {
             InitializeComponent();
 
@@ -40,6 +40,9 @@ namespace ChattingAppTeam6.Home
             _chatService = new ChatService(_db);
             _orgService = new OrgService(_db);
             _profileService = new ProfileService(_db);
+
+            // 로그인
+            _auth.Login(userId);
 
             // 로그아웃 라벨을 클릭 가능해 보이게 커서 변경함 (필요없으면 삭제 가능)
             LogoutLabel.Cursor = Cursors.Hand;
@@ -103,52 +106,6 @@ namespace ChattingAppTeam6.Home
 
         // ===================== 로그인 / 로그아웃 =====================
 
-        // 나중에 지워야됨 쓸모없음
-        private void DoLogin()
-        {
-            var id = IDText.Text.Trim();
-            var pw = PWText.Text;
-
-            if (string.IsNullOrWhiteSpace(id) || string.IsNullOrWhiteSpace(pw))
-            {
-                return;
-            }
-
-            if (_auth.Login(id, pw, out var error))
-            {
-                UpdateLoginUiState();
-
-                LoadTeamDepartmentTree();
-                TeamMemberTreeView.ExpandAll();
-
-                // 관리자계정 로그인은 새빈이쪽에서 연결하는??
-                RefreshChatList();
-                RefreshFavoriteList();
-            }
-            else
-            {
-                MessageBox.Show(error ?? "로그인 실패");
-            }
-        }
-
-        // 로그인하고넘어올때 쓰려고 만들긴했는데
-        public void InitializeAfterLogin()
-        {
-            // UI
-            UpdateLoginUiState();
-
-            // 트리
-            LoadTeamDepartmentTree();
-            TeamMemberTreeView.ExpandAll();
-
-            // 채팅/즐찾
-            if (_auth.IsAuthenticated)
-            {
-                RefreshChatList();
-                RefreshFavoriteList();
-            }
-        }
-
         // 로그아웃
         private void DoLogout()
         {
@@ -184,6 +141,7 @@ namespace ChattingAppTeam6.Home
             _selectedUserIdInTree = null;
 
             // 다시 로그인 폼으로 이동시켜야됨
+            this.Close();
         }
 
         // 로그인 정보
@@ -202,9 +160,9 @@ namespace ChattingAppTeam6.Home
             // Label 변경함
             if (authed)
             {
-                var name = _auth.CurrentUserName ?? "";
-                var nickname = !string.IsNullOrWhiteSpace(_auth.CurrentUserNickname)
-                    ? _auth.CurrentUserNickname
+                var name = _auth.CurrentUser?.name ?? "";
+                var nickname = !string.IsNullOrWhiteSpace(_auth.CurrentUser?.defaultProfile.nickname ?? "")
+                    ? _auth.CurrentUser!.defaultProfile.nickname
                     : name;
 
                 UserNicknameLabel.Text = nickname;
@@ -226,7 +184,7 @@ namespace ChattingAppTeam6.Home
         // 프사
         private void LoadCurrentUserProfileImage()
         {
-            if (!_auth.IsAuthenticated || !_auth.CurrentUserId.HasValue)
+            if (!_auth.IsAuthenticated || _auth.CurrentUser == null)
             {
                 var old2 = UserPIC.Image;
                 UserPIC.Image = null;
@@ -234,8 +192,10 @@ namespace ChattingAppTeam6.Home
                 return;
             }
 
-            byte[] imgBytes = _auth.CurrentUserImageBytes;
-            string fallbackName = _auth.CurrentUserNickname ?? _auth.CurrentUserName ?? "";
+            byte[]? imgBytes = _auth.CurrentUser!.defaultProfile.image;
+            string fallbackName = string.IsNullOrWhiteSpace(_auth.CurrentUser?.defaultProfile.nickname ?? "") ?
+                _auth.CurrentUser!.name :
+                _auth.CurrentUser!.defaultProfile.nickname;
 
             try
             {
@@ -500,7 +460,7 @@ namespace ChattingAppTeam6.Home
         {
             var set = new HashSet<int>();
 
-            if (!_auth.IsAuthenticated || !_auth.CurrentUserId.HasValue)
+            if (!_auth.IsAuthenticated || _auth.CurrentUser == null)
                 return set;
 
             string sql = @"
@@ -523,7 +483,7 @@ namespace ChattingAppTeam6.Home
         // 즐찾리스트 갱신
         private void RefreshFavoriteList()
         {
-            if (!_auth.IsAuthenticated || !_auth.CurrentUserId.HasValue)
+            if (!_auth.IsAuthenticated || _auth.CurrentUser == null)
             {
                 if (FAVMemberList != null)
                     FAVMemberList.Items.Clear();
@@ -600,7 +560,7 @@ namespace ChattingAppTeam6.Home
         // 채팅불러옴(즐찾은위로)
         private void RefreshChatList()
         {
-            if (!_auth.IsAuthenticated || !_auth.CurrentUserId.HasValue)
+            if (!_auth.IsAuthenticated || _auth.CurrentUser == null)
             {
                 flpChats.Controls.Clear();
                 return;
@@ -739,7 +699,7 @@ namespace ChattingAppTeam6.Home
         // 로그인 버튼은 나중에 없어져야됨
         private void LoginButton_Click_1(object sender, EventArgs e)
         {
-            DoLogin();
+            //DoLogin();
         }
 
         // 앤 있어야됨
@@ -761,7 +721,7 @@ namespace ChattingAppTeam6.Home
         // 즐찾버튼 누름
         private void favoriteInsertButton_Click_1(object sender, EventArgs e)
         {
-            if (!_auth.IsAuthenticated || !_auth.CurrentUserId.HasValue)
+            if (!_auth.IsAuthenticated || _auth.CurrentUser == null)
             {
                 MessageBox.Show("로그인 후 사용 가능합니다.");
                 return;
@@ -797,7 +757,7 @@ namespace ChattingAppTeam6.Home
         // 즐겨찾기 삭제 버튼 클릭
         private void favoriteDeleteButton_Click_1(object sender, EventArgs e)
         {
-            if (!_auth.IsAuthenticated || !_auth.CurrentUserId.HasValue)
+            if (!_auth.IsAuthenticated || _auth.CurrentUser == null)
             {
                 return;
             }
@@ -839,9 +799,8 @@ namespace ChattingAppTeam6.Home
 
         private void settingLabel_Click(object sender, EventArgs e)
         {
-            // 새빈이꺼 회원정보변경 페이지로 연결
-            // var UpdateUserInfo = new UpdateUserInfo(MeId);
-            // UpdateUserInfo.ShowDialog();
+            var updateUserInfo = new UpdateUserInfo(MeId);
+            updateUserInfo.ShowDialog();
         }
 
     }

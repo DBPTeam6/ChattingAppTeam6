@@ -21,22 +21,22 @@ namespace ChattingAppTeam6.Home.Service
         SELECT
             c.id AS chat_id,
             c.name AS chat_name,
-            c.profile_id_1,
-            c.profile_id_2,
+            c.user_id_1,
+            c.user_id_2,
             c.last_chat_time,
             c.last_chat_content,
             CASE
-                WHEN c.profile_id_1 = @meId THEN c.profile_id_2
-                ELSE c.profile_id_1
+                WHEN c.user_id_1 = @meId THEN c.user_id_2
+                ELSE c.user_id_1
             END AS other_user_id,
             u.name AS other_user_name
         FROM chat c
         JOIN `user` u
             ON u.id = CASE
-                WHEN c.profile_id_1 = @meId THEN c.profile_id_2
-                ELSE c.profile_id_1
+                WHEN c.user_id_1 = @meId THEN c.user_id_2
+                ELSE c.user_id_1
             END
-        WHERE c.profile_id_1 = @meId OR c.profile_id_2 = @meId
+        WHERE c.user_id_1 = @meId OR c.user_id_2 = @meId
         ORDER BY c.last_chat_time DESC;
     ";
 
@@ -77,8 +77,8 @@ namespace ChattingAppTeam6.Home.Service
             string selectSql = @"
                 SELECT *
                 FROM chat
-                WHERE (profile_id_1 = @u1 AND profile_id_2 = @u2)
-                   OR (profile_id_1 = @u2 AND profile_id_2 = @u1)
+                WHERE (user_id_1 = @u1 AND user_id_2 = @u2)
+                   OR (user_id_1 = @u2 AND user_id_2 = @u1)
                 LIMIT 1;
             ";
 
@@ -97,15 +97,34 @@ namespace ChattingAppTeam6.Home.Service
             // 방 이름 일단 걍 대충함
             string roomName = $"채팅 ({meId}, {otherUserId})";
 
+            var profileAccessSql = @"
+                SELECT profile_id
+                FROM profile_access
+                WHERE user_id = @u1 AND target_user_id = @u2";
+
+            var meToTarget = _db.Query(profileAccessSql, ("@u1", meId), ("@u2", otherUserId));
+            var targetToMe = _db.Query(profileAccessSql, ("@u1", otherUserId), ("@u2", meId));
+
+            var defaultProfileSql = @"
+                SELECT id
+                FROM profile
+                WHERE user_id = @uid AND is_default = 1
+                LIMIT 1;";
+
+            var meDefaultProfileId = Convert.ToInt32(_db.Query(defaultProfileSql, ("@uid", meId)).Rows[0]["id"]);
+            var targetDefaultProfileId = Convert.ToInt32(_db.Query(defaultProfileSql, ("@uid", otherUserId)).Rows[0]["id"]);
+
             string insertSql = @"
-                INSERT INTO chat (name, profile_id_1, profile_id_2, last_chat_time, last_chat_content)
-                VALUES (@name, @u1, @u2, NOW(), '');
+                INSERT INTO chat (name, user_id_1, user_id_2, profile_id_1, profile_id_2, last_chat_time, last_chat_content, banner)
+                VALUES (@name, @u1, @u2, @p1, @p2, NOW(), '', '');
             ";
 
             _db.ExecuteNonQuery(insertSql,
                 ("@name", roomName),
                 ("@u1", meId),
-                ("@u2", otherUserId)
+                ("@u2", otherUserId),
+                ("@p1", meToTarget.Rows.Count > 0 ? (object)meToTarget.Rows[0]["profile_id"] : meDefaultProfileId),
+                ("@p2", targetToMe.Rows.Count > 0 ? (object)targetToMe.Rows[0]["profile_id"] : targetDefaultProfileId)
             );
 
             // 방금만든 채팅방 반환

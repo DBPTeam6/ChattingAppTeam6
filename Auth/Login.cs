@@ -1,3 +1,5 @@
+using ChattingAppTeam6.Admin;
+using ChattingAppTeam6.Home;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -127,17 +129,21 @@ namespace ChattingAppTeam6.Auth
 
                 MessageBox.Show("로그인에 성공하였습니다.");
 
-                if (id.Equals("Admin"))
-                {   
+                if (id.Equals("admin"))
+                {
                     // 관리자 화면
-                }
+                    this.Hide();
+                    new AdminShellForm().ShowDialog();
+
+                    this.Show();
+                }   
                 else
                 {
                     // 사용자 화면
-                    
-                    /// ========= 다른 폼 돌아가는지 확인 ========
-                    var Form = new MultiProfiles(userId);
-                    Form.ShowDialog();
+                    this.Hide();
+                    new HomeMain(userId).ShowDialog();
+
+                    this.Show();
                 }
             }
         }

@@ -201,6 +201,8 @@
     <Compile Include="Chat\UI\ChatMessage.Designer.cs">
       <DependentUpon>ChatMessage.cs</DependentUpon>
     </Compile>
+    <Compile Include="Common\Profile.cs" />
+    <Compile Include="Common\User.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
