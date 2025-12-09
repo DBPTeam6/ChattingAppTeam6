@@ -592,6 +592,25 @@ namespace ChattingAppTeam6.Admin
 
             int deptId = Convert.ToInt32(cmbHiddenDept.SelectedValue);
 
+            // Prevent adding the base user's own department as a hidden department
+            int? baseDept = GetUserDepartmentId(_baseUserId.Value);
+            if (baseDept != null && baseDept.Value == deptId)
+            {
+                MessageBox.Show("기준 직원이 속한 부서는 비공개 대상으로 추가할 수 없습니다.");
+                return;
+            }
+
+            // Prevent duplicate relation
+            string existsSql = $"SELECT COUNT(*) FROM user_relation WHERE user_id = {_baseUserId.Value} AND target_user_id = {deptId} AND relation_type = 'HIDE_DEPT'";
+            object cntObj = db.ExecuteScalar(existsSql);
+            int cnt = 0;
+            if (cntObj != null && int.TryParse(cntObj.ToString(), out int parsed)) cnt = parsed;
+            if (cnt > 0)
+            {
+                MessageBox.Show("이미 비공개 부서로 추가되어 있습니다.");
+                return;
+            }
+
             string sql = $@"
                 INSERT INTO user_relation(user_id, target_user_id, relation_type)
                 VALUES ({_baseUserId.Value}, {deptId}, 'HIDE_DEPT')";
@@ -625,6 +644,24 @@ namespace ChattingAppTeam6.Admin
             }
 
             int targetUserId = Convert.ToInt32(cmbHiddenEmployee.SelectedValue);
+
+            // Prevent adding self
+            if (targetUserId == _baseUserId.Value)
+            {
+                MessageBox.Show("자기 자신은 비공개 대상에 추가할 수 없습니다.");
+                return;
+            }
+
+            // Prevent duplicate relation
+            string existsUserSql = $"SELECT COUNT(*) FROM user_relation WHERE user_id = {_baseUserId.Value} AND target_user_id = {targetUserId} AND relation_type = 'HIDE_USER'";
+            object cntUserObj = db.ExecuteScalar(existsUserSql);
+            int cntUser = 0;
+            if (cntUserObj != null && int.TryParse(cntUserObj.ToString(), out int parsedUser)) cntUser = parsedUser;
+            if (cntUser > 0)
+            {
+                MessageBox.Show("이미 비공개 직원으로 추가되어 있습니다.");
+                return;
+            }
 
             string sql = $@"
                 INSERT INTO user_relation(user_id, target_user_id, relation_type)
@@ -692,6 +729,24 @@ namespace ChattingAppTeam6.Admin
             }
 
             int targetUserId = Convert.ToInt32(cmbBlockedEmployee.SelectedValue);
+
+            // Prevent blocking self
+            if (targetUserId == _baseUserId.Value)
+            {
+                MessageBox.Show("자기 자신은 대화 차단 대상으로 추가할 수 없습니다.");
+                return;
+            }
+
+            // Prevent duplicate relation
+            string existsBlockSql = $"SELECT COUNT(*) FROM user_relation WHERE user_id = {_baseUserId.Value} AND target_user_id = {targetUserId} AND relation_type = 'BLOCK_CHAT'";
+            object cntBlockObj = db.ExecuteScalar(existsBlockSql);
+            int cntBlock = 0;
+            if (cntBlockObj != null && int.TryParse(cntBlockObj.ToString(), out int parsedBlock)) cntBlock = parsedBlock;
+            if (cntBlock > 0)
+            {
+                MessageBox.Show("이미 차단된 직원으로 추가되어 있습니다.");
+                return;
+            }
 
             string sql = $@"
                 INSERT INTO user_relation(user_id, target_user_id, relation_type)
@@ -848,6 +903,21 @@ namespace ChattingAppTeam6.Admin
             object val = dgvDeptEmployees.CurrentRow.Cells["user_id"].Value;
             if (val == null || val == DBNull.Value) return null;
             return Convert.ToInt32(val);
+        }
+
+        // Helper: get department id for a given user id
+        private int? GetUserDepartmentId(int userId)
+        {
+            try
+            {
+                var dt = db.Query($@"SELECT d.id AS dept_id FROM user u LEFT JOIN team t ON u.team_id = t.id LEFT JOIN department d ON t.department_id = d.id WHERE u.id = {userId} LIMIT 1");
+                if (dt.Rows.Count > 0 && dt.Columns.Contains("dept_id") && dt.Rows[0]["dept_id"] != DBNull.Value)
+                {
+                    return Convert.ToInt32(dt.Rows[0]["dept_id"]);
+                }
+            }
+            catch { }
+            return null;
         }
 
         private void btnTeamRename_Click(object sender, EventArgs e)
