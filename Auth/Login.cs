@@ -21,22 +21,23 @@ namespace ChattingAppTeam6.Auth
             InitializeComponent();
         }
 
-        // Æû ·Îµå ½Ã ¼³Á¤ ·Îµå ¹× ÃÊ±â µ¿ÀÛ ¼öÇà
+        // í¼ ë¡œë“œ ì‹œ ì„¤ì • ë¡œë“œ ë° ì´ˆê¸° ë™ì‘ ìˆ˜í–‰
         private void Login_Load(object sender, EventArgs e)
         {
-            // ¼³Á¤°ª UI ¹İ¿µ
+            Chat.Lib.ChattingClient.GetInstance().Connect();
+            // ì„¤ì •ê°’ UI ë°˜ì˜
             AutoLoginCheckBox.Checked = ConfigManager.GetInstance().AutoLoginChecked();
             RememberInfoCheckBox.Checked = ConfigManager.GetInstance().RememeberInfoChecked();
 
             string id = ConfigManager.GetInstance().Id();
             string pw = ConfigManager.GetInstance().Password();
 
-            // ÀÚµ¿ ·Î±×ÀÎ ¼³Á¤ È®ÀÎ
+            // ìë™ ë¡œê·¸ì¸ ì„¤ì • í™•ì¸
             if (ConfigManager.GetInstance().AutoLoginChecked())
             {
                 login(id, pw);
             }
-            // ·Î±×ÀÎ Á¤º¸ ±â¾ïÇÏ±â ¼³Á¤ È®ÀÎ
+            // ë¡œê·¸ì¸ ì •ë³´ ê¸°ì–µí•˜ê¸° ì„¤ì • í™•ì¸
             if (ConfigManager.GetInstance().RememeberInfoChecked())
             {
                 IdBox.Text = id;
@@ -44,7 +45,7 @@ namespace ChattingAppTeam6.Auth
             }
         }
 
-        // ÀÚµ¿·Î±×ÀÎ¡¡Ã¼Å©¡¡ÀúÀå
+        // ìë™ë¡œê·¸ì¸ã€€ì²´í¬ã€€ì €ì¥
         private void AutoLoginCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             ConfigManager.GetInstance().SaveFlags(
@@ -53,7 +54,7 @@ namespace ChattingAppTeam6.Auth
             );
         }
 
-        // ¾ÆÀÌµğ, ºñ¹Ğ¹øÈ£ ±â¾ï¡¡Ã¼Å©¡¡ÀúÀå
+        // ì•„ì´ë””, ë¹„ë°€ë²ˆí˜¸ ê¸°ì–µã€€ì²´í¬ã€€ì €ì¥
         private void RememberInfoCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             ConfigManager.GetInstance().SaveFlags(
@@ -62,7 +63,7 @@ namespace ChattingAppTeam6.Auth
             );
         }
 
-        // SHA-256 ÇØ½Ã
+        // SHA-256 í•´ì‹œ
         private string ComputeSHA256(string rawData)
         {
             using (var sha256 = SHA256.Create())
@@ -73,24 +74,24 @@ namespace ChattingAppTeam6.Auth
             }
         }
 
-        // ºñ¹Ğ¹øÈ£ È®ÀÎ
+        // ë¹„ë°€ë²ˆí˜¸ í™•ì¸
         private bool checkPw(string inputPw, DataTable userRow)
         {
             string storedHash = userRow.Rows[0]["login_pw"].ToString();
             string salt = userRow.Rows[0]["salt"] == DBNull.Value ? null : userRow.Rows[0]["salt"].ToString();
 
-            if (string.IsNullOrEmpty(salt)) // ±âÁ¸ user
+            if (string.IsNullOrEmpty(salt)) // ê¸°ì¡´ user
             {
                 return inputPw == storedHash;
             }
-            else // ½Å±Ô user
+            else // ì‹ ê·œ user
             {
                 string inputHash = ComputeSHA256(inputPw + salt);
                 return inputHash == storedHash;
             }
         }
 
-        // ·Î±×ÀÎ ¹öÆ°
+        // ë¡œê·¸ì¸ ë²„íŠ¼
         private void LoginButton_Click(object sender, EventArgs e)
         {
             string id = IdBox.Text;
@@ -99,7 +100,7 @@ namespace ChattingAppTeam6.Auth
             login(id, password);
         }
 
-        // ·Î±×ÀÎ ·ÎÁ÷
+        // ë¡œê·¸ì¸ ë¡œì§
         private void login(string id, string password)
         {
             string query = $"SELECT id, login_pw, salt FROM s5819937.user WHERE login_id='{id}';";
@@ -107,7 +108,7 @@ namespace ChattingAppTeam6.Auth
 
             if (checkUser.Rows.Count != 1)
             {
-                MessageBox.Show("È¸¿øÁ¤º¸°¡ ¾ø½À´Ï´Ù.");
+                MessageBox.Show("íšŒì›ì •ë³´ê°€ ì—†ìŠµë‹ˆë‹¤.");
             }
             else
             {
@@ -115,23 +116,25 @@ namespace ChattingAppTeam6.Auth
 
                 if (checkPw(password, checkUser) == false)
                 {
-                    MessageBox.Show("ºñ¹Ğ¹øÈ£°¡ ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù.");
+                    MessageBox.Show("ë¹„ë°€ë²ˆí˜¸ê°€ ì¼ì¹˜í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
                     return;
                 }
 
-                // ·Î±×ÀÎ ¼º°ø Ã³¸®
+                // ë¡œê·¸ì¸ ì„±ê³µ ì²˜ë¦¬
                 if (AutoLoginCheckBox.Checked || RememberInfoCheckBox.Checked)
-                    // °èÁ¤ Á¤º¸ ÀúÀå
+                    // ê³„ì • ì •ë³´ ì €ì¥
                     ConfigManager.GetInstance().SaveUser(id, password);
                 else
-                    // ¸ğµç Ã¼Å©¹Ú½º ÇØÁ¦ ¡æ ÀúÀåµÈ °èÁ¤ »èÁ¦
+                    // ëª¨ë“  ì²´í¬ë°•ìŠ¤ í•´ì œ â†’ ì €ì¥ëœ ê³„ì • ì‚­ì œ
                     ConfigManager.GetInstance().ClearUser();
 
-                MessageBox.Show("·Î±×ÀÎ¿¡ ¼º°øÇÏ¿´½À´Ï´Ù.");
+                MessageBox.Show("ë¡œê·¸ì¸ì— ì„±ê³µí•˜ì˜€ìŠµë‹ˆë‹¤.");
 
+                Chat.Lib.ChattingClient.GetInstance().Login(userId);
+                
                 if (id.Equals("admin"))
                 {
-                    // °ü¸®ÀÚ È­¸é
+                    // ê´€ë¦¬ì í™”ë©´
                     this.Hide();
                     new AdminShellForm().ShowDialog();
 
@@ -139,22 +142,24 @@ namespace ChattingAppTeam6.Auth
                 }   
                 else
                 {
-                    // »ç¿ëÀÚ È­¸é
+                    // ì‚¬ìš©ì í™”ë©´
                     this.Hide();
                     new HomeMain(userId).ShowDialog();
 
                     this.Show();
                 }
+
+                Chat.Lib.ChattingClient.GetInstance().Logout();
             }
         }
 
-        // È¸¿ø°¡ÀÔ Ã¢ ¿­±â
+        // íšŒì›ê°€ì… ì°½ ì—´ê¸°
         private void SignUpButton_Click(object sender, EventArgs e)
         {
             this.Hide();
 
             var signUp = new SignUp();
-            signUp.ShowDialog(); // SignUp.FormÀ¸·Î ÀÌµ¿
+            signUp.ShowDialog(); // SignUp.Formìœ¼ë¡œ ì´ë™
 
             this.Show();
         }
