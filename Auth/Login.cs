@@ -131,6 +131,10 @@ namespace ChattingAppTeam6.Auth
                 MessageBox.Show("로그인에 성공하였습니다.");
 
                 Chat.Lib.ChattingClient.GetInstance().Login(userId);
+                Chat.Lib.ChattingClient.GetInstance().commands["ALL"] = (packet) =>
+                {
+                    Notification.PacketReceiver.OnPacketReceived(packet);
+                };
                 
                 if (id.Equals("admin"))
                 {

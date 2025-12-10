@@ -32,6 +32,7 @@ namespace ChattingAppTeam6.Chat.UI
             viewModel.On($"{roomId}-SEND_MESSAGE", OnReceiveTextMessage);
             viewModel.On($"{roomId}-DELETE_MESSAGE", OnDeleteMessage);
             viewModel.On($"{roomId}-SEND_FILE", OnReceiveFileMessage);
+            viewModel.On($"{roomId}-EDIT_BANNER", OnEditBanner);
 
             List<Entity.ChatMessage> messages = viewModel.LoadAllMessages();
             foreach (var message in messages)

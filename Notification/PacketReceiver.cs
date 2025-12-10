@@ -1,4 +1,6 @@
+using ChatMessage;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -10,14 +12,16 @@ namespace ChattingAppTeam6.Notification
         private static readonly string[] ImageExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif", ".bmp" };
 
         // Entry point to be called by actual network receive loop
-        public static void OnPacketReceived(dynamic packet)
+        public static void OnPacketReceived(Packet packet)
         {
             try
             {
-                string command = Convert.ToString(packet.Base.Command);
-                int chatId = Convert.ToInt32(packet.Base.ChatId);
-                int profileId = Convert.ToInt32(packet.Base.ProfileId);
-                DateTime timestamp = Convert.ToDateTime(packet.Base.Timestamp);
+                string command = Convert.ToString(packet.Command);
+                command = command.Split('-')[1];
+                int chatId = Convert.ToInt32(packet.ChatId);
+                int profileId = Convert.ToInt32(packet.ProfileId);
+                DateTime timestamp = packet.Timestamp.ToDateTime();
+                Debug.WriteLine(timestamp);
 
                 string nickname = ProfileService.GetNickname(profileId);
                 if (string.IsNullOrEmpty(nickname)) nickname = "알 수 없음";
@@ -25,12 +29,12 @@ namespace ChattingAppTeam6.Notification
                 switch (command)
                 {
                     case "SEND_MESSAGE":
-                        string content = Convert.ToString(packet.Content) ?? string.Empty;
+                        string content = Convert.ToString(packet.SendMessage.Content) ?? string.Empty;
                         string preview = BuildMessagePreview(content);
                         ToastManager.ShowToast(nickname, timestamp, preview, chatId);
                         break;
                     case "SEND_FILE":
-                        string fileName = Convert.ToString(packet.FileName) ?? string.Empty;
+                        string fileName = Convert.ToString(packet.SendFile.FileName) ?? string.Empty;
                         string previewFile = BuildFilePreview(fileName);
                         ToastManager.ShowToast(nickname, timestamp, previewFile, chatId);
                         break;
