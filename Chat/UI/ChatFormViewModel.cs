@@ -29,11 +29,11 @@ namespace ChattingAppTeam6.Chat.UI
                 .Add("@id", roomId)
                 .Build());
 
-            var otherId = (int)rawRoom.Rows[0]["user_id_1"];
-            otherId = otherId == selfUserId ? (int)rawRoom.Rows[0]["user_id_2"] : otherId;
+            var otherId = Convert.ToInt32(rawRoom.Rows[0]["user_id_1"]);
+            otherId = otherId == selfUserId ? Convert.ToInt32(rawRoom.Rows[0]["user_id_2"]) : otherId;
 
-            ChatUser user1 = GetChatUser((int)rawRoom.Rows[0]["profile_id_1"]);
-            ChatUser user2 = GetChatUser((int)rawRoom.Rows[0]["profile_id_2"]);
+            ChatUser user1 = GetChatUser(Convert.ToInt32(rawRoom.Rows[0]["profile_id_1"]));
+            ChatUser user2 = GetChatUser(Convert.ToInt32(rawRoom.Rows[0]["profile_id_2"]));
 
             if (user2.user_id == selfUserId) {
                 var temp = user1;
@@ -51,9 +51,9 @@ namespace ChattingAppTeam6.Chat.UI
                 .Build());
 
             if (meToTargetProfile.Rows.Count > 0)
-                user1 = GetChatUser((int)meToTargetProfile.Rows[0]["profile_id"]);
+                user1 = GetChatUser(Convert.ToInt32(meToTargetProfile.Rows[0]["profile_id"]));
             if (targetToMeProfile.Rows.Count > 0)
-                user2 = GetChatUser((int)targetToMeProfile.Rows[0]["profile_id"]);
+                user2 = GetChatUser(Convert.ToInt32(targetToMeProfile.Rows[0]["profile_id"]));
 
             // room 업데이트
             db.CreateQuery($"UPDATE chat SET {(user1.user_id == selfUserId ? "profile_id_1=@profile_id_1" : "profile_id_1=@profile_id_2")}, {(user1.user_id == otherId ? "profile_id_2=@profile_id_1" : "profile_id_2=@profile_id_2")} WHERE id = @id", new ParameterBuilder()

@@ -106,6 +106,7 @@
             this._senderInfo.Size = new System.Drawing.Size(38, 12);
             this._senderInfo.TabIndex = 2;
             this._senderInfo.Text = "label2";
+            this._senderInfo.Visible = false;
             // 
             // _sender
             // 
