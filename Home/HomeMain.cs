@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using ChattingAppTeam6.Auth;
+using ChattingAppTeam6.Chat.UI;
 using ChattingAppTeam6.Home.Models;
 using ChattingAppTeam6.Home.Service;
 using ChattingAppTeam6.Home.Utils;
@@ -691,7 +692,9 @@ namespace ChattingAppTeam6.Home
             RefreshChatList();
 
             // 밑에 메세지박스 없애고 채팅방 폼으로 연결시키면 되는데 
-            MessageBox.Show($"[DEBUG] 채팅방 열기: ChatId={chatId}, Name={chatName}, 상대={targetUserId}");
+            //MessageBox.Show($"[DEBUG] 채팅방 열기: ChatId={chatId}, Name={chatName}, 상대={targetUserId}");
+
+            new ChatForm(chatId, meId).Show();
         }
 
         // ===================== UI 이벤트 핸들러 =====================

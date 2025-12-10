@@ -42,10 +42,10 @@ namespace ChattingAppTeam6.Home
         {
             _item = item;
 
-            System.Diagnostics.Debug.WriteLine(
-        $"[Bind] other={item.OtherUserId}, name={item.DisplayName}, " +
-        $"avatar={(item.AvatarBytes == null ? "null" : item.AvatarBytes.Length.ToString())}"
-        );
+        //    System.Diagnostics.Debug.WriteLine(
+        //$"[Bind] other={item.OtherUserId}, name={item.DisplayName}, " +
+        //$"avatar={(item.AvatarBytes == null ? "null" : item.AvatarBytes.Length.ToString())}"
+        //);
 
             chatName.Text = item.DisplayName;
             lastChat.Text = item.LastMessage;
