@@ -10,6 +10,7 @@ using ChattingAppTeam6.Chat.UI;
 using ChattingAppTeam6.Home.Models;
 using ChattingAppTeam6.Home.Service;
 using ChattingAppTeam6.Home.Utils;
+using MySqlX.XDevAPI.Common;
 
 namespace ChattingAppTeam6.Home
 {
@@ -799,12 +800,20 @@ namespace ChattingAppTeam6.Home
         private void settingLabel_Click(object sender, EventArgs e)
         {
             var updateUserInfo = new UpdateUserInfo(MeId);
-            updateUserInfo.ShowDialog();
+            var result = updateUserInfo.ShowDialog();
+
+            if (result == DialogResult.OK)
+            {
+                _auth.ReloadCurrentUser();
+                UpdateLoginUiState();
+            }
+
         }
 
         private void UserPIC_Click(object sender, EventArgs e)
         {
             new MultiProfiles(MeId).ShowDialog();
         }
+
     }
 }

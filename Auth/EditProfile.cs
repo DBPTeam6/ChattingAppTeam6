@@ -215,5 +215,7 @@ namespace ChattingAppTeam6.Auth
             MessageBox.Show("회원정보가 변경되었습니다.");
             this.DialogResult = DialogResult.OK;
         }
+
+
     }
 }

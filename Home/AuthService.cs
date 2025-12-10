@@ -53,6 +53,17 @@ namespace ChattingAppTeam6.Home
                     profile.Rows[0]["image"] == DBNull.Value ? null : (byte[])profile.Rows[0]["image"],
                     (int)profile.Rows[0]["is_default"] == 1)
                 );
+
+        }
+
+        public void ReloadCurrentUser()
+        {
+            if (CurrentUser == null)
+                return;
+
+            int userId = CurrentUser.id;
+
+            Login(userId);
         }
 
         /// <summary>
