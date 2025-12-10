@@ -82,15 +82,6 @@ namespace ChattingAppTeam6.Chat.Lib
 
                     Debug.WriteLine($"Received packet: Command={packet.Command}, ChatId={packet.ChatId}, UserId={packet.UserId}");
 
-                    if (packet.UserId == userId)
-                        Debug.WriteLine("³»°¡ º¸³¿");
-
-                    if (receiver == userId)
-                        Debug.WriteLine("³ª¿¡°Ô º¸³¿");
-
-                    if (packet.UserId != userId && receiver != userId)
-                        return;
-
                     if (commands.TryGetValue("ALL", out var all)) all?.Invoke(packet);
                     if (commands.TryGetValue(packet.Command, out var cmd)) cmd?.Invoke(packet);
                 }
