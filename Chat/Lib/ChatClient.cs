@@ -35,7 +35,7 @@ namespace ChattingAppTeam6.Chat.Lib
         {
             try
             {
-                client = new TcpClient("52.79.132.107", 9000);
+                client = new TcpClient("52.79.168.47", 9000);
                 stream = client.GetStream();
 
                 Thread t = new Thread(Recive);
