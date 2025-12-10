@@ -80,6 +80,14 @@ namespace ChattingAppTeam6.Chat.Lib
                     var packet = Packet.Parser.ParseFrom(data);
                     var receiver = int.Parse(packet.Command.Split('-')[0]);
 
+                    Debug.WriteLine($"Received packet: Command={packet.Command}, ChatId={packet.ChatId}, UserId={packet.UserId}");
+
+                    if (packet.UserId == userId)
+                        Debug.WriteLine("³»°¡ º¸³¿");
+
+                    if (receiver == userId)
+                        Debug.WriteLine("³ª¿¡°Ô º¸³¿");
+
                     if (packet.UserId != userId && receiver != userId)
                         return;
 
