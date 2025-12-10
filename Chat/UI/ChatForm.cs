@@ -39,6 +39,8 @@ namespace ChattingAppTeam6.Chat.UI
             {
                 AddChatMessage(message);
             }
+
+            bannerTextBox.Text = this.viewModel.room.banner;
         }
 
         // 텍스트 메시지 수신 처리
