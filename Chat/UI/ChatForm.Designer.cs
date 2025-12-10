@@ -94,7 +94,7 @@
             this.bannerLabel.Name = "bannerLabel";
             this.bannerLabel.Size = new System.Drawing.Size(53, 12);
             this.bannerLabel.TabIndex = 3;
-            this.bannerLabel.Text = "공지사상";
+            this.bannerLabel.Text = "공지사항";
             // 
             // _senderInfo
             // 
