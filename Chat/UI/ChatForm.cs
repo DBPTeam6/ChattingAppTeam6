@@ -28,7 +28,7 @@ namespace ChattingAppTeam6.Chat.UI
             // 기존 테스트용 ChatMessage 제거
             _chatList.Controls.Clear();
 
-            var targetId = viewModel.room.target.id;
+            var targetId = viewModel.room.target.user_id;
             viewModel.On($"{targetId}-SEND_MESSAGE", OnReceiveTextMessage);
             viewModel.On($"{targetId}-DELETE_MESSAGE", OnDeleteMessage);
             viewModel.On($"{targetId}-SEND_FILE", OnReceiveFileMessage);
@@ -79,14 +79,14 @@ namespace ChattingAppTeam6.Chat.UI
                 using MemoryStream ms = new MemoryStream(message.fileContent);
                 Image image = Image.FromStream(ms);
                 AddImageMessage(
-                    sender: viewModel.room.me.user == message.sender ? viewModel.room.me.nickname : viewModel.room.target.nickname,
+                    sender: viewModel.room.me.user_id == message.sender ? viewModel.room.me.nickname : viewModel.room.target.nickname,
                     image: image
                 );
                 return;
             }
 
             AddFileMessage(
-                sender: viewModel.room.me.user == message.sender ? viewModel.room.me.nickname : viewModel.room.target.nickname,
+                sender: viewModel.room.me.user_id == message.sender ? viewModel.room.me.nickname : viewModel.room.target.nickname,
                 fileName: message.fileName,
                 fileContent: message.fileContent
             );
@@ -221,12 +221,12 @@ namespace ChattingAppTeam6.Chat.UI
 
             ChatMessage chatMessage = new ChatMessage();
             chatMessage.SetId(message.id);
-            chatMessage.SetSender(viewModel.room.me.user == message.sender ? viewModel.room.me.nickname : viewModel.room.target.nickname);
+            chatMessage.SetSender(viewModel.room.me.user_id == message.sender ? viewModel.room.me.nickname : viewModel.room.target.nickname);
             chatMessage.SetMessage(message.message);
             chatMessage.SetTimestamp(message.timestamp);
       
             // 프로필 이미지 설정
-        string sender = viewModel.room.me.user == message.sender ? viewModel.room.me.nickname : viewModel.room.target.nickname;
+        string sender = viewModel.room.me.user_id == message.sender ? viewModel.room.me.nickname : viewModel.room.target.nickname;
         if (sender == viewModel.room.me.nickname && viewModel.room.me.profileImageBytes != null && viewModel.room.me.profileImageBytes.Length > 0)
         {
             chatMessage.SetProfileImage(Home.Utils.ImageUtils.BytesToImage(viewModel.room.me.profileImageBytes));
@@ -277,7 +277,7 @@ namespace ChattingAppTeam6.Chat.UI
             Entity.ChatMessage message = new Entity.ChatMessage(
                 id: -1,
                 room: viewModel.room.id,
-                sender: viewModel.room.me.user,
+                sender: viewModel.room.me.user_id,
                 message: txtMessage.Text.Trim(),
                 timestamp: DateTime.Now,
                 isRead: false,
@@ -307,7 +307,7 @@ namespace ChattingAppTeam6.Chat.UI
                 Entity.ChatMessage message = new Entity.ChatMessage(
                     id: -1,
                     room: viewModel.room.id,
-                    sender: viewModel.room.me.user,
+                    sender: viewModel.room.me.user_id,
                     message: fileName,
                     timestamp: DateTime.Now,
                     isRead: false,

@@ -9,15 +9,15 @@ namespace ChattingAppTeam6.Chat.Entity
 {
     public class ChatUser
     {
-        public readonly int id; // profile id
-        public readonly int user; // user id
+        public readonly int profile_id; // profile id
+        public readonly int user_id; // user id
         public readonly string nickname;
         public readonly byte[] profileImageBytes;
 
         public ChatUser(int id, int user, string nickname, byte[] profileImageBytes)
         {
-            this.id = id;
-            this.user = user;
+            this.profile_id = id;
+            this.user_id = user;
             this.nickname = nickname;
             this.profileImageBytes = profileImageBytes;
         }

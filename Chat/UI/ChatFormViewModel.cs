@@ -31,7 +31,7 @@ namespace ChattingAppTeam6.Chat.UI
             ChatUser user1 = GetChatUser((int)rawRoom.Rows[0]["profile_id_1"]);
             ChatUser user2 = GetChatUser((int)rawRoom.Rows[0]["profile_id_2"]);
 
-            if (user2.user == selfUserId) {
+            if (user2.user_id == selfUserId) {
                 var temp = user1;
                 user1 = user2;
                 user2 = temp;
@@ -71,7 +71,7 @@ namespace ChattingAppTeam6.Chat.UI
 
         public void SendTextMessage(Entity.ChatMessage message)
         {
-            client.SendMessage(message.room, room.me.id, message.message);
+            client.SendMessage(message.room, room.me.profile_id, message.message);
         }
 
         public void DeleteMessage(Entity.ChatMessage message)
@@ -81,14 +81,14 @@ namespace ChattingAppTeam6.Chat.UI
 
         public void SendFileMessage(Entity.ChatMessage message, Stream fs)
         {
-            client.SendFile(message.room, room.me.id, message.message, ByteString.FromStream(fs));
+            client.SendFile(message.room, room.me.profile_id, message.message, ByteString.FromStream(fs));
         }
 
         public void StopListen()
         {
-            client.commands[$"{room.target.id}-SEND_MESSAGE"] = (packet) => { };
-            client.commands[$"{room.target.id}-DELETE_MESSAGE"] = (packet) => { };
-            client.commands[$"{room.target.id}-SEND_FILE"] = (packet) => { };
+            client.commands[$"{room.target.user_id}-SEND_MESSAGE"] = (packet) => { };
+            client.commands[$"{room.target.user_id}-DELETE_MESSAGE"] = (packet) => { };
+            client.commands[$"{room.target.user_id}-SEND_FILE"] = (packet) => { };
         }
     }
 }
