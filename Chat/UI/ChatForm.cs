@@ -358,12 +358,12 @@ namespace ChattingAppTeam6.Chat.UI
                     id: -1,
                     room: viewModel.room.id,
                     sender: viewModel.room.me.user_id,
-                    message: "귀여운 가나디",
+                    message: "가나디.png",
                     timestamp: DateTime.Now,
                     isRead: false,
                     isDeleted: false
                 );
-
+                
                 viewModel.SendFileMessage(message, stream);
             }
             catch (Exception ex)
