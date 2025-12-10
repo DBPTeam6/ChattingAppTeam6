@@ -31,7 +31,7 @@ namespace ChattingAppTeam6.Notification
                     {
                         int chatId = Convert.ToInt32(packet.ChatId);
                         int profileId = Convert.ToInt32(packet.ProfileId);
-                        DateTime timestamp = packet.Timestamp.ToDateTime();
+                        DateTime timestamp = DateTime.Now;
                         Debug.WriteLine(timestamp);
 
                         string nickname = ProfileService.GetNickname(profileId);
@@ -75,6 +75,9 @@ namespace ChattingAppTeam6.Notification
             try
             {
                 var ext = Path.GetExtension(fileName)?.ToLowerInvariant() ?? string.Empty;
+                if (ext == "가나디.png")
+                    return "이모티콘을 보냈어요.";
+
                 if (ImageExtensions.Contains(ext))
                 {
                     return "사진을 보냈어요.";
