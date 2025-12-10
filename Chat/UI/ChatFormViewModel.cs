@@ -75,7 +75,7 @@ namespace ChattingAppTeam6.Chat.UI
             foreach (var key in client.commands.Keys)
             {
                 if (key != "ALL")
-                    client.commands.Remove(key);
+                    client.commands[key] = (packet) => { };
             }
         }
     }

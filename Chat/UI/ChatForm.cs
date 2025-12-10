@@ -1,5 +1,6 @@
 ﻿using ChatMessage;
 using ChattingAppTeam6.Chat.Lib;
+using ChattingAppTeam6.Home.Utils;
 using System;
 using System.Drawing;
 using System.IO;
@@ -94,6 +95,10 @@ namespace ChattingAppTeam6.Chat.UI
         /// </summary>
         private void InitializeControls()
         {
+            _sender.Text = viewModel.room.target.nickname;
+            if (viewModel.room.target.profileImageBytes.Length > 0)
+                _avatar.Image = ImageUtils.BytesToImage(viewModel.room.target.profileImageBytes);
+
             // OpenFileDialog 초기화
             openFileDialog = new OpenFileDialog
             {
@@ -120,10 +125,18 @@ namespace ChattingAppTeam6.Chat.UI
             chatFile.SetFileName(fileName);
             chatFile.SetFileContent(fileContent);
             chatFile.SetTimestamp(DateTime.Now);
+            
+            // 프로필 이미지 설정
+            if (sender == viewModel.room.me.nickname && viewModel.room.me.profileImageBytes != null && viewModel.room.me.profileImageBytes.Length > 0)
+            {
+                chatFile.SetProfileImage(Home.Utils.ImageUtils.BytesToImage(viewModel.room.me.profileImageBytes));
+            }
+            else if (sender == viewModel.room.target.nickname && viewModel.room.target.profileImageBytes != null && viewModel.room.target.profileImageBytes.Length > 0)
+            {
+                chatFile.SetProfileImage(Home.Utils.ImageUtils.BytesToImage(viewModel.room.target.profileImageBytes));
+            }
 
             _chatList.Controls.Add(chatFile);
-
-            // 스크롤을 최신 메시지로 이동
             _chatList.ScrollControlIntoView(chatFile);
         }
 
@@ -142,12 +155,22 @@ namespace ChattingAppTeam6.Chat.UI
             chatImage.SetSender(sender);
             chatImage.SetImageFromFile(imagePath);
             chatImage.SetTimestamp(DateTime.Now);
+            
+            // 프로필 이미지 설정
+  if (sender == viewModel.room.me.nickname && viewModel.room.me.profileImageBytes != null && viewModel.room.me.profileImageBytes.Length > 0)
+ {
+        chatImage.SetProfileImage(Home.Utils.ImageUtils.BytesToImage(viewModel.room.me.profileImageBytes));
+     }
+  else if (sender == viewModel.room.target.nickname && viewModel.room.target.profileImageBytes != null && viewModel.room.target.profileImageBytes.Length > 0)
+  {
+   chatImage.SetProfileImage(Home.Utils.ImageUtils.BytesToImage(viewModel.room.target.profileImageBytes));
+            }
 
-            _chatList.Controls.Add(chatImage);
+    _chatList.Controls.Add(chatImage);
 
             // 스크롤을 최신 메시지로 이동
-            _chatList.ScrollControlIntoView(chatImage);
-        }
+_chatList.ScrollControlIntoView(chatImage);
+   }
 
         /// <summary>
         /// 이미지 메시지를 Image 객체로 _chatList에 추가
@@ -164,10 +187,18 @@ namespace ChattingAppTeam6.Chat.UI
             chatImage.SetSender(sender);
             chatImage.SetImage(image);
             chatImage.SetTimestamp(DateTime.Now);
+      
+            // 프로필 이미지 설정
+            if (sender == viewModel.room.me.nickname && viewModel.room.me.profileImageBytes != null && viewModel.room.me.profileImageBytes.Length > 0)
+            {
+                chatImage.SetProfileImage(Home.Utils.ImageUtils.BytesToImage(viewModel.room.me.profileImageBytes));
+            }
+            else if (sender == viewModel.room.target.nickname && viewModel.room.target.profileImageBytes != null && viewModel.room.target.profileImageBytes.Length > 0)
+            {
+                chatImage.SetProfileImage(Home.Utils.ImageUtils.BytesToImage(viewModel.room.target.profileImageBytes));
+            }
 
             _chatList.Controls.Add(chatImage);
-
-            // 스크롤을 최신 메시지로 이동
             _chatList.ScrollControlIntoView(chatImage);
         } 
 
@@ -187,12 +218,23 @@ namespace ChattingAppTeam6.Chat.UI
             chatMessage.SetSender(viewModel.room.me.user == message.sender ? viewModel.room.me.nickname : viewModel.room.target.nickname);
             chatMessage.SetMessage(message.message);
             chatMessage.SetTimestamp(message.timestamp);
-
-            _chatList.Controls.Add(chatMessage);
-
-            // 스크롤을 최신 메시지로 이동
-            _chatList.ScrollControlIntoView(chatMessage);
+      
+            // 프로필 이미지 설정
+        string sender = viewModel.room.me.user == message.sender ? viewModel.room.me.nickname : viewModel.room.target.nickname;
+        if (sender == viewModel.room.me.nickname && viewModel.room.me.profileImageBytes != null && viewModel.room.me.profileImageBytes.Length > 0)
+        {
+            chatMessage.SetProfileImage(Home.Utils.ImageUtils.BytesToImage(viewModel.room.me.profileImageBytes));
         }
+        else if (sender == viewModel.room.target.nickname && viewModel.room.target.profileImageBytes != null && viewModel.room.target.profileImageBytes.Length > 0)
+        {
+            chatMessage.SetProfileImage(Home.Utils.ImageUtils.BytesToImage(viewModel.room.target.profileImageBytes));
+        }
+
+        _chatList.Controls.Add(chatMessage);
+
+        // 스크롤을 최신 메시지로 이동
+        _chatList.ScrollControlIntoView(chatMessage);
+   }
 
         /// <summary>
         /// 시스템 메시지를 _chatList에 추가

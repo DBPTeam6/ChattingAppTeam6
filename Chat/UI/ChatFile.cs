@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
@@ -36,6 +37,36 @@ namespace ChattingAppTeam6.Chat.UI
         public void SetTimestamp(DateTime timestamp)
         {
             this._sendTime.Text = timestamp.ToString("HH:mm");
+        }
+
+        /// <summary>
+        /// 프로필 이미지 설정
+        /// </summary>
+        public void SetProfileImage(Image image)
+        {
+            if (image != null)
+            {
+                this._avatar.Image = image;
+            }
+        }
+
+        /// <summary>
+        /// 프로필 ID로 프로필 이미지 설정
+        /// </summary>
+        public void SetProfileImageByProfileId(int profileId)
+        {
+            try
+            {
+                Image profileImage = Notification.ProfileService.GetProfileImage(profileId);
+                if (profileImage != null)
+                {
+                    this._avatar.Image = profileImage;
+                }
+            }
+            catch
+            {
+                // 실패시 기본 이미지 유지
+            }
         }
 
         /// <summary>

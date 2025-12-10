@@ -40,6 +40,7 @@
             this.txtMessage = new System.Windows.Forms.TextBox();
             this.btnSend = new System.Windows.Forms.Button();
             this._tools = new System.Windows.Forms.Panel();
+            this.btnSearch = new System.Windows.Forms.Button();
             this.btnFile = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
             this._chatListContainer = new System.Windows.Forms.Panel();
@@ -123,6 +124,7 @@
             this._avatar.Margin = new System.Windows.Forms.Padding(16, 16, 0, 16);
             this._avatar.Name = "_avatar";
             this._avatar.Size = new System.Drawing.Size(48, 48);
+            this._avatar.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this._avatar.TabIndex = 0;
             this._avatar.TabStop = false;
             // 
@@ -174,6 +176,7 @@
             // 
             // _tools
             // 
+            this._tools.Controls.Add(this.btnSearch);
             this._tools.Controls.Add(this.btnFile);
             this._tools.Dock = System.Windows.Forms.DockStyle.Bottom;
             this._tools.Location = new System.Drawing.Point(0, 60);
@@ -181,6 +184,20 @@
             this._tools.Name = "_tools";
             this._tools.Size = new System.Drawing.Size(384, 40);
             this._tools.TabIndex = 0;
+            // 
+            // btnSearch
+            // 
+            this.btnSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnSearch.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnSearch.FlatAppearance.BorderSize = 0;
+            this.btnSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSearch.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.btnSearch.Location = new System.Drawing.Point(80, 0);
+            this.btnSearch.Name = "btnSearch";
+            this.btnSearch.Size = new System.Drawing.Size(108, 40);
+            this.btnSearch.TabIndex = 2;
+            this.btnSearch.Text = "대화내용 검색";
+            this.btnSearch.UseVisualStyleBackColor = true;
             // 
             // btnFile
             // 
@@ -288,5 +305,6 @@
         private System.Windows.Forms.Button editBannerButton;
         private System.Windows.Forms.TextBox bannerTextBox;
         private System.Windows.Forms.Label bannerLabel;
+        private System.Windows.Forms.Button btnSearch;
     }
 }

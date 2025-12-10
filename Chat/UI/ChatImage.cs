@@ -44,6 +44,36 @@ namespace ChattingAppTeam6.Chat.UI
         }
 
         /// <summary>
+        /// 프로필 이미지 설정
+        /// </summary>
+        public void SetProfileImage(Image image)
+        {
+            if (image != null)
+            {
+                this._avatar.Image = image;
+            }
+        }
+
+        /// <summary>
+        /// 프로필 ID로 프로필 이미지 설정
+        /// </summary>
+        public void SetProfileImageByProfileId(int profileId)
+        {
+            try
+            {
+                Image profileImage = Notification.ProfileService.GetProfileImage(profileId);
+                if (profileImage != null)
+                {
+                    this._avatar.Image = profileImage;
+                }
+            }
+            catch
+            {
+                // 실패시 기본 이미지 유지
+            }
+        }
+
+        /// <summary>
         /// 파일 경로에서 이미지 로드
         /// </summary>
         public void SetImageFromFile(string filePath)
