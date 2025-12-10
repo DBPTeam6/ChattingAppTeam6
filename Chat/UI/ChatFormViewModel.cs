@@ -12,12 +12,14 @@ namespace ChattingAppTeam6.Chat.UI
     internal class ChatFormViewModel
     {
         private readonly ChattingClient client;
+        private readonly BadWordFilter filter;
         private readonly DB db;
         public ChatRoom room;
 
         public ChatFormViewModel(int roomId, int selfUserId)
         {
             this.client = ChattingClient.GetInstance();
+            this.filter = BadWordFilter.GetInstance();
             this.db = DB.GetInstance();
             
             LoadRoom(roomId, selfUserId);
@@ -96,7 +98,8 @@ namespace ChattingAppTeam6.Chat.UI
 
         public void SendTextMessage(Entity.ChatMessage message)
         {
-            client.SendMessage(message.room, room.me.profile_id, message.message);
+            string filterdMessage = filter.FilteredText(message.message);
+            client.SendMessage(message.room, room.me.profile_id, filterdMessage);
         }
 
         public void DeleteMessage(Entity.ChatMessage message)
