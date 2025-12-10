@@ -67,9 +67,10 @@ namespace ChattingAppTeam6.Auth
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("맑은 고딕", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label1.Location = new System.Drawing.Point(529, 56);
+            this.label1.Location = new System.Drawing.Point(370, 37);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(329, 41);
+            this.label1.Size = new System.Drawing.Size(219, 28);
             this.label1.TabIndex = 0;
             this.label1.Text = "회원정보를 입력하세요";
             // 
@@ -77,9 +78,10 @@ namespace ChattingAppTeam6.Auth
             // 
             this.IdLabel.AutoSize = true;
             this.IdLabel.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.IdLabel.Location = new System.Drawing.Point(156, 185);
+            this.IdLabel.Location = new System.Drawing.Point(109, 123);
+            this.IdLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.IdLabel.Name = "IdLabel";
-            this.IdLabel.Size = new System.Drawing.Size(80, 25);
+            this.IdLabel.Size = new System.Drawing.Size(52, 15);
             this.IdLabel.TabIndex = 1;
             this.IdLabel.Text = "* 아이디";
             // 
@@ -87,11 +89,11 @@ namespace ChattingAppTeam6.Auth
             // 
             this.IdBox.BackColor = System.Drawing.SystemColors.Control;
             this.IdBox.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.IdBox.Location = new System.Drawing.Point(149, 214);
-            this.IdBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.IdBox.Location = new System.Drawing.Point(104, 143);
+            this.IdBox.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.IdBox.Multiline = true;
             this.IdBox.Name = "IdBox";
-            this.IdBox.Size = new System.Drawing.Size(284, 46);
+            this.IdBox.Size = new System.Drawing.Size(200, 32);
             this.IdBox.TabIndex = 2;
             this.IdBox.TextChanged += new System.EventHandler(this.IdBox_TextChanged);
             // 
@@ -99,9 +101,10 @@ namespace ChattingAppTeam6.Auth
             // 
             this.PwLabel.AutoSize = true;
             this.PwLabel.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.PwLabel.Location = new System.Drawing.Point(156, 282);
+            this.PwLabel.Location = new System.Drawing.Point(109, 188);
+            this.PwLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.PwLabel.Name = "PwLabel";
-            this.PwLabel.Size = new System.Drawing.Size(98, 25);
+            this.PwLabel.Size = new System.Drawing.Size(64, 15);
             this.PwLabel.TabIndex = 3;
             this.PwLabel.Text = "* 비밀번호";
             // 
@@ -109,22 +112,22 @@ namespace ChattingAppTeam6.Auth
             // 
             this.PwBox.BackColor = System.Drawing.SystemColors.Control;
             this.PwBox.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.PwBox.Location = new System.Drawing.Point(149, 311);
-            this.PwBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.PwBox.Location = new System.Drawing.Point(104, 207);
+            this.PwBox.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.PwBox.Multiline = true;
             this.PwBox.Name = "PwBox";
             this.PwBox.PasswordChar = '*';
-            this.PwBox.Size = new System.Drawing.Size(457, 46);
+            this.PwBox.Size = new System.Drawing.Size(321, 32);
             this.PwBox.TabIndex = 4;
-            this.PwBox.TextChanged += new System.EventHandler(this.PwCheckBox_TextChanged);
             // 
             // PwCheckLabel
             // 
             this.PwCheckLabel.AutoSize = true;
             this.PwCheckLabel.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.PwCheckLabel.Location = new System.Drawing.Point(149, 384);
+            this.PwCheckLabel.Location = new System.Drawing.Point(104, 256);
+            this.PwCheckLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.PwCheckLabel.Name = "PwCheckLabel";
-            this.PwCheckLabel.Size = new System.Drawing.Size(140, 25);
+            this.PwCheckLabel.Size = new System.Drawing.Size(92, 15);
             this.PwCheckLabel.TabIndex = 6;
             this.PwCheckLabel.Text = "* 비밀번호 확인";
             // 
@@ -132,21 +135,23 @@ namespace ChattingAppTeam6.Auth
             // 
             this.PwCheckBox.BackColor = System.Drawing.SystemColors.Control;
             this.PwCheckBox.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.PwCheckBox.Location = new System.Drawing.Point(149, 412);
-            this.PwCheckBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.PwCheckBox.Location = new System.Drawing.Point(104, 275);
+            this.PwCheckBox.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.PwCheckBox.Multiline = true;
             this.PwCheckBox.Name = "PwCheckBox";
             this.PwCheckBox.PasswordChar = '*';
-            this.PwCheckBox.Size = new System.Drawing.Size(457, 46);
+            this.PwCheckBox.Size = new System.Drawing.Size(321, 32);
             this.PwCheckBox.TabIndex = 7;
+            this.PwCheckBox.TextChanged += new System.EventHandler(this.PwCheckBox_TextChanged);
             // 
             // TeamLabel
             // 
             this.TeamLabel.AutoSize = true;
             this.TeamLabel.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.TeamLabel.Location = new System.Drawing.Point(156, 484);
+            this.TeamLabel.Location = new System.Drawing.Point(109, 323);
+            this.TeamLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.TeamLabel.Name = "TeamLabel";
-            this.TeamLabel.Size = new System.Drawing.Size(98, 25);
+            this.TeamLabel.Size = new System.Drawing.Size(64, 15);
             this.TeamLabel.TabIndex = 8;
             this.TeamLabel.Text = "* 소속부서";
             // 
@@ -155,10 +160,10 @@ namespace ChattingAppTeam6.Auth
             this.TeamBox.BackColor = System.Drawing.SystemColors.Control;
             this.TeamBox.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.TeamBox.FormattingEnabled = true;
-            this.TeamBox.Location = new System.Drawing.Point(149, 514);
-            this.TeamBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.TeamBox.Location = new System.Drawing.Point(104, 343);
+            this.TeamBox.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.TeamBox.Name = "TeamBox";
-            this.TeamBox.Size = new System.Drawing.Size(457, 33);
+            this.TeamBox.Size = new System.Drawing.Size(321, 23);
             this.TeamBox.TabIndex = 9;
             // 
             // SignupButton
@@ -167,10 +172,10 @@ namespace ChattingAppTeam6.Auth
             this.SignupButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.SignupButton.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.SignupButton.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.SignupButton.Location = new System.Drawing.Point(149, 744);
-            this.SignupButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.SignupButton.Location = new System.Drawing.Point(104, 496);
+            this.SignupButton.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.SignupButton.Name = "SignupButton";
-            this.SignupButton.Size = new System.Drawing.Size(1064, 61);
+            this.SignupButton.Size = new System.Drawing.Size(745, 41);
             this.SignupButton.TabIndex = 10;
             this.SignupButton.Text = "회원가입";
             this.SignupButton.UseVisualStyleBackColor = false;
@@ -180,9 +185,10 @@ namespace ChattingAppTeam6.Auth
             // 
             this.nameLabel.AutoSize = true;
             this.nameLabel.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.nameLabel.Location = new System.Drawing.Point(754, 384);
+            this.nameLabel.Location = new System.Drawing.Point(528, 256);
+            this.nameLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.nameLabel.Name = "nameLabel";
-            this.nameLabel.Size = new System.Drawing.Size(62, 25);
+            this.nameLabel.Size = new System.Drawing.Size(40, 15);
             this.nameLabel.TabIndex = 11;
             this.nameLabel.Text = "* 이름";
             // 
@@ -190,9 +196,10 @@ namespace ChattingAppTeam6.Auth
             // 
             this.NicknameLabel.AutoSize = true;
             this.NicknameLabel.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.NicknameLabel.Location = new System.Drawing.Point(754, 485);
+            this.NicknameLabel.Location = new System.Drawing.Point(528, 323);
+            this.NicknameLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.NicknameLabel.Name = "NicknameLabel";
-            this.NicknameLabel.Size = new System.Drawing.Size(48, 25);
+            this.NicknameLabel.Size = new System.Drawing.Size(31, 15);
             this.NicknameLabel.TabIndex = 12;
             this.NicknameLabel.Text = "별명";
             // 
@@ -200,9 +207,10 @@ namespace ChattingAppTeam6.Auth
             // 
             this.AddrLabel.AutoSize = true;
             this.AddrLabel.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.AddrLabel.Location = new System.Drawing.Point(156, 583);
+            this.AddrLabel.Location = new System.Drawing.Point(109, 389);
+            this.AddrLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.AddrLabel.Name = "AddrLabel";
-            this.AddrLabel.Size = new System.Drawing.Size(62, 25);
+            this.AddrLabel.Size = new System.Drawing.Size(40, 15);
             this.AddrLabel.TabIndex = 13;
             this.AddrLabel.Text = "* 주소";
             // 
@@ -210,42 +218,43 @@ namespace ChattingAppTeam6.Auth
             // 
             this.AddressBox.BackColor = System.Drawing.SystemColors.Control;
             this.AddressBox.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.AddressBox.Location = new System.Drawing.Point(149, 612);
-            this.AddressBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.AddressBox.Location = new System.Drawing.Point(104, 408);
+            this.AddressBox.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.AddressBox.Multiline = true;
             this.AddressBox.Name = "AddressBox";
-            this.AddressBox.Size = new System.Drawing.Size(650, 46);
+            this.AddressBox.Size = new System.Drawing.Size(456, 32);
             this.AddressBox.TabIndex = 14;
             // 
             // NameBox
             // 
             this.NameBox.BackColor = System.Drawing.SystemColors.Control;
             this.NameBox.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.NameBox.Location = new System.Drawing.Point(748, 412);
-            this.NameBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.NameBox.Location = new System.Drawing.Point(524, 275);
+            this.NameBox.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.NameBox.Multiline = true;
             this.NameBox.Name = "NameBox";
-            this.NameBox.Size = new System.Drawing.Size(465, 46);
+            this.NameBox.Size = new System.Drawing.Size(327, 32);
             this.NameBox.TabIndex = 15;
             // 
             // NicknameBox
             // 
             this.NicknameBox.BackColor = System.Drawing.SystemColors.Control;
             this.NicknameBox.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.NicknameBox.Location = new System.Drawing.Point(748, 514);
-            this.NicknameBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.NicknameBox.Location = new System.Drawing.Point(524, 343);
+            this.NicknameBox.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.NicknameBox.Multiline = true;
             this.NicknameBox.Name = "NicknameBox";
-            this.NicknameBox.Size = new System.Drawing.Size(465, 46);
+            this.NicknameBox.Size = new System.Drawing.Size(327, 32);
             this.NicknameBox.TabIndex = 16;
             // 
             // zipCodeLabel
             // 
             this.zipCodeLabel.AutoSize = true;
             this.zipCodeLabel.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.zipCodeLabel.Location = new System.Drawing.Point(961, 583);
+            this.zipCodeLabel.Location = new System.Drawing.Point(673, 389);
+            this.zipCodeLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.zipCodeLabel.Name = "zipCodeLabel";
-            this.zipCodeLabel.Size = new System.Drawing.Size(98, 25);
+            this.zipCodeLabel.Size = new System.Drawing.Size(64, 15);
             this.zipCodeLabel.TabIndex = 17;
             this.zipCodeLabel.Text = "* 우편번호";
             // 
@@ -253,11 +262,11 @@ namespace ChattingAppTeam6.Auth
             // 
             this.ZipcodeBox.BackColor = System.Drawing.SystemColors.Control;
             this.ZipcodeBox.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.ZipcodeBox.Location = new System.Drawing.Point(964, 612);
-            this.ZipcodeBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.ZipcodeBox.Location = new System.Drawing.Point(675, 408);
+            this.ZipcodeBox.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.ZipcodeBox.Multiline = true;
             this.ZipcodeBox.Name = "ZipcodeBox";
-            this.ZipcodeBox.Size = new System.Drawing.Size(249, 46);
+            this.ZipcodeBox.Size = new System.Drawing.Size(176, 32);
             this.ZipcodeBox.TabIndex = 18;
             // 
             // UpdateImage
@@ -265,9 +274,10 @@ namespace ChattingAppTeam6.Auth
             this.UpdateImage.AutoSize = true;
             this.UpdateImage.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.UpdateImage.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.UpdateImage.Location = new System.Drawing.Point(1087, 353);
+            this.UpdateImage.Location = new System.Drawing.Point(761, 235);
+            this.UpdateImage.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.UpdateImage.Name = "UpdateImage";
-            this.UpdateImage.Size = new System.Drawing.Size(90, 25);
+            this.UpdateImage.Size = new System.Drawing.Size(59, 15);
             this.UpdateImage.TabIndex = 19;
             this.UpdateImage.Text = "사진 변경";
             this.UpdateImage.Click += new System.EventHandler(this.UpdateImage_Click);
@@ -276,10 +286,10 @@ namespace ChattingAppTeam6.Auth
             // 
             this.ProfileBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ProfileBox.Image = global::ChattingAppTeam6.Properties.Resources.BasicImage;
-            this.ProfileBox.Location = new System.Drawing.Point(845, 178);
-            this.ProfileBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.ProfileBox.Location = new System.Drawing.Point(592, 119);
+            this.ProfileBox.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.ProfileBox.Name = "ProfileBox";
-            this.ProfileBox.Size = new System.Drawing.Size(200, 200);
+            this.ProfileBox.Size = new System.Drawing.Size(140, 133);
             this.ProfileBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.ProfileBox.TabIndex = 20;
             this.ProfileBox.TabStop = false;
@@ -289,10 +299,10 @@ namespace ChattingAppTeam6.Auth
             // 
             this.FindAddrButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.FindAddrButton.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.FindAddrButton.Location = new System.Drawing.Point(815, 612);
-            this.FindAddrButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.FindAddrButton.Location = new System.Drawing.Point(570, 408);
+            this.FindAddrButton.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.FindAddrButton.Name = "FindAddrButton";
-            this.FindAddrButton.Size = new System.Drawing.Size(125, 46);
+            this.FindAddrButton.Size = new System.Drawing.Size(88, 31);
             this.FindAddrButton.TabIndex = 21;
             this.FindAddrButton.Text = "주소찾기";
             this.FindAddrButton.UseVisualStyleBackColor = true;
@@ -302,10 +312,10 @@ namespace ChattingAppTeam6.Auth
             // 
             this.IdCheckButton.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.IdCheckButton.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.IdCheckButton.Location = new System.Drawing.Point(450, 214);
-            this.IdCheckButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.IdCheckButton.Location = new System.Drawing.Point(315, 143);
+            this.IdCheckButton.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.IdCheckButton.Name = "IdCheckButton";
-            this.IdCheckButton.Size = new System.Drawing.Size(156, 46);
+            this.IdCheckButton.Size = new System.Drawing.Size(109, 31);
             this.IdCheckButton.TabIndex = 5;
             this.IdCheckButton.Text = "중복확인";
             this.IdCheckButton.UseVisualStyleBackColor = true;
@@ -313,10 +323,10 @@ namespace ChattingAppTeam6.Auth
             // 
             // SignUp
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 18F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.ClientSize = new System.Drawing.Size(1385, 878);
+            this.ClientSize = new System.Drawing.Size(970, 585);
             this.Controls.Add(this.FindAddrButton);
             this.Controls.Add(this.ProfileBox);
             this.Controls.Add(this.UpdateImage);
@@ -339,7 +349,7 @@ namespace ChattingAppTeam6.Auth
             this.Controls.Add(this.IdBox);
             this.Controls.Add(this.IdLabel);
             this.Controls.Add(this.label1);
-            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.Name = "SignUp";
             this.Text = "SignUp";
             ((System.ComponentModel.ISupportInitialize)(this.ProfileBox)).EndInit();
