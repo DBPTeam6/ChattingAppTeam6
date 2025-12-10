@@ -12,7 +12,6 @@ namespace ChattingAppTeam6.Chat.UI
     {
         private readonly ChatFormViewModel viewModel;
         private OpenFileDialog openFileDialog;
-        private OpenFileDialog openFileDialogForFile;
 
         public ChatForm(int roomId, int selfUserId)
         {
@@ -30,9 +29,9 @@ namespace ChattingAppTeam6.Chat.UI
             viewModel.On("SEND_MESSAGE", OnReceiveTextMessage);
             viewModel.On("DELETE_MESSAGE", OnDeleteMessage);
             viewModel.On("SEND_FILE", OnReceiveFileMessage);
-            viewModel.Listen();
         }
 
+        // 텍스트 메시지 수신 처리
         private void OnReceiveTextMessage(Packet packet)
         {
             var message = Entity.ChatMessage.FromPacket(packet);
@@ -40,6 +39,7 @@ namespace ChattingAppTeam6.Chat.UI
             AddChatMessage(message);
         }
 
+        // 메시지 삭제 처리
         private void OnDeleteMessage(Packet packet)
         {
             if (_chatList.InvokeRequired)
@@ -59,9 +59,22 @@ namespace ChattingAppTeam6.Chat.UI
             }
         }
 
+        // 파일 메시지 수신 처리
         private void OnReceiveFileMessage(Packet packet)
         {
             var message = Entity.ChatFileMessage.FromPacket(packet);
+
+            if (new string[] { ".jpg", ".jpeg", ".png", ".gif", ".bmp" }
+                .Contains(Path.GetExtension(message.fileName).ToLower()))
+            {
+                using MemoryStream ms = new MemoryStream(message.fileContent);
+                Image image = Image.FromStream(ms);
+                AddImageMessage(
+                    sender: viewModel.room.me.user == message.sender ? viewModel.room.me.nickname : viewModel.room.target.nickname,
+                    image: image
+                );
+                return;
+            }
 
             AddFileMessage(
                 sender: viewModel.room.me.user == message.sender ? viewModel.room.me.nickname : viewModel.room.target.nickname,
@@ -70,6 +83,7 @@ namespace ChattingAppTeam6.Chat.UI
             );
         }
 
+        // 배너 편집 처리
         private void OnEditBanner(Packet packet)
         {
             bannerTextBox.Text = packet.EditBanner.Content;
@@ -83,72 +97,11 @@ namespace ChattingAppTeam6.Chat.UI
             // OpenFileDialog 초기화
             openFileDialog = new OpenFileDialog
             {
-                Title = "이미지 선택",
-                Filter = "이미지 파일|*.jpg;*.jpeg;*.png;*.gif;*.bmp|모든 파일|*.*",
-                FilterIndex = 1,
-                Multiselect = false
-            };
-
-            // OpenFileDialog for file 초기화
-            openFileDialogForFile = new OpenFileDialog
-            {
                 Title = "파일 선택",
                 Filter = "모든 파일|*.*",
                 FilterIndex = 1,
                 Multiselect = false
             };
-        }
-
-        /// <summary>
-        /// 이미지 전송 버튼 클릭 이벤트
-        /// </summary>
-        private void BtnImage_Click(object sender, EventArgs e)
-        {
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                string filePath = openFileDialog.FileName;
-                SendImage(filePath);
-            }
-        }
-
-        /// <summary>
-        /// 이미지 전송
-        /// </summary>
-        private void SendImage(string filePath)
-        {
-            try
-            {
-                // 이미지 파일 유효성 검사
-                if (!File.Exists(filePath))
-                {
-                    MessageBox.Show("이미지 파일을 찾을 수 없습니다.", "오류",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-
-                // 이미지 로드 테스트
-                using (Image testImage = Image.FromFile(filePath))
-                {
-                    // 이미지가 정상적으로 로드되면 채팅에 추가
-                }
-
-                // 내가 보낸 이미지를 채팅 리스트에 추가
-                //AddImageMessage(currentUsername ?? "나", filePath);
-
-                // 서버에 이미지 전송 (Base64 인코딩)
-                //if (chatClient != null && chatClient.IsConnected)
-                //{
-                //    byte[] imageBytes = File.ReadAllBytes(filePath);
-                //    string base64Image = Convert.ToBase64String(imageBytes);
-                //    string imageMessage = $"[IMAGE]{base64Image}";
-                //    chatClient.SendMessage(imageMessage);
-                //}
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"이미지 전송 실패: {ex.Message}", "오류",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
         }
 
         /// <summary>
@@ -302,14 +255,6 @@ namespace ChattingAppTeam6.Chat.UI
                 }
 
                 string fileName = Path.GetFileName(filePath);
-
-                // 보낼 파일이 이미지라면 이미지로 처리
-                if (new string[] { ".jpg", ".jpeg", ".png", ".gif", ".bmp" }
-                    .Contains(Path.GetExtension(fileName).ToLower()))
-                {
-                    SendImage(filePath);
-                    return;
-                }
 
                 Entity.ChatMessage message = new Entity.ChatMessage(
                     id: -1,

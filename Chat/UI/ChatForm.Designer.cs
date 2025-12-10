@@ -29,6 +29,9 @@
         private void InitializeComponent()
         {
             this._header = new System.Windows.Forms.Panel();
+            this.editBannerButton = new System.Windows.Forms.Button();
+            this.bannerTextBox = new System.Windows.Forms.TextBox();
+            this.bannerLabel = new System.Windows.Forms.Label();
             this._senderInfo = new System.Windows.Forms.Label();
             this._sender = new System.Windows.Forms.Label();
             this._avatar = new System.Windows.Forms.PictureBox();
@@ -37,15 +40,11 @@
             this.txtMessage = new System.Windows.Forms.TextBox();
             this.btnSend = new System.Windows.Forms.Button();
             this._tools = new System.Windows.Forms.Panel();
-            this.btnImage = new System.Windows.Forms.Button();
             this.btnFile = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
             this._chatListContainer = new System.Windows.Forms.Panel();
             this._chatList = new System.Windows.Forms.FlowLayoutPanel();
             this.chatMessage1 = new ChattingAppTeam6.Chat.UI.ChatMessage();
-            this.bannerLabel = new System.Windows.Forms.Label();
-            this.bannerTextBox = new System.Windows.Forms.TextBox();
-            this.editBannerButton = new System.Windows.Forms.Button();
             this._header.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this._avatar)).BeginInit();
             this.panel2.SuspendLayout();
@@ -70,6 +69,32 @@
             this._header.Name = "_header";
             this._header.Size = new System.Drawing.Size(384, 80);
             this._header.TabIndex = 0;
+            // 
+            // editBannerButton
+            // 
+            this.editBannerButton.Location = new System.Drawing.Point(297, 52);
+            this.editBannerButton.Name = "editBannerButton";
+            this.editBannerButton.Size = new System.Drawing.Size(75, 23);
+            this.editBannerButton.TabIndex = 5;
+            this.editBannerButton.Text = "수정";
+            this.editBannerButton.UseVisualStyleBackColor = true;
+            this.editBannerButton.Click += new System.EventHandler(this.editBannerButton_Click);
+            // 
+            // bannerTextBox
+            // 
+            this.bannerTextBox.Location = new System.Drawing.Point(137, 25);
+            this.bannerTextBox.Name = "bannerTextBox";
+            this.bannerTextBox.Size = new System.Drawing.Size(235, 21);
+            this.bannerTextBox.TabIndex = 4;
+            // 
+            // bannerLabel
+            // 
+            this.bannerLabel.AutoSize = true;
+            this.bannerLabel.Location = new System.Drawing.Point(135, 9);
+            this.bannerLabel.Name = "bannerLabel";
+            this.bannerLabel.Size = new System.Drawing.Size(53, 12);
+            this.bannerLabel.TabIndex = 3;
+            this.bannerLabel.Text = "공지사상";
             // 
             // _senderInfo
             // 
@@ -149,7 +174,6 @@
             // 
             // _tools
             // 
-            this._tools.Controls.Add(this.btnImage);
             this._tools.Controls.Add(this.btnFile);
             this._tools.Dock = System.Windows.Forms.DockStyle.Bottom;
             this._tools.Location = new System.Drawing.Point(0, 60);
@@ -157,21 +181,6 @@
             this._tools.Name = "_tools";
             this._tools.Size = new System.Drawing.Size(384, 40);
             this._tools.TabIndex = 0;
-            // 
-            // btnImage
-            // 
-            this.btnImage.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnImage.Dock = System.Windows.Forms.DockStyle.Left;
-            this.btnImage.FlatAppearance.BorderSize = 0;
-            this.btnImage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnImage.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.btnImage.Location = new System.Drawing.Point(80, 0);
-            this.btnImage.Name = "btnImage";
-            this.btnImage.Size = new System.Drawing.Size(80, 40);
-            this.btnImage.TabIndex = 0;
-            this.btnImage.Text = "📷 이미지";
-            this.btnImage.UseVisualStyleBackColor = true;
-            this.btnImage.Click += new System.EventHandler(this.OnClickSendImageButton);
             // 
             // btnFile
             // 
@@ -232,32 +241,6 @@
             this.chatMessage1.Size = new System.Drawing.Size(367, 56);
             this.chatMessage1.TabIndex = 0;
             // 
-            // bannerLabel
-            // 
-            this.bannerLabel.AutoSize = true;
-            this.bannerLabel.Location = new System.Drawing.Point(135, 9);
-            this.bannerLabel.Name = "bannerLabel";
-            this.bannerLabel.Size = new System.Drawing.Size(53, 12);
-            this.bannerLabel.TabIndex = 3;
-            this.bannerLabel.Text = "공지사상";
-            // 
-            // bannerTextBox
-            // 
-            this.bannerTextBox.Location = new System.Drawing.Point(137, 25);
-            this.bannerTextBox.Name = "bannerTextBox";
-            this.bannerTextBox.Size = new System.Drawing.Size(235, 21);
-            this.bannerTextBox.TabIndex = 4;
-            // 
-            // editBannerButton
-            // 
-            this.editBannerButton.Location = new System.Drawing.Point(297, 52);
-            this.editBannerButton.Name = "editBannerButton";
-            this.editBannerButton.Size = new System.Drawing.Size(75, 23);
-            this.editBannerButton.TabIndex = 5;
-            this.editBannerButton.Text = "수정";
-            this.editBannerButton.UseVisualStyleBackColor = true;
-            this.editBannerButton.Click += new System.EventHandler(this.editBannerButton_Click);
-            // 
             // ChatForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
@@ -268,6 +251,8 @@
             this.Controls.Add(this._header);
             this.Name = "ChatForm";
             this.Text = "ChatForm";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnCloseChatForm);
+            this.Load += new System.EventHandler(this.OnLoadChatForm);
             this._header.ResumeLayout(false);
             this._header.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this._avatar)).EndInit();
@@ -299,7 +284,6 @@
         private System.Windows.Forms.TextBox txtMessage;
         private System.Windows.Forms.Button btnSend;
         private System.Windows.Forms.Panel _tools;
-        private System.Windows.Forms.Button btnImage;
         private System.Windows.Forms.Button btnFile;
         private System.Windows.Forms.Button editBannerButton;
         private System.Windows.Forms.TextBox bannerTextBox;

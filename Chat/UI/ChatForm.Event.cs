@@ -9,12 +9,15 @@ namespace ChattingAppTeam6.Chat.UI
     {
         private void OnLoadChatForm(object sender, EventArgs e)
         {
+            System.Diagnostics.Debug.WriteLine("ChatForm loaded.");
             // 폼 로드 시 초기화 작업 수행
         }
 
-        private void OnCloseChatForm(object sender, EventArgs e)
+        private void OnCloseChatForm(object sender, FormClosingEventArgs e)
         {
-            // 폼 닫힐 때 정리 작업 수행
+            System.Diagnostics.Debug.WriteLine("ChatForm closing.");
+            
+            viewModel.StopListen();
         }
 
         private void OnClickSendButton(object sender, EventArgs e)

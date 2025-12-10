@@ -55,11 +55,6 @@ namespace ChattingAppTeam6.Chat.UI
             client.commands[command] = callbackFn;
         }
 
-        public void Listen()
-        {
-            // client.Connect();
-        }
-
         public void SendTextMessage(Entity.ChatMessage message)
         {
             client.SendMessage(message.room, room.me.id, message.message);
@@ -73,6 +68,15 @@ namespace ChattingAppTeam6.Chat.UI
         public void SendFileMessage(Entity.ChatMessage message, Stream fs)
         {
             client.SendFile(message.room, room.me.id, message.message, ByteString.FromStream(fs));
+        }
+
+        public void StopListen()
+        {
+            foreach (var key in client.commands.Keys)
+            {
+                if (key != "ALL")
+                    client.commands.Remove(key);
+            }
         }
     }
 }
