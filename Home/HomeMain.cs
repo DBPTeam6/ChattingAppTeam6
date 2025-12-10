@@ -150,11 +150,6 @@ namespace ChattingAppTeam6.Home
         {
             bool authed = _auth.IsAuthenticated;
 
-            // 아이디,비밀번호 치는 창은 나중에 없앨거니까 딱히 필요한 코드는 아님
-            IDText.Enabled = !authed;
-            PWText.Enabled = !authed;
-            LoginButton.Enabled = !authed;
-
             LogoutLabel.Enabled = authed;
             LogoutLabel.ForeColor = authed ? Color.Blue : Color.Gray;
 
@@ -806,5 +801,9 @@ namespace ChattingAppTeam6.Home
             updateUserInfo.ShowDialog();
         }
 
+        private void UserPIC_Click(object sender, EventArgs e)
+        {
+            new MultiProfiles(MeId).ShowDialog();
+        }
     }
 }
