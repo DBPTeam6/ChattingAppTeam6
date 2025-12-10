@@ -41,7 +41,7 @@ namespace ChattingAppTeam6.Home
             // 
             // chatPIC
             // 
-            this.chatPIC.Location = new System.Drawing.Point(25, 14);
+            this.chatPIC.Location = new System.Drawing.Point(28, 20);
             this.chatPIC.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.chatPIC.Name = "chatPIC";
             this.chatPIC.Size = new System.Drawing.Size(59, 59);
@@ -54,7 +54,7 @@ namespace ChattingAppTeam6.Home
             this.lastChatTime.AutoSize = true;
             this.lastChatTime.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.lastChatTime.ForeColor = System.Drawing.Color.DimGray;
-            this.lastChatTime.Location = new System.Drawing.Point(395, 35);
+            this.lastChatTime.Location = new System.Drawing.Point(467, 43);
             this.lastChatTime.Name = "lastChatTime";
             this.lastChatTime.Size = new System.Drawing.Size(124, 20);
             this.lastChatTime.TabIndex = 16;
@@ -66,7 +66,7 @@ namespace ChattingAppTeam6.Home
             this.lastChat.AutoSize = true;
             this.lastChat.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.lastChat.ForeColor = System.Drawing.Color.Gray;
-            this.lastChat.Location = new System.Drawing.Point(110, 52);
+            this.lastChat.Location = new System.Drawing.Point(113, 58);
             this.lastChat.Name = "lastChat";
             this.lastChat.Size = new System.Drawing.Size(124, 20);
             this.lastChat.TabIndex = 15;
@@ -77,7 +77,7 @@ namespace ChattingAppTeam6.Home
             this.chatName.AutoSize = true;
             this.chatName.Font = new System.Drawing.Font("맑은 고딕", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.chatName.ForeColor = System.Drawing.Color.Black;
-            this.chatName.Location = new System.Drawing.Point(110, 14);
+            this.chatName.Location = new System.Drawing.Point(113, 20);
             this.chatName.Name = "chatName";
             this.chatName.Size = new System.Drawing.Size(74, 20);
             this.chatName.TabIndex = 14;
@@ -94,7 +94,7 @@ namespace ChattingAppTeam6.Home
             this.Controls.Add(this.chatPIC);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "ChatListItemControl";
-            this.Size = new System.Drawing.Size(544, 88);
+            this.Size = new System.Drawing.Size(629, 100);
             ((System.ComponentModel.ISupportInitialize)(this.chatPIC)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

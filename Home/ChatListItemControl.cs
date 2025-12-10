@@ -54,7 +54,7 @@ namespace ChattingAppTeam6.Home
             if (item.AvatarBytes != null && item.AvatarBytes.Length > 0)
                 chatPIC.Image = ImageUtils.BytesToImage(item.AvatarBytes);
             else
-                chatPIC.Image = ImageUtils.CreateInitialsAvatar(item.DisplayName);
+                chatPIC.Image = Properties.Resources.BasicImage;
         }
     }
 }

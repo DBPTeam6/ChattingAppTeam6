@@ -56,7 +56,8 @@ namespace ChattingAppTeam6.Home.Service
                 JOIN department d ON d.id = t.department_id
                 LEFT JOIN `user` u 
                        ON u.team_id = t.id
-                WHERE (t.name LIKE CONCAT('%', @kw, '%')
+                WHERE u.name <> 'Admin'
+                    AND (t.name LIKE CONCAT('%', @kw, '%')
                     OR d.name LIKE CONCAT('%', @kw, '%')
                     OR u.name LIKE CONCAT('%', @kw, '%'))
                 ORDER BY d.name, t.name, u.name;

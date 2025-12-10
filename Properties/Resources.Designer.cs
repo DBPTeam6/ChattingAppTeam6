@@ -73,9 +73,9 @@ namespace ChattingAppTeam6.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap PlusIcon {
+        internal static System.Drawing.Bitmap chat_profile_test {
             get {
-                object obj = ResourceManager.GetObject("PlusIcon", resourceCulture);
+                object obj = ResourceManager.GetObject("chat_profile_test", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -83,9 +83,9 @@ namespace ChattingAppTeam6.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
-        internal static System.Drawing.Bitmap chat_profile_test {
+        internal static System.Drawing.Bitmap PlusIcon {
             get {
-                object obj = ResourceManager.GetObject("chat_profile_test", resourceCulture);
+                object obj = ResourceManager.GetObject("PlusIcon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

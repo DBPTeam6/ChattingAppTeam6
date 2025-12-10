@@ -19,6 +19,8 @@ namespace ChattingAppTeam6.Home.Utils
             }
         }
 
+
+        /*
         // 이름을 기반으로 간단한 이니셜 아바타(동그란 프로필 이미지) 만들어 준다고 함
         // 솔직히 저도 잘 몰라요 기본 이미지 하나 만들어서 이미지 잘 되나 보려고 넣은거라
         // 그냥없애도되는부분이기도함
@@ -82,5 +84,8 @@ namespace ChattingAppTeam6.Home.Utils
             // Bitmap 자체를 반환 (호출 쪽에서 dispose 해주면 됨)
             return bmp;
         }
+        */
+
+        
     }
 }

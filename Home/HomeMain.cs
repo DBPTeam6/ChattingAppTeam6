@@ -205,8 +205,8 @@ namespace ChattingAppTeam6.Home
                 }
                 else
                 {
-                    // 없으면 이름 이니셜로 간단한 아바타 생성 (저도잘모르는코드)
-                    UserPIC.Image = ImageUtils.CreateInitialsAvatar(fallbackName);
+                    // 없으면 프로젝트 리소스에 있는 기본 이미지 사용
+                    UserPIC.Image = Properties.Resources.BasicImage;
                 }
 
                 old?.Dispose();
@@ -216,7 +216,7 @@ namespace ChattingAppTeam6.Home
                 // 깨지면 이니셜프사
                 System.Diagnostics.Debug.WriteLine("[UserPIC] decode failed: " + ex);
                 var old = UserPIC.Image;
-                UserPIC.Image = ImageUtils.CreateInitialsAvatar(fallbackName);
+                UserPIC.Image = Properties.Resources.BasicImage;
                 old?.Dispose();
             }
         }
@@ -263,6 +263,7 @@ namespace ChattingAppTeam6.Home
                 SELECT u.id, u.name, u.team_id, t.department_id
                 FROM `user` u
                 LEFT JOIN team t ON t.id = u.team_id
+                WHERE u.name <> 'Admin'
                 ORDER BY u.name;
             ");     
 
