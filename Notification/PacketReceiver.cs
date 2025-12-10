@@ -1,6 +1,7 @@
 using ChatMessage;
 using ChattingAppTeam6.Chat.Lib;
 using System;
+using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -23,26 +24,33 @@ namespace ChattingAppTeam6.Notification
                 {
                     return;
                 }
-                int chatId = Convert.ToInt32(packet.ChatId);
-                int profileId = Convert.ToInt32(packet.ProfileId);
-                DateTime timestamp = packet.Timestamp.ToDateTime();
-                Debug.WriteLine(timestamp);
-
-                string nickname = ProfileService.GetNickname(profileId);
-                if (string.IsNullOrEmpty(nickname)) nickname = "알 수 없음";
-
-                switch (command)
+                DataTable dt = DBconnector.DBConnector.GetInstance().Query($"SELECT id FROM chat WHERE user_id_1 = {userId} || user_id_2 = {userId};");
+                foreach (DataRow row in dt.Rows)
                 {
-                    case "SEND_MESSAGE":
-                        string content = Convert.ToString(packet.SendMessage.Content) ?? string.Empty;
-                        string preview = BuildMessagePreview(content);
-                        ToastManager.ShowToast(nickname, timestamp, preview, chatId);
-                        break;
-                    case "SEND_FILE":
-                        string fileName = Convert.ToString(packet.SendFile.FileName) ?? string.Empty;
-                        string previewFile = BuildFilePreview(fileName);
-                        ToastManager.ShowToast(nickname, timestamp, previewFile, chatId);
-                        break;
+                    if (int.Parse(row[0].ToString()) == packet.ChatId)
+                    {
+                        int chatId = Convert.ToInt32(packet.ChatId);
+                        int profileId = Convert.ToInt32(packet.ProfileId);
+                        DateTime timestamp = packet.Timestamp.ToDateTime();
+                        Debug.WriteLine(timestamp);
+
+                        string nickname = ProfileService.GetNickname(profileId);
+                        if (string.IsNullOrEmpty(nickname)) nickname = "알 수 없음";
+
+                        switch (command)
+                        {
+                            case "SEND_MESSAGE":
+                                string content = Convert.ToString(packet.SendMessage.Content) ?? string.Empty;
+                                string preview = BuildMessagePreview(content);
+                                ToastManager.ShowToast(nickname, timestamp, preview, chatId);
+                                break;
+                            case "SEND_FILE":
+                                string fileName = Convert.ToString(packet.SendFile.FileName) ?? string.Empty;
+                                string previewFile = BuildFilePreview(fileName);
+                                ToastManager.ShowToast(nickname, timestamp, previewFile, chatId);
+                                break;
+                        }
+                    }
                 }
             }
             catch
