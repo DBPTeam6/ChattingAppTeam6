@@ -157,20 +157,18 @@ namespace ChattingAppTeam6.Chat.UI
             chatImage.SetTimestamp(DateTime.Now);
             
             // 프로필 이미지 설정
-  if (sender == viewModel.room.me.nickname && viewModel.room.me.profileImageBytes != null && viewModel.room.me.profileImageBytes.Length > 0)
- {
-        chatImage.SetProfileImage(Home.Utils.ImageUtils.BytesToImage(viewModel.room.me.profileImageBytes));
-     }
-  else if (sender == viewModel.room.target.nickname && viewModel.room.target.profileImageBytes != null && viewModel.room.target.profileImageBytes.Length > 0)
-  {
-   chatImage.SetProfileImage(Home.Utils.ImageUtils.BytesToImage(viewModel.room.target.profileImageBytes));
+            if (sender == viewModel.room.me.nickname && viewModel.room.me.profileImageBytes != null && viewModel.room.me.profileImageBytes.Length > 0)
+            {
+                chatImage.SetProfileImage(Home.Utils.ImageUtils.BytesToImage(viewModel.room.me.profileImageBytes));
+            }
+            else if (sender == viewModel.room.target.nickname && viewModel.room.target.profileImageBytes != null && viewModel.room.target.profileImageBytes.Length > 0)
+            {
+                chatImage.SetProfileImage(Home.Utils.ImageUtils.BytesToImage(viewModel.room.target.profileImageBytes));
             }
 
-    _chatList.Controls.Add(chatImage);
-
-            // 스크롤을 최신 메시지로 이동
-_chatList.ScrollControlIntoView(chatImage);
-   }
+            _chatList.Controls.Add(chatImage);
+            _chatList.ScrollControlIntoView(chatImage);
+        }
 
         /// <summary>
         /// 이미지 메시지를 Image 객체로 _chatList에 추가

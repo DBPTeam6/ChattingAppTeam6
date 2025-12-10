@@ -72,11 +72,9 @@ namespace ChattingAppTeam6.Chat.UI
 
         public void StopListen()
         {
-            foreach (var key in client.commands.Keys)
-            {
-                if (key != "ALL")
-                    client.commands[key] = (packet) => { };
-            }
+            client.commands["SEND_MESSAGE"] = (packet) => { };
+            client.commands["DELETE_MESSAGE"] = (packet) => { };
+            client.commands["SEND_FILE"] = (packet) => { };
         }
     }
 }
