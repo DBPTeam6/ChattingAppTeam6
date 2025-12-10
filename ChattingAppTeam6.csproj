@@ -171,9 +171,16 @@
     <Compile Include="Chat\Lib\BadWordFilter.cs" />
     <Compile Include="Chat\Lib\ChatClient.cs" />
     <Compile Include="Chat\Lib\DB.cs" />
+    <Compile Include="Chat\Lib\ImageConverter.cs" />
     <Compile Include="Chat\Lib\ParameterBuilder.cs" />
     <Compile Include="Chat\Lib\Protocol\ChatMessageProtocol.cs" />
     <Compile Include="Chat\MessageDB.cs" />
+    <Compile Include="Chat\UI\ChatEmoticonForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Chat\UI\ChatEmoticonForm.Designer.cs">
+      <DependentUpon>ChatEmoticonForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Chat\UI\ChatFile.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -201,6 +208,12 @@
     </Compile>
     <Compile Include="Chat\UI\ChatMessage.Designer.cs">
       <DependentUpon>ChatMessage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Chat\UI\ChatSearchForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Chat\UI\ChatSearchForm.Designer.cs">
+      <DependentUpon>ChatSearchForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Common\Profile.cs" />
     <Compile Include="Common\User.cs" />
@@ -264,6 +277,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Admin\AdminShellForm.resx">
       <DependentUpon>AdminShellForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Chat\UI\ChatEmoticonForm.resx">
+      <DependentUpon>ChatEmoticonForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Home\ChatListItemControl.resx">
       <DependentUpon>ChatListItemControl.cs</DependentUpon>
@@ -579,6 +595,15 @@
     <Content Include="packages\ZstdSharp.Port.0.8.6\lib\netcoreapp3.1\ZstdSharp.dll" />
     <Content Include="packages\ZstdSharp.Port.0.8.6\lib\netstandard2.0\ZstdSharp.dll" />
     <Content Include="packages\ZstdSharp.Port.0.8.6\lib\netstandard2.1\ZstdSharp.dll" />
+    <None Include="Resources\em9.png" />
+    <None Include="Resources\em8.png" />
+    <None Include="Resources\em7.png" />
+    <None Include="Resources\em6.png" />
+    <None Include="Resources\em5.png" />
+    <None Include="Resources\em4.png" />
+    <None Include="Resources\em3.png" />
+    <None Include="Resources\em2.png" />
+    <None Include="Resources\em1.png" />
     <None Include="Resources\fword_list.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

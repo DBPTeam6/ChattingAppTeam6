@@ -9,7 +9,7 @@ using Google.Protobuf;
 
 namespace ChattingAppTeam6.Chat.UI
 {
-    internal class ChatFormViewModel
+    public class ChatFormViewModel
     {
         private readonly ChattingClient client;
         private readonly BadWordFilter filter;

@@ -307,6 +307,7 @@ namespace ChattingAppTeam6.Chat.UI
                 isDeleted: false
             );
 
+            txtMessage.Clear();
             viewModel.SendTextMessage(message);
         }
 
@@ -342,6 +343,32 @@ namespace ChattingAppTeam6.Chat.UI
             catch (Exception ex)
             {
                 MessageBox.Show($"파일 전송 실패: {ex.Message}", "오류",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// 임티 전송
+        /// </summary>
+        private void SendEmoticonMessage(Stream stream)
+        {
+            try
+            {
+                Entity.ChatMessage message = new Entity.ChatMessage(
+                    id: -1,
+                    room: viewModel.room.id,
+                    sender: viewModel.room.me.user_id,
+                    message: "귀여운 가나디",
+                    timestamp: DateTime.Now,
+                    isRead: false,
+                    isDeleted: false
+                );
+
+                viewModel.SendFileMessage(message, stream);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"이모티콘 전송 실패: {ex.Message}", "오류",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }

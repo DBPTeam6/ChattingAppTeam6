@@ -1,5 +1,7 @@
-﻿using System;
+﻿using ChattingAppTeam6.Chat.Lib;
+using System;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
@@ -39,7 +41,19 @@ namespace ChattingAppTeam6.Chat.UI
 
         private void OnClickSendEmoticonButton(object sender, EventArgs e)
         {
-            // 이모티콘 전송 버튼 클릭 처리
+            new ChatEmoticonForm((image) =>
+            {
+                SendEmoticonMessage(Chat.Lib.ImageConverter.ImageToStream(image));
+            }).ShowDialog();
+        }
+
+        /// <summary>
+        /// 검색 버튼 클릭 이벤트
+        /// </summary>
+        private void BtnSearch_Click(object sender, EventArgs e)
+        {
+            ChatSearchForm searchForm = new ChatSearchForm(viewModel);
+            searchForm.ShowDialog(this);
         }
     }
 }
