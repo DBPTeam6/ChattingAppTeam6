@@ -51,7 +51,8 @@ namespace ChattingAppTeam6.Home.Service
                     d.id AS dept_id,
                     d.name AS dept_name,
                     u.id AS user_id,
-                    u.name AS user_name
+                    u.name AS user_name,
+                    u.login_id AS login_id
                 FROM team t
                 JOIN department d ON d.id = t.department_id
                 LEFT JOIN `user` u 
@@ -59,7 +60,8 @@ namespace ChattingAppTeam6.Home.Service
                 WHERE u.name <> 'Admin'
                     AND (t.name LIKE CONCAT('%', @kw, '%')
                     OR d.name LIKE CONCAT('%', @kw, '%')
-                    OR u.name LIKE CONCAT('%', @kw, '%'))
+                    OR u.name LIKE CONCAT('%', @kw, '%')
+                    OR u.login_id LIKE CONCAT('%', @kw, '%'))
                 ORDER BY d.name, t.name, u.name;
             ", ("@kw", keyword));
         }
