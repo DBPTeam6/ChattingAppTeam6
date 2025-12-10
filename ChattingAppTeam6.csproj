@@ -595,6 +595,10 @@
     <Content Include="packages\ZstdSharp.Port.0.8.6\lib\netcoreapp3.1\ZstdSharp.dll" />
     <Content Include="packages\ZstdSharp.Port.0.8.6\lib\netstandard2.0\ZstdSharp.dll" />
     <Content Include="packages\ZstdSharp.Port.0.8.6\lib\netstandard2.1\ZstdSharp.dll" />
+    <Content Include="Resources\images - 복사본.png" />
+    <Content Include="Resources\images.png" />
+    <Content Include="Resources\plusIcon.jpg" />
+    <Content Include="Resources\기본프로필.jpg" />
     <None Include="Resources\em9.png" />
     <None Include="Resources\em8.png" />
     <None Include="Resources\em7.png" />

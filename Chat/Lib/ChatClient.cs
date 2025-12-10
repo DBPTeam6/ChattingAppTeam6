@@ -41,8 +41,6 @@ namespace ChattingAppTeam6.Chat.Lib
                 Thread t = new Thread(Recive);
                 t.IsBackground = true;
                 t.Start();
-
-                MessageBox.Show("Connected");
             }
             catch (Exception e)
             {
