@@ -2,6 +2,7 @@
 using ChattingAppTeam6.Chat.Lib;
 using ChattingAppTeam6.Home.Utils;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -28,12 +29,11 @@ namespace ChattingAppTeam6.Chat.UI
             // 기존 테스트용 ChatMessage 제거
             _chatList.Controls.Clear();
 
-            var targetId = viewModel.room.target.user_id;
-            viewModel.On($"{targetId}-SEND_MESSAGE", OnReceiveTextMessage);
-            viewModel.On($"{targetId}-DELETE_MESSAGE", OnDeleteMessage);
-            viewModel.On($"{targetId}-SEND_FILE", OnReceiveFileMessage);
+            viewModel.On($"{roomId}-SEND_MESSAGE", OnReceiveTextMessage);
+            viewModel.On($"{roomId}-DELETE_MESSAGE", OnDeleteMessage);
+            viewModel.On($"{roomId}-SEND_FILE", OnReceiveFileMessage);
 
-            Entity.ChatMessage[] messages = viewModel.LoadAllMessages();
+            List<Entity.ChatMessage> messages = viewModel.LoadAllMessages();
             foreach (var message in messages)
             {
                 AddChatMessage(message);
@@ -44,7 +44,9 @@ namespace ChattingAppTeam6.Chat.UI
         private void OnReceiveTextMessage(Packet packet)
         {
             var message = Entity.ChatMessage.FromPacket(packet);
-            
+            if (packet.ChatId != viewModel.room.id)
+                return;
+
             AddChatMessage(message);
         }
 
@@ -56,6 +58,9 @@ namespace ChattingAppTeam6.Chat.UI
                 _chatList.Invoke(new Action(() => OnDeleteMessage(packet)));
                 return;
             }
+
+            if(packet.ChatId != viewModel.room.id)
+                return;
 
             foreach (var contral in _chatList.Controls)
             {
@@ -72,6 +77,9 @@ namespace ChattingAppTeam6.Chat.UI
         private void OnReceiveFileMessage(Packet packet)
         {
             var message = Entity.ChatFileMessage.FromPacket(packet);
+
+            if(packet.ChatId != viewModel.room.id)
+                return;
 
             if (new string[] { ".jpg", ".jpeg", ".png", ".gif", ".bmp" }
                 .Contains(Path.GetExtension(message.fileName).ToLower()))

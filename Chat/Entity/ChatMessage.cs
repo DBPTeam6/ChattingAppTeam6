@@ -52,9 +52,8 @@ namespace ChattingAppTeam6.Chat.Entity
             );
         }
 
-        public static ChatMessage FromTable(DataTable table, ChatUser me, ChatUser target)
+        public static ChatMessage FromTableRow(DataRow row, ChatUser me, ChatUser target)
         {
-            DataRow row = table.Rows[0];
             return new ChatMessage(
                 id: Convert.ToInt32(row["id"]),
                 room: Convert.ToInt32(row["chat_id"]),
