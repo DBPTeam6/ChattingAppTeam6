@@ -1,4 +1,5 @@
 using ChatMessage;
+using ChattingAppTeam6.Chat.Lib;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -12,12 +13,16 @@ namespace ChattingAppTeam6.Notification
         private static readonly string[] ImageExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif", ".bmp" };
 
         // Entry point to be called by actual network receive loop
-        public static void OnPacketReceived(Packet packet)
+        public static void OnPacketReceived(Packet packet, int userId)
         {
             try
             {
                 string command = Convert.ToString(packet.Command);
                 command = command.Split('-')[1];
+                if (packet.UserId == userId)
+                {
+                    return;
+                }
                 int chatId = Convert.ToInt32(packet.ChatId);
                 int profileId = Convert.ToInt32(packet.ProfileId);
                 DateTime timestamp = packet.Timestamp.ToDateTime();

@@ -133,7 +133,7 @@ namespace ChattingAppTeam6.Auth
                 Chat.Lib.ChattingClient.GetInstance().Login(userId);
                 Chat.Lib.ChattingClient.GetInstance().commands["ALL"] = (packet) =>
                 {
-                    Notification.PacketReceiver.OnPacketReceived(packet);
+                    Notification.PacketReceiver.OnPacketReceived(packet, userId);
                 };
                 
                 if (id.Equals("admin"))
