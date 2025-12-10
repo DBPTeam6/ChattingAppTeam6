@@ -48,7 +48,16 @@ namespace ChattingAppTeam6.Chat.UI
             if (packet.ChatId != viewModel.room.id)
                 return;
 
-            AddChatMessage(message);
+
+            AddChatMessage(new Entity.ChatMessage(
+                id: message.id,
+                room: message.room,
+                sender: message.sender,
+                message: message.message,
+                timestamp: DateTime.Now,
+                isRead: message.isRead,
+                isDeleted: message.isDeleted
+            ));
         }
 
         // 메시지 삭제 처리
@@ -104,6 +113,9 @@ namespace ChattingAppTeam6.Chat.UI
         // 배너 편집 처리
         private void OnEditBanner(Packet packet)
         {
+            if (packet.ChatId != viewModel.room.id)
+                return;
+
             bannerTextBox.Text = packet.EditBanner.Content;
         }
 

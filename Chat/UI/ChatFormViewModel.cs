@@ -29,6 +29,9 @@ namespace ChattingAppTeam6.Chat.UI
                 .Add("@id", roomId)
                 .Build());
 
+            var otherId = (int)rawRoom.Rows[0]["user_id_1"];
+            otherId = otherId == selfUserId ? (int)rawRoom.Rows[0]["user_id_2"] : otherId;
+
             ChatUser user1 = GetChatUser((int)rawRoom.Rows[0]["profile_id_1"]);
             ChatUser user2 = GetChatUser((int)rawRoom.Rows[0]["profile_id_2"]);
 
@@ -37,6 +40,27 @@ namespace ChattingAppTeam6.Chat.UI
                 user1 = user2;
                 user2 = temp;
             }
+
+            var meToTargetProfile = db.ReadQuery("SELECT profile_id FROM profile_access WHERE user_id = @user_id AND target_user_id = @target_user_id", new ParameterBuilder()
+                .Add("@user_id", selfUserId)
+                .Add("@target_user_id", otherId)
+                .Build());
+            var targetToMeProfile = db.ReadQuery("SELECT profile_id FROM profile_access WHERE user_id = @user_id AND target_user_id = @target_user_id", new ParameterBuilder()
+                .Add("@user_id", otherId)
+                .Add("@target_user_id", selfUserId)
+                .Build());
+
+            if (meToTargetProfile.Rows.Count > 0)
+                user1 = GetChatUser((int)meToTargetProfile.Rows[0]["profile_id"]);
+            if (targetToMeProfile.Rows.Count > 0)
+                user2 = GetChatUser((int)targetToMeProfile.Rows[0]["profile_id"]);
+
+            // room 업데이트
+            db.CreateQuery($"UPDATE chat SET {(user1.user_id == selfUserId ? "profile_id_1=@profile_id_1" : "profile_id_1=@profile_id_2")}, {(user1.user_id == otherId ? "profile_id_2=@profile_id_1" : "profile_id_2=@profile_id_2")} WHERE id = @id", new ParameterBuilder()
+                .Add("@id", roomId)
+                .Add("@profile_id_1", user1.profile_id)
+                .Add("@profile_id_2", user2.profile_id)
+                .Build());
 
             this.room = ChatRoom.FromTable(rawRoom, user1, user2);
         }
@@ -90,6 +114,7 @@ namespace ChattingAppTeam6.Chat.UI
             client.commands[$"{room.id}-SEND_MESSAGE"] = (packet) => { };
             client.commands[$"{room.id}-DELETE_MESSAGE"] = (packet) => { };
             client.commands[$"{room.id}-SEND_FILE"] = (packet) => { };
+            client.commands[$"{room.id}-EDIT_BANNER"] = (packet) => { };
         }
     }
 }
