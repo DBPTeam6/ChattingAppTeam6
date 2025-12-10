@@ -27,9 +27,17 @@ namespace ChattingAppTeam6.Chat.UI
 
             // 기존 테스트용 ChatMessage 제거
             _chatList.Controls.Clear();
-            viewModel.On("SEND_MESSAGE", OnReceiveTextMessage);
-            viewModel.On("DELETE_MESSAGE", OnDeleteMessage);
-            viewModel.On("SEND_FILE", OnReceiveFileMessage);
+
+            var targetId = viewModel.room.target.id;
+            viewModel.On($"{targetId}-SEND_MESSAGE", OnReceiveTextMessage);
+            viewModel.On($"{targetId}-DELETE_MESSAGE", OnDeleteMessage);
+            viewModel.On($"{targetId}-SEND_FILE", OnReceiveFileMessage);
+
+            Entity.ChatMessage[] messages = viewModel.LoadAllMessages();
+            foreach (var message in messages)
+            {
+                AddChatMessage(message);
+            }
         }
 
         // 텍스트 메시지 수신 처리

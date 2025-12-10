@@ -52,6 +52,20 @@ namespace ChattingAppTeam6.Chat.Entity
             );
         }
 
+        public static ChatMessage FromTable(DataTable table, ChatUser me, ChatUser target)
+        {
+            DataRow row = table.Rows[0];
+            return new ChatMessage(
+                id: Convert.ToInt32(row["id"]),
+                room: Convert.ToInt32(row["chat_id"]),
+                sender: Convert.ToInt32(row["user_id"]),
+                message: Convert.ToString(row["content"]),
+                timestamp: Convert.ToDateTime(row["timestamp"]),
+                isRead: false,
+                isDeleted: false
+            );
+        }
+
         public ChatFileMessage AttachFile(string fileName, byte[] fileContent)
         {
             return new ChatFileMessage(

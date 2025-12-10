@@ -78,6 +78,10 @@ namespace ChattingAppTeam6.Chat.Lib
                     if (!ReadExact(stream, data, msgLength)) break;
 
                     var packet = Packet.Parser.ParseFrom(data);
+                    var receiver = int.Parse(packet.Command.Split('-')[0]);
+
+                    if (packet.UserId != userId && receiver != userId)
+                        return;
 
                     if (commands.TryGetValue("ALL", out var all)) all?.Invoke(packet);
                     if (commands.TryGetValue(packet.Command, out var cmd)) cmd?.Invoke(packet);

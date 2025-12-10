@@ -50,6 +50,20 @@ namespace ChattingAppTeam6.Chat.UI
             return ChatUser.FromTable(chatUser);
         }
 
+        public Entity.ChatMessage[] LoadAllMessages()
+        {
+            var parameters = new ParameterBuilder()
+                .Add("@chat_id", room.id)
+                .Build();
+            var rawMessages = db.ReadQuery("SELECT * FROM message_log WHERE chat_id = @chat_id ORDER BY timestamp ASC", parameters);
+            Entity.ChatMessage[] messages = new Entity.ChatMessage[rawMessages.Rows.Count];
+            for (int i = 0; i < rawMessages.Rows.Count; i++)
+            {
+                messages[i] = Entity.ChatMessage.FromTable(rawMessages, room.me, room.target);
+            }
+            return messages;
+        }
+
         public void On(string command, Action<Packet> callbackFn)
         {
             client.commands[command] = callbackFn;
@@ -72,9 +86,9 @@ namespace ChattingAppTeam6.Chat.UI
 
         public void StopListen()
         {
-            client.commands["SEND_MESSAGE"] = (packet) => { };
-            client.commands["DELETE_MESSAGE"] = (packet) => { };
-            client.commands["SEND_FILE"] = (packet) => { };
+            client.commands[$"{room.target.id}-SEND_MESSAGE"] = (packet) => { };
+            client.commands[$"{room.target.id}-DELETE_MESSAGE"] = (packet) => { };
+            client.commands[$"{room.target.id}-SEND_FILE"] = (packet) => { };
         }
     }
 }
