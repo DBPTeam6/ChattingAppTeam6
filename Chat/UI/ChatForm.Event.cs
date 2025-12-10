@@ -25,17 +25,12 @@ namespace ChattingAppTeam6.Chat.UI
             SendTextMessage();
         }
 
-        private void OnClickSendImageButton(object sender, EventArgs e)
-        {
-            
-        }
-
         private void OnClickSendFileButton(object sender, EventArgs e)
         {
-            if (openFileDialogForFile.ShowDialog() == DialogResult.OK)
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                string fileName = openFileDialogForFile.FileName;
-                Stream fileStream = openFileDialogForFile.OpenFile();
+                string fileName = openFileDialog.FileName;
+                Stream fileStream = openFileDialog.OpenFile();
                 Debug.WriteLine("Selected file: " + fileName);
                 Debug.WriteLine("File stream length: " + fileStream.Length);
                 SendFileMessage(fileName, fileStream);
